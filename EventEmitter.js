@@ -12,7 +12,9 @@ function EventEmitter() {}
 // Initialise the storage variables
 EventEmitter.prototype._events = {};
 EventEmitter.prototype._listeners = [];
-EventEmitter.prototype._maxListeners = 10;
+
+// Has to be an array to stop it being moved out of the prototype on change
+EventEmitter.prototype._maxListeners = [10];
 
 /**
  * Adds a listener for a specified event
@@ -103,7 +105,7 @@ EventEmitter.prototype.removeAllListeners = function(name) {
  * @param {Number} n Max number of listeners before a message is displayed
  */
 EventEmitter.prototype.setMaxListeners = function(n) {
-	
+	this._maxListeners[0] = n;
 };
 
 /** 
