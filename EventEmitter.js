@@ -40,6 +40,12 @@ EventEmitter.prototype.addListener = function(name, listener, once) {
 	
 	// Add the listeners index to the event
 	this._events[name].push(index);
+	
+	// Check if we have exceeded the max listeners
+	if(this._events[name].length === this._maxListeners[0]) {
+		// We have, let the developer know
+		console.log('Maximum number of listeners (' + this._maxListeners[0] + ') reached for the "' + name + '" event!');
+	}
 };
 
 /**
