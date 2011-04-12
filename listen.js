@@ -40,7 +40,7 @@ EventEmitter.prototype.on = EventEmitter.prototype.addListener;
  * @param {Function} listener Run when the event is emitted
  */
 EventEmitter.prototype.once = function(name, listener) {
-	this.on(name, listener, true);
+	this.addListener(name, listener, true);
 };
 
 /**
