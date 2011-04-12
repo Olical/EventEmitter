@@ -148,5 +148,17 @@ EventEmitter.prototype.listeners = function(name) {
  * @param {Mixed} An argument to be passed to the listeners, you can have as many of these as you want
  */
 EventEmitter.prototype.emit = function(name) {
+	// Initialise any required variables
+	var i = null,
+		args = Array.prototype.slice.call(arguments),
+		listeners = this.listeners(name);
 	
+	// Splice out the first argument
+	args.splice(0, 1);
+	
+	// Loop through the listeners
+	for(i = 0; i < listeners.length; i++) {
+		// Call the function
+		listeners[i].apply(null, args);
+	}
 };
