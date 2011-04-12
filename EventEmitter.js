@@ -115,7 +115,24 @@ EventEmitter.prototype.setMaxListeners = function(n) {
  * @returns {Array} An array of the assigned listeners
  */
 EventEmitter.prototype.listeners = function(name) {
+	// Initialise any required variables
+	var i = null,
+		built = [];
 	
+	// Make sure the event exists
+	if(this._events[name] instanceof Array) {
+		// Grab the listeners indexes
+		indexes = this._events[name]; 
+		
+		// Loop through all of the indexes
+		for(i = 0; i < indexes.length; i++) {
+			// Add it to the array
+			built.push(this._listeners[indexes[i]].listener);
+		}
+	}
+	
+	// Return the found listeners
+	return built;
 };
 
 /** 
