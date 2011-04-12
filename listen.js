@@ -21,7 +21,19 @@ function EventEmitter() {
  * @param {Boolan} once If true, the listener will only be run once, use EventEmitter.once instead, this is mainly for internal use
  */
 EventEmitter.prototype.addListener = function(name, listener, once) {
+	// Grab the index of the listener
+	var index = this.listeners.length;
 	
+	// Add the listener
+	this.listeners.push(listener);
+	
+	// Add the event to the events object if required
+	if(typeof this.events[name] === 'undefined') {
+		this.events[name] = [];
+	}
+	
+	// Add the listeners index to the event
+	this.events[name].push(index);
 };
 
 /**
