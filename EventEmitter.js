@@ -68,6 +68,16 @@ EventEmitter.prototype.removeListener = function(name, listener) {
 	
 };
 
+/**
+ * Removes all the listeners for a specified event
+ * 
+ * @param {String} name Name of the event
+ */
+EventEmitter.prototype.removeAllListeners = function(name) {
+	
+};
+
+
 /** 
  * Sets the max number of listeners before a message is displayed
  * If it is set to 0 then there is no limit
