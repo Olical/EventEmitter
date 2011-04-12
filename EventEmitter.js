@@ -48,6 +48,7 @@ EventEmitter.prototype.addListener = function(name, listener, once) {
 	}
 	
 	// Emit the newListener event
+	this.emit('newListener', name, listener);
 };
 
 /**
