@@ -21,7 +21,7 @@ EventEmitter.prototype._maxListeners = [10];
  * 
  * @param {String} name Name of the event
  * @param {Function} listener Run when the event is emitted
- * @param {Boolan} once If true, the listener will only be run once, use EventEmitter.once instead, this is mainly for internal use
+ * @param {Boolean} once If true, the listener will only be run once, use EventEmitter.once instead, this is mainly for internal use
  */
 EventEmitter.prototype.addListener = function(name, listener, once) {
 	// Grab the index of the listener
@@ -47,7 +47,7 @@ EventEmitter.prototype.addListener = function(name, listener, once) {
  * 
  * @param {String} name Name of the event
  * @param {Function} listener Run when the event is emitted
- * @param {Boolan} once If true, the listener will only be run once, use EventEmitter.once instead, this is mainly for internal use
+ * @param {Boolean} once If true, the listener will only be run once, use EventEmitter.once instead, this is mainly for internal use
  */
 EventEmitter.prototype.on = EventEmitter.prototype.addListener;
 
