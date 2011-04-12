@@ -1,5 +1,5 @@
 // Initialisation
-var src = require('fs').readFileSync('listen.js', 'utf8'),
+var src = require('fs').readFileSync('EventEmitter.js', 'utf8'),
 	sys = require('sys'),
 	jshint = require('./jshint').JSHINT,
 	i = null,
