@@ -12,6 +12,7 @@ function EventEmitter() {}
 // Initialise the storage variables
 EventEmitter.prototype._events = {};
 EventEmitter.prototype._listeners = [];
+EventEmitter.prototype._maxListeners = 10;
 
 /**
  * Adds a listener for a specified event
@@ -79,7 +80,7 @@ EventEmitter.prototype.removeListener = function(name, listener) {
 			// Check if we have found the listener
 			if(this._listeners[indexes[i]].listener === listener) {
 				// It is, remove it and return
-				this._events[name].splice(i, 1);
+				indexes.splice(i, 1);
 			}
 		}
 	}
