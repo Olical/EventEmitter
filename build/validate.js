@@ -1,5 +1,5 @@
 // Initialisation
-var src = require('fs').readFileSync('spark.js', 'utf8'),
+var src = require('fs').readFileSync('listen.js', 'utf8'),
 	sys = require('sys'),
 	jshint = require('./jshint').JSHINT,
 	i = null,
@@ -10,8 +10,7 @@ var result = jshint(src, {
 	curly: true,
 	eqeqeq: true,
 	forin: true,
-	browser: true,
-	evil: true
+	browser: true
 });
 
 // Check for errors
