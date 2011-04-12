@@ -4,6 +4,10 @@ So you can register and emit events from what ever objects you choose.
 
 It works exactly the same as the NodeJS version so head over to the [NodeJS docs](http://nodejs.org/docs/v0.4.5/api/events.html#events.EventEmitter) for the details.
 
+## Author
+
+[Oliver Caldwell](http://flowdev.co.uk/), a 17 year old web developer from Essex, England.
+
 ## Licences
 
 ### MIT
