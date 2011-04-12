@@ -27,6 +27,9 @@ EventEmitter.prototype.addListener = function(name, listener, once) {
 	// Grab the index of the listener
 	var index = this._listeners.length;
 	
+	// Emit the newListener event
+	this.emit('newListener', name, listener);
+	
 	// Add the listener
 	this._listeners.push({
 		listener: listener,
@@ -46,9 +49,6 @@ EventEmitter.prototype.addListener = function(name, listener, once) {
 		// We have, let the developer know
 		console.log('Maximum number of listeners (' + this._maxListeners[0] + ') reached for the "' + name + '" event!');
 	}
-	
-	// Emit the newListener event
-	this.emit('newListener', name, listener);
 };
 
 /**
