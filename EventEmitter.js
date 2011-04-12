@@ -25,7 +25,10 @@ EventEmitter.prototype.addListener = function(name, listener, once) {
 	var index = this._listeners.length;
 	
 	// Add the listener
-	this._listeners.push(listener);
+	this._listeners.push({
+		listener: listener,
+		once: (once) ? true : false
+	});
 	
 	// Add the event to the events object if required
 	if(typeof this._events[name] === 'undefined') {
