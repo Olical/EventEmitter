@@ -2,6 +2,8 @@ Listen adds the event functionality that NodeJS has to your browser.
 
 So you can register and emit events from what ever objects you choose.
 
+It works exactly the same as the NodeJS version so head over to the [NodeJS docs](http://nodejs.org/docs/v0.4.5/api/events.html#events.EventEmitter) for the details.
+
 ## Licences
 
 ### MIT
