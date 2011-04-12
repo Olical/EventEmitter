@@ -1,7 +1,7 @@
 /**
  * @preserve EventEmitter v1.0.0
  * 
- * Copyright 2011, Oliver Caldwell
+ * Copyright 2011, Oliver Caldwell (flowdev.co.uk)
  * Dual licensed under the MIT or GPL Version 2 licenses.
  * https://github.com/Wolfy87/Listen
  */
