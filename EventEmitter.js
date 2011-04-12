@@ -121,12 +121,14 @@ EventEmitter.prototype.setMaxListeners = function(n) {
  * Returns an array of listeners for the specified event
  * 
  * @param {String} name Name of the event
+ * @param {Boolean} checkOnce Mainly for internal use, but if true, it will check if the once flag is set on the listener and remove it if it is
  * @returns {Array} An array of the assigned listeners
  */
-EventEmitter.prototype.listeners = function(name) {
+EventEmitter.prototype.listeners = function(name, checkOnce) {
 	// Initialise any required variables
 	var i = null,
-		built = [];
+		built = [],
+		l = null;
 	
 	// Make sure the event exists
 	if(this._events[name] instanceof Array) {
@@ -135,8 +137,24 @@ EventEmitter.prototype.listeners = function(name) {
 		
 		// Loop through all of the indexes
 		for(i = 0; i < indexes.length; i++) {
-			// Add it to the array
-			built.push(this._listeners[indexes[i]].listener);
+			// Grab the listener
+			l = this._listeners[indexes[i]];
+			
+			// To do, finish this
+			if(checkOnce) {
+				if(l.once) {
+					// Add it to the array
+					built.push(this._listeners.splice(indexes[i], 1).listener);
+				}
+				else {
+					// Add it to the array
+					built.push(l.listener);
+				}
+			}
+			else {
+				// Add it to the array
+				built.push(l.listener);
+			}
 		}
 	}
 	
@@ -154,7 +172,7 @@ EventEmitter.prototype.emit = function(name) {
 	// Initialise any required variables
 	var i = null,
 		args = Array.prototype.slice.call(arguments),
-		listeners = this.listeners(name);
+		listeners = this.listeners(name, true);
 	
 	// Splice out the first argument
 	args.splice(0, 1);
@@ -165,5 +183,5 @@ EventEmitter.prototype.emit = function(name) {
 		listeners[i].apply(null, args);
 	}
 	
-	// TODO: Remove any flagged with once
+	// Remove any flagged with once
 };
