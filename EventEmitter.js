@@ -91,7 +91,7 @@ EventEmitter.prototype.removeListener = function(name, listener) {
  * @param {String} name Name of the event
  */
 EventEmitter.prototype.removeAllListeners = function(name) {
-	
+	this._events[name] = [];
 };
 
 
