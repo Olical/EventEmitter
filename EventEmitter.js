@@ -7,23 +7,11 @@
  */
 
 // Initialise the class
-function EventEmitter() {
-	// Initialise the storage variables
-	var events = {};
-	var list = [];
-	
-	// Put this in scope
-	var that = this;
-	
-	// Allow a way of accessing the storage variables
-	this.getEvents = function() {
-		return that.events;
-	}
-	
-	this.getListeners = function() {
-		return that.list;
-	}
-}
+function EventEmitter() {}
+
+// Initialise the storage variables
+EventEmitter.prototype._events = {};
+EventEmitter.prototype._listeners = [];
 
 /**
  * Adds a listener for a specified event
@@ -34,18 +22,18 @@ function EventEmitter() {
  */
 EventEmitter.prototype.addListener = function(name, listener, once) {
 	// Grab the index of the listener
-	var index = this.getListeners().length;
+	var index = this._listeners.length;
 	
 	// Add the listener
-	this.getListeners().push(listener);
+	this._listeners.push(listener);
 	
 	// Add the event to the events object if required
-	if(typeof this.getEvents()[name] === 'undefined') {
-		this.getEvents()[name] = [];
+	if(typeof this._events[name] === 'undefined') {
+		this._events[name] = [];
 	}
 	
 	// Add the listeners index to the event
-	this.getEvents()[name].push(index);
+	this._events[name].push(index);
 };
 
 /**
