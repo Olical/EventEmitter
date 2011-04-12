@@ -62,10 +62,27 @@ EventEmitter.prototype.once = function(name, listener) {
  * Removes a listener for a specified event
  * 
  * @param {String} name Name of the event
- * @param {Function} listener Run when the event is emitted
+ * @param {Function} listener Reference to the listener function
  */
 EventEmitter.prototype.removeListener = function(name, listener) {
+	// Initialise any required variables
+	var i = null,
+		indexes = null;
 	
+	// Make sure the event exists
+	if(this._events[name] instanceof Array) {
+		// Grab the listeners indexes
+		indexes = this._events[name]; 
+		
+		// Loop through all of the indexes
+		for(i = 0; i < indexes.length; i++) {
+			// Check if we have found the listener
+			if(this._listeners[indexes[i]].listener === listener) {
+				// It is, remove it and return
+				this._events[name].splice(i, 1);
+			}
+		}
+	}
 };
 
 /**
