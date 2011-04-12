@@ -10,7 +10,19 @@
 function EventEmitter() {
 	// Initialise the storage variables
 	var events = {};
-	var listeners = [];
+	var list = [];
+	
+	// Put this in scope
+	var that = this;
+	
+	// Allow a way of accessing the storage variables
+	this.getEvents = function() {
+		return that.events;
+	}
+	
+	this.getListeners = function() {
+		return that.list;
+	}
 }
 
 /**
@@ -22,18 +34,18 @@ function EventEmitter() {
  */
 EventEmitter.prototype.addListener = function(name, listener, once) {
 	// Grab the index of the listener
-	var index = this.listeners.length;
+	var index = this.getListeners().length;
 	
 	// Add the listener
-	this.listeners.push(listener);
+	this.getListeners().push(listener);
 	
 	// Add the event to the events object if required
-	if(typeof this.events[name] === 'undefined') {
-		this.events[name] = [];
+	if(typeof this.getEvents()[name] === 'undefined') {
+		this.getEvents()[name] = [];
 	}
 	
 	// Add the listeners index to the event
-	this.events[name].push(index);
+	this.getEvents()[name].push(index);
 };
 
 /**
