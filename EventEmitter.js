@@ -46,6 +46,8 @@ EventEmitter.prototype.addListener = function(name, listener, once) {
 		// We have, let the developer know
 		console.log('Maximum number of listeners (' + this._maxListeners[0] + ') reached for the "' + name + '" event!');
 	}
+	
+	// Emit the newListener event
 };
 
 /**
@@ -161,4 +163,6 @@ EventEmitter.prototype.emit = function(name) {
 		// Call the function
 		listeners[i].apply(null, args);
 	}
+	
+	// TODO: Remove any flagged with once
 };
