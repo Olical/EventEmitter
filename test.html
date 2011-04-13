@@ -9,7 +9,46 @@
 	<body>
 		<script type='text/javascript' src='EventEmitter.js'></script>
 		<script type='text/javascript'>
+			// Initialise the class
 			var emitter = new EventEmitter();
+			
+			// Create a test function
+			function show(msg) {
+				alert(msg);
+			}
+			
+			// Add the listener
+			emitter.addListener('message', show);
+			
+			// Trigger the event
+			emitter.emit('message', 'Basic event');
+			
+			// Remove the listener
+			emitter.removeListener('message', show);
+			
+			// Trigger the event
+			emitter.emit('message', 'Should not show');
+			
+			// Add the listener
+			emitter.on('message', show);
+			
+			// Trigger the event
+			emitter.emit('message', 'Using alias');
+			
+			// Remove all listeners
+			emitter.removeAllListeners('message');
+			
+			// Trigger the event
+			emitter.emit('message', 'Should not show');
+			
+			// Add the listener
+			emitter.once('message', show);
+			
+			// Trigger the event
+			emitter.emit('message', 'Using once');
+			
+			// Trigger the event
+			emitter.emit('message', 'Should not show');
 		</script>
 	</body>
 </html>
