@@ -144,7 +144,10 @@ EventEmitter.prototype.listeners = function(name, checkOnce) {
 			if(checkOnce) {
 				if(l.once) {
 					// Add it to the array
-					built.push(this._listeners.splice(indexes[i], 1).listener);
+					built.push(l.listener);
+					
+					// Remove the reference
+					this._events[name].splice(i, 1);
 				}
 				else {
 					// Add it to the array
