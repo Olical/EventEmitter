@@ -1,13 +1,13 @@
 # Set the default files to be built
-default: listen.min.js validate
+default: EventEmitter.min.js validate
 
-# Compress listen.js into listen.min.js
-listen.min.js: listen.js
+# Compress EventEmitter.js into EventEmitter.min.js
+EventEmitter.min.js: EventEmitter.js
 	@@echo 'Compressing...'
 	@@java -jar build/compiler.jar --js $^ --js_output_file $@
 	@@echo 'Done!'
 
-# Validate listen.js with jshint
+# Validate EventEmitter.js with jshint
 validate:
 	@@echo 'Validating...'
 	@@node build/validate.js
