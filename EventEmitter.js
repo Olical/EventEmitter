@@ -185,6 +185,4 @@ EventEmitter.prototype.emit = function(name) {
 		// Call the function
 		listeners[i].apply(null, args);
 	}
-	
-	// Remove any flagged with once
 };
