@@ -3,7 +3,7 @@
  * 
  * Copyright 2011, Oliver Caldwell (flowdev.co.uk)
  * Dual licensed under the MIT or GPL Version 2 licenses.
- * https://github.com/Wolfy87/Listen
+ * https://github.com/Wolfy87/EventEmitter
  */
 
 // Initialise the class
@@ -140,7 +140,6 @@ EventEmitter.prototype.listeners = function(name, checkOnce) {
 			// Grab the listener
 			l = this._listeners[indexes[i]];
 			
-			// To do, finish this
 			if(checkOnce) {
 				if(l.once) {
 					// Add it to the array
