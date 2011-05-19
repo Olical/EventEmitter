@@ -23,7 +23,7 @@ function EventEmitter() {
  */
 EventEmitter.prototype._convertNameToRegExp = function(name) {
 	return name.replace(/\./g, '\\.').replace(/\*\./g, '[\\w\\-]+\\.').replace(/\*$/gi, '.+');
-}
+};
 
 /**
  * Adds a listener for a specified event
