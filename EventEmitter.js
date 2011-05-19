@@ -22,7 +22,7 @@ function EventEmitter() {
  * @return {String} RegExp pattern
  */
 EventEmitter.prototype._convertNameToRegExp = function(name) {
-	return name.replace(/\./g, '\\.').replace(/\*\./g, '[\\w\\-]+\\.').replace(/\*$/gi, '.+');
+	return name.replace(/\./g, '\\.').replace(/\*\\\./g, '[\\w\\-]+\\.').replace(/\*$/gi, '.+');
 };
 
 /**
