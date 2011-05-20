@@ -1,5 +1,5 @@
 /**
- * @preserve EventEmitter v1.1.0
+ * @preserve EventEmitter v1.1.1
  *
  * Copyright 2011, Oliver Caldwell (flowdev.co.uk)
  * Dual licensed under the MIT or GPL Version 2 licenses.
@@ -22,7 +22,7 @@ function EventEmitter() {
  * @return {String} RegExp pattern
  */
 EventEmitter.prototype._convertNameToRegExp = function(name) {
-	return name.replace(/\./g, '\\.').replace(/\*\./g, '[\\w\\-]+\\.').replace(/\*$/gi, '.+');
+	return name.replace(/\./g, '\\.').replace(/\*\\\./g, '[\\w\\-]+\\.').replace(/\*$/gi, '.+');
 };
 
 /**
