@@ -28,6 +28,12 @@ This is assuming you have a function called `show` already defined. It assigns t
 
 You can also use the `once` method to add a listener that will only be fired once. The syntax is the same as the previous methods.
 
+You can use wildcards within name spaced events like so.
+
+    myEmitter.addListener('foo.*.bar', show);
+
+This will then be fired every time an event that begins with `foo.` and ends with `.bar` is emitted.
+
 You can retrieve an array of listeners for a specified event with the `listeners` method.
 
 This will return an array of all listeners associated with the `message` event.

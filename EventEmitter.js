@@ -1,5 +1,5 @@
 /**
- * @preserve EventEmitter v1.1.1
+ * @preserve EventEmitter v1.1.2
  *
  * Copyright 2011, Oliver Caldwell (flowdev.co.uk)
  * Dual licensed under the MIT or GPL Version 2 licenses.
@@ -196,6 +196,18 @@ EventEmitter.prototype.emit = function(name) {
 		args = Array.prototype.slice.call(arguments),
 		listeners = this.listeners(name, true);
 	
+	// Check if there are no listeners for the event
+	if(listeners.length === 0) {
+		// If it is an error event, throw an exception
+		// Otherwise, return false
+		if(name === 'error') {
+			throw 'unspecifiedErrorEvent';
+		}
+		else {
+			return false;
+		}
+	}
+	
 	// Splice out the first argument
 	args.splice(0, 1);
 	
@@ -204,4 +216,6 @@ EventEmitter.prototype.emit = function(name) {
 		// Call the function
 		listeners[i].apply(null, args);
 	}
+	
+	return true;
 };
