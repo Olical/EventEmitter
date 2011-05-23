@@ -196,6 +196,14 @@ EventEmitter.prototype.emit = function(name) {
 		args = Array.prototype.slice.call(arguments),
 		listeners = this.listeners(name, true);
 	
+	// Check if it is an error event
+	// And if there are no listeners for error events
+	// If so, throw an exception
+	if(name === 'error' && listeners.length === 0) {
+		// Throw the exception
+		throw 'unspecifiedErrorEvent';
+	}
+	
 	// Splice out the first argument
 	args.splice(0, 1);
 	
