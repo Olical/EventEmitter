@@ -78,7 +78,7 @@ You can have as many arguments as you want.
 
 ## Author
 
-[Oliver Caldwell](http://flowdev.co.uk/), a 17 year old web developer from Essex, England.
+[Oliver Caldwell](http://flowdev.co.uk/).
 
 ## Licences
 
