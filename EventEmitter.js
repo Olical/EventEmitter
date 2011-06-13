@@ -61,6 +61,9 @@ EventEmitter.prototype.addListener = function(name, listener, once) {
 		// We have, let the developer know
 		console.log('Maximum number of listeners (' + this._maxListeners + ') reached for the "' + name + '" event!');
 	}
+	
+	// Return this to enable chaining
+	return this;
 };
 
 /**
@@ -79,7 +82,8 @@ EventEmitter.prototype.on = EventEmitter.prototype.addListener;
  * @param {Function} listener Run when the event is emitted
  */
 EventEmitter.prototype.once = function(name, listener) {
-	this.addListener(name, listener, true);
+	// Return addListeners return, it will contain this to enable chaining
+	return this.addListener(name, listener, true);
 };
 
 /**
@@ -110,6 +114,9 @@ EventEmitter.prototype.removeListener = function(name, listener) {
 			}
 		}
 	}
+	
+	// Return this to enable chaining
+	return this;
 };
 
 /**
@@ -120,6 +127,9 @@ EventEmitter.prototype.removeListener = function(name, listener) {
 EventEmitter.prototype.removeAllListeners = function(name) {
 	name = this._convertNameToRegExp(name);
 	this._events[name] = [];
+	
+	// Return this to enable chaining
+	return this;
 };
 
 
@@ -131,6 +141,9 @@ EventEmitter.prototype.removeAllListeners = function(name) {
  */
 EventEmitter.prototype.setMaxListeners = function(n) {
 	this._maxListeners = n;
+	
+	// Return this to enable chaining
+	return this;
 };
 
 /**
