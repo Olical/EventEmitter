@@ -40,6 +40,8 @@ This will return an array of all listeners associated with the `message` event.
 
     myEmitter.listeners('message');
 
+This method is chainable.
+
 ### Removing a listener
 
 To remove a listener, use the `removeListener` method with the same arguments as you used to set it.
@@ -49,6 +51,8 @@ To remove a listener, use the `removeListener` method with the same arguments as
 You can also remove all listeners for a specified event, like so.
 
     myEmitter.removeAllListeners('message');
+
+This method is chainable.
 
 ### Event limits
 
@@ -66,6 +70,8 @@ You can change the limit with the `setMaxListeners` method. For instance, this w
 
 Setting it to 0 will disable this feature.
 
+This method is chainable.
+
 ### Emitting events
 
 To emit an event to all the registered listeners you have to use the `emit` method.
@@ -78,7 +84,7 @@ You can have as many arguments as you want.
 
 ## Author
 
-[Oliver Caldwell](http://flowdev.co.uk/), a 17 year old web developer from Essex, England.
+[Oliver Caldwell](http://flowdev.co.uk/).
 
 ## Licences
 
