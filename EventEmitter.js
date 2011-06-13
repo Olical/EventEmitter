@@ -31,6 +31,7 @@ EventEmitter.prototype._convertNameToRegExp = function(name) {
  * @param {String} name Name of the event
  * @param {Function} listener Run when the event is emitted
  * @param {Boolean} once If true, the listener will only be run once, use EventEmitter.once instead, this is mainly for internal use
+ * @returns {Object} Returns the EventEmitter instance to allow chaining
  */
 EventEmitter.prototype.addListener = function(name, listener, once) {
 	// Grab the index of the listener
@@ -72,6 +73,7 @@ EventEmitter.prototype.addListener = function(name, listener, once) {
  * @param {String} name Name of the event
  * @param {Function} listener Run when the event is emitted
  * @param {Boolean} once If true, the listener will only be run once, use EventEmitter.once instead, this is mainly for internal use
+ * @returns {Object} Returns the EventEmitter instance to allow chaining
  */
 EventEmitter.prototype.on = EventEmitter.prototype.addListener;
 
@@ -80,6 +82,7 @@ EventEmitter.prototype.on = EventEmitter.prototype.addListener;
  *
  * @param {String} name Name of the event
  * @param {Function} listener Run when the event is emitted
+ * @returns {Object} Returns the EventEmitter instance to allow chaining
  */
 EventEmitter.prototype.once = function(name, listener) {
 	// Return addListeners return, it will contain this to enable chaining
@@ -91,6 +94,7 @@ EventEmitter.prototype.once = function(name, listener) {
  *
  * @param {String} name Name of the event
  * @param {Function} listener Reference to the listener function
+ * @returns {Object} Returns the EventEmitter instance to allow chaining
  */
 EventEmitter.prototype.removeListener = function(name, listener) {
 	// Initialise any required variables
@@ -123,6 +127,7 @@ EventEmitter.prototype.removeListener = function(name, listener) {
  * Removes all the listeners for a specified event
  *
  * @param {String} name Name of the event
+ * @returns {Object} Returns the EventEmitter instance to allow chaining
  */
 EventEmitter.prototype.removeAllListeners = function(name) {
 	name = this._convertNameToRegExp(name);
@@ -138,6 +143,7 @@ EventEmitter.prototype.removeAllListeners = function(name) {
  * If it is set to 0 then there is no limit
  *
  * @param {Number} n Max number of listeners before a message is displayed
+ * @returns {Object} Returns the EventEmitter instance to allow chaining
  */
 EventEmitter.prototype.setMaxListeners = function(n) {
 	this._maxListeners = n;
@@ -202,6 +208,7 @@ EventEmitter.prototype.listeners = function(name, checkOnce) {
  *
  * @param {String} name Name of the event to be emitted
  * @param {Mixed} An argument to be passed to the listeners, you can have as many of these as you want
+ * @returns {Boolean} Will return true on success and false if no listeners where found
  */
 EventEmitter.prototype.emit = function(name) {
 	// Initialise any required variables
