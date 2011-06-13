@@ -1,5 +1,5 @@
 /**
- * @preserve EventEmitter v1.1.2
+ * @preserve EventEmitter v1.1.3
  *
  * Copyright 2011, Oliver Caldwell (flowdev.co.uk)
  * Dual licensed under the MIT or GPL Version 2 licenses.
