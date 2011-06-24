@@ -7,9 +7,11 @@
  */
 
 function EventEmitter() {
-	// Put the instance in scope and initialise required variables
+	// Put the instance in scope and initialise all required variables
 	var instance = this,
-		events = {};
+		listeners = {},
+		i = null,
+		args = null;
 	
 	/**
 	 * Assigns a listener to the specified event
@@ -20,13 +22,36 @@ function EventEmitter() {
 	 */
 	instance.addListener = function(eventName, listener) {
 		// Check if we currently have a listener array for the specified event
-		if(typeof events[eventName] === 'undefined') {
-			// We do not, create it with our listener inside
-			events[eventName] = [listener];
+		if(listeners[eventName]) {
+			// We do, push the listener onto the end
+			listeners[eventName].push(listener);
 		}
 		else {
-			// We do, push the listener onto the end
-			events[eventName].push(listener);
+			// We do not, create it with our listener inside
+			listeners[eventName] = [listener];
+		}
+		
+		// Return the instance to allow chaining
+		return instance;
+	};
+	
+	/**
+	 * Emits the specified event running all listeners associated with it
+	 * 
+	 * @param {String} eventName Name of the event to assign the listener to
+	 * @param {Mixed} arguments You can pass as many arguments as you want after the event name. These will be passed to the listeners
+	 * @returns {Object} The current instance of EventEmitter to allow chaining
+	 */
+	instance.emit = function(eventName) {
+		// Check if we currently have a listener array for the specified event
+		if(listeners[eventName]) {
+			// We do, get the arguments
+			args = Array.prototype.slice.call(arguments, 1);
+			
+			// Loop over the listeners executing them
+			for(i = 0; i < listeners.length; i += 1) {
+				listeners[eventName](args);
+			}
 		}
 		
 		// Return the instance to allow chaining
