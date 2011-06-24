@@ -1,0 +1,7 @@
+/**
+ * EventEmitter tests
+ */
+
+(function() {
+	
+}());
