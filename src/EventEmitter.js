@@ -49,8 +49,8 @@ function EventEmitter() {
 			args = Array.prototype.slice.call(arguments, 1);
 			
 			// Loop over the listeners executing them
-			for(i = 0; i < listeners.length; i += 1) {
-				listeners[eventName](args);
+			for(i = 0; i < listeners[eventName].length; i += 1) {
+				listeners[eventName][i].apply(null, args);
 			}
 		}
 		

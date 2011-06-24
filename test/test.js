@@ -25,11 +25,11 @@
 		equals(ee, ee.emit('test2'), 'emit should return the instance to allow chaining.');
 		equals(true, checkThis, 'checkThis should equal true.');
 		
-		equals(ee, ee.addListener('test2.1', function(bool, number, string) {
-			argsTest = [bool, number, string];
+		equals(ee, ee.addListener('test2.1', function(number) {
+			argsTest = number;
 		}), 'addListener should return the instance to allow chaining.');
-		equals(ee, ee.emit('test2.1', true, 10, 'test'), 'emit should return the instance to allow chaining.');
-		equals([true, 10, 'test'], argsTest, 'argsTest should equal the specified array.');
+		equals(ee, ee.emit('test2.1', 10), 'emit should return the instance to allow chaining.');
+		equals(10, argsTest, 'argsTest should equal the specified number.');
 	});
 	
 	test('Adding a listener that will only run once', function() {
