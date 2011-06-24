@@ -66,4 +66,16 @@ function EventEmitter() {
 		// Return the instance to allow chaining
 		return instance;
 	};
+	
+	instance.listeners = function(eventName) {
+		// Check if we currently have a listener array for the specified event
+		if(listeners[eventName]) {
+			// We do, return it
+			return listeners[eventName];
+		}
+		else {
+			// We do not, create the array and return it
+			return listeners[eventName] = [];
+		}
+	};
 }

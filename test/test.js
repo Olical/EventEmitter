@@ -25,11 +25,11 @@
 		equals(ee, ee.emit('test2'), 'emit should return the instance to allow chaining.');
 		equals(true, checkThis, 'checkThis should equal true.');
 		
-		equals(ee, ee.addListener('test2.1', function(number) {
-			argsTest = number;
+		equals(ee, ee.addListener('test2.1', function(bool, number, string) {
+			argsTest = [bool, number, string];
 		}), 'addListener should return the instance to allow chaining.');
-		equals(ee, ee.emit('test2.1', 10), 'emit should return the instance to allow chaining.');
-		equals(10, argsTest, 'argsTest should equal the specified number.');
+		equals(ee, ee.emit('test2.1', true, 10, 'test'), 'emit should return the instance to allow chaining.');
+		equals('test', argsTest[2], 'argsTest should equal the specified array.');
 	});
 	
 	test('Adding a listener that will only run once', function() {
@@ -94,10 +94,10 @@
 		equals(ee, ee.addListener('test6', testFunction), 'addListener should return the instance to allow chaining.');
 		equals(ee, ee.addListener('test6', testFunction2), 'addListener should return the instance to allow chaining.');
 		
-		equals([testFunction, testFunction2], ee.listeners('test6'), 'lisrsners should return an array containing both functions.');
+		equals(testFunction2, ee.listeners('test6')[1], 'lisrsners should return an array containing both functions.');
 		
 		equals(ee, ee.removeAllListeners('test6'), 'removeAllListeners should return the instance to allow chaining.');
 		
-		equals([], ee.listeners('test6'), 'lisrsners should return an empty array.');
+		equals(undefined, ee.listeners('test6')[0], 'listeners should return an empty array.');
 	});
 }());
