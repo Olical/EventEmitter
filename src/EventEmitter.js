@@ -47,7 +47,7 @@ function EventEmitter() {
 	/**
 	 * Emits the specified event running all listeners associated with it
 	 * 
-	 * @param {String} eventName Name of the event to assign the listener to
+	 * @param {String} eventName Name of the event to execute the listeners of
 	 * @param {Mixed} arguments You can pass as many arguments as you want after the event name. These will be passed to the listeners
 	 * @returns {Object} The current instance of EventEmitter to allow chaining
 	 */
@@ -67,6 +67,12 @@ function EventEmitter() {
 		return instance;
 	};
 	
+	/**
+	 * Returns an array of listeners for the specified event name
+	 * 
+	 * @param {String} eventName Name of the event to get the listeners for
+	 * @returns {Array} An array of listeners for the specified event
+	 */
 	instance.listeners = function(eventName) {
 		// Check if we currently have a listener array for the specified event
 		if(listeners[eventName]) {
