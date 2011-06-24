@@ -36,6 +36,15 @@ function EventEmitter() {
 	};
 	
 	/**
+	 * Assigns a listener to the specified event (alias for addListener)
+	 * 
+	 * @param {String} eventName Name of the event to assign the listener to
+	 * @param {Function} listener Function to be executed when the specified event is emitted
+	 * @returns {Object} The current instance of EventEmitter to allow chaining
+	 */
+	instance.on = instance.addListener;
+	
+	/**
 	 * Emits the specified event running all listeners associated with it
 	 * 
 	 * @param {String} eventName Name of the event to assign the listener to
