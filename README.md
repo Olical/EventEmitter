@@ -4,8 +4,6 @@ This script adds the EventEmitter class to your browser. It has the same API and
 
 So you can listen for and emit events from what ever objects you choose.
 
-It works exactly the same as the NodeJS version so head over to the [NodeJS docs](http://nodejs.org/docs/v0.4.5/api/events.html#events.EventEmitter) for details.
-
 ## Author
 
 [Oliver Caldwell](http://olivercaldwell.co.uk/).
