@@ -5,3 +5,7 @@
  * Dual licensed under the MIT or GPL Version 2 licenses.
  * https://github.com/Wolfy87/EventEmitter
  */
+
+function EventEmitter() {
+	
+}
