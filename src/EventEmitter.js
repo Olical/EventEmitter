@@ -54,6 +54,9 @@ function EventEmitter() {
 			listeners[eventName] = [listener];
 		}
 		
+		// Emit the new listener event
+		instance.emit('newListener', eventName, listener);
+		
 		// Return the instance to allow chaining
 		return instance;
 	};
