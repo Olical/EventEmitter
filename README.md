@@ -4,6 +4,62 @@ This script adds the EventEmitter class to your browser. It has the same API and
 
 So you can listen for and emit events from what ever objects you choose.
 
+## API
+
+### addListener(eventName, listener)
+
+Assigns a listener to the specified event
+
+ * param {String} eventName Name of the event to assign the listener to
+ * param {Function} listener Function to be executed when the specified event is emitted
+ * returns {Object} The current instance of EventEmitter to allow chaining
+
+### on(eventName, listener)
+
+Assigns a listener to the specified event (alias for addListener)
+
+ * param {String} eventName Name of the event to assign the listener to
+ * param {Function} listener Function to be executed when the specified event is emitted
+ * returns {Object} The current instance of EventEmitter to allow chaining
+
+### once(eventName, listener)
+
+Assigns a listener to the specified event removes its self after the first run
+
+ * param {String} eventName Name of the event to assign the listener to
+ * param {Function} listener Function to be executed when the specified event is emitted
+ * returns {Object} The current instance of EventEmitter to allow chaining
+
+### emit(eventName)
+
+Emits the specified event running all listeners associated with it
+
+ * param {String} eventName Name of the event to execute the listeners of
+ * param {Mixed} arguments You can pass as many arguments as you want after the event name. These will be passed to the listeners
+ * returns {Object} The current instance of EventEmitter to allow chaining
+
+### listeners(eventName)
+
+Returns an array of listeners for the specified event name
+
+ * param {String} eventName Name of the event to get the listeners for
+ * returns {Array} An array of listeners for the specified event
+
+## removeListener(eventName, listener)
+
+Removes the specified listener
+
+ * param {String} eventName Name of the event to remove the listener from
+ * param {Function} listener Listener function to be removed
+ * returns {Object} The current instance of EventEmitter to allow chaining
+
+## removeAllListeners(eventName)
+
+Removes all listeners from the specified event
+
+ * param {String} eventName Name of the event to remove the listeners from
+ * returns {Object} The current instance of EventEmitter to allow chaining
+
 ## Tests
 
 EventEmitter is tested and working in the following browsers.
