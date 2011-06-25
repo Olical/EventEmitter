@@ -1,8 +1,18 @@
 **Evented JavaScript for the browser**
 
-This script adds the EventEmitter class to your browser. It has the same API and functionality as the NodeJS implementation.
+This script adds the EventEmitter class to your browser.
 
 So you can listen for and emit events from what ever objects you choose.
+
+Version 2 deters from the NodeJS implementation slightly but it is lighter and faster.
+
+The main thing it lacks is the emitting of a warning when you create over 10 listeners for an event.
+
+## Known bugs
+
+I only know of one at the moment, you can not remove listeners assigned via `once`.
+
+If you find any more, please put them in the issues section.
 
 ## API
 
@@ -53,12 +63,18 @@ Removes the specified listener
  * param {Function} listener Listener function to be removed
  * returns {Object} The current instance of EventEmitter to allow chaining
 
-## removeAllListeners(eventName)
+### removeAllListeners(eventName)
 
 Removes all listeners from the specified event
 
  * param {String} eventName Name of the event to remove the listeners from
  * returns {Object} The current instance of EventEmitter to allow chaining
+
+### Event: 'newListener'
+
+Emitted whenever a new listener is added.
+
+Passes the event name and listener that triggered it to the listeners.
 
 ## Tests
 
