@@ -1,86 +1,116 @@
 **Evented JavaScript for the browser**
 
-This script adds the EventEmitter class to your browser. It has the same API and functionality as the NodeJS implementation.
+This script adds the EventEmitter class to your browser.
 
 So you can listen for and emit events from what ever objects you choose.
 
-It works exactly the same as the NodeJS version so head over to the [NodeJS docs](http://nodejs.org/docs/v0.4.5/api/events.html#events.EventEmitter) for the details.
+Version 2 deters from the NodeJS implementation slightly but it is lighter and faster.
 
-## Documentation
+The main thing it lacks is the emitting of a warning when you create over 10 listeners for an event.
 
-### Creating an EventEmitter object
+## Example
 
-This is simple, just include the script and create a new instance of the EventEmitter class like so.
+	// Initialise the EventEmitter
+	var ee = new EventEmitter();
+	
+	// Initialise the listener function
+	function myListener() {
+		console.log('The foo event was emitted.');
+	}
+	
+	// Add the listener
+	ee.addListener('foo', myListener);
+	
+	// Emit the foo event
+	ee.emit('foo'); // The listener function is now called
+	
+	// Remove the listener
+	ee.removeListener('foo', myListener);
+	
+	// Log the array of listeners to show that it has been removed
+	console.log(ee.listeners('foo'));
 
-    var myEmitter = new EventEmitter();
+## Known bugs
 
-Now the myEmitter object will have methods such as `emit` and `addListener`.
+I only know of one at the moment, you can not remove listeners assigned via `once`.
 
-### Adding a listener
+If you find any more, please put them in the issues section.
 
-This can be done in a few ways. You can use the `addListener` method or it's alias, the `on` method.
+## API
 
-This example uses the `addListener` method but you can swap it for `on` and it will make no difference.
+### addListener(eventName, listener)
 
-    myEmitter.addListener('message', show);
+Assigns a listener to the specified event
 
-This is assuming you have a function called `show` already defined. It assigns the `show` function to the `message` event.
+ * param {String} eventName Name of the event to assign the listener to
+ * param {Function} listener Function to be executed when the specified event is emitted
+ * returns {Object} The current instance of EventEmitter to allow chaining
 
-You can also use the `once` method to add a listener that will only be fired once. The syntax is the same as the previous methods.
+### on(eventName, listener)
 
-You can use wildcards within name spaced events like so.
+Assigns a listener to the specified event (alias for addListener)
 
-    myEmitter.addListener('foo.*.bar', show);
+ * param {String} eventName Name of the event to assign the listener to
+ * param {Function} listener Function to be executed when the specified event is emitted
+ * returns {Object} The current instance of EventEmitter to allow chaining
 
-This will then be fired every time an event that begins with `foo.` and ends with `.bar` is emitted.
+### once(eventName, listener)
 
-You can retrieve an array of listeners for a specified event with the `listeners` method.
+Assigns a listener to the specified event removes its self after the first run
 
-This will return an array of all listeners associated with the `message` event.
+ * param {String} eventName Name of the event to assign the listener to
+ * param {Function} listener Function to be executed when the specified event is emitted
+ * returns {Object} The current instance of EventEmitter to allow chaining
 
-    myEmitter.listeners('message');
+### emit(eventName)
 
-This method is chainable.
+Emits the specified event running all listeners associated with it
 
-### Removing a listener
+ * param {String} eventName Name of the event to execute the listeners of
+ * param {Mixed} arguments You can pass as many arguments as you want after the event name. These will be passed to the listeners
+ * returns {Object} The current instance of EventEmitter to allow chaining
 
-To remove a listener, use the `removeListener` method with the same arguments as you used to set it.
+### listeners(eventName)
 
-    myEmitter.removeListener('message', show);
+Returns an array of listeners for the specified event name
 
-You can also remove all listeners for a specified event, like so.
+ * param {String} eventName Name of the event to get the listeners for
+ * returns {Array} An array of listeners for the specified event
 
-    myEmitter.removeAllListeners('message');
+## removeListener(eventName, listener)
 
-This method is chainable.
+Removes the specified listener
 
-### Event limits
+ * param {String} eventName Name of the event to remove the listener from
+ * param {Function} listener Listener function to be removed
+ * returns {Object} The current instance of EventEmitter to allow chaining
 
-There is no hard limit as such, but after a certain amount a message will be posted to the console saying that you have exceeded the limit.
+### removeAllListeners(eventName)
 
-You can still add more, it just helps you to find bugs where it may be looping and adding too many listeners.
+Removes all listeners from the specified event
 
-The default limit is 10 listeners per event.
+ * param {String} eventName Name of the event to remove the listeners from
+ * returns {Object} The current instance of EventEmitter to allow chaining
 
-It does not restrict functionality at all.
+### Event: 'newListener'
 
-You can change the limit with the `setMaxListeners` method. For instance, this would set the limit to 20.
+Emitted whenever a new listener is added.
 
-    myEmitter.setMaxListeners(20);
+Passes the event name and listener that triggered it to the listeners.
 
-Setting it to 0 will disable this feature.
+## Tests
 
-This method is chainable.
+EventEmitter is tested and working in the following browsers.
 
-### Emitting events
+ * Chrome
+ * Firefox
+ * Safari
+ * Opera
+ * IE 5 - 9
 
-To emit an event to all the registered listeners you have to use the `emit` method.
+If you test it in something a little more obscure, please let me know how it turned out.
 
-This would emit the `message` event and pass two arguments to the listeners.
-
-    myEmitter.emit('message', 'arg1', 'arg2');
-
-You can have as many arguments as you want.
+To test, simply run `test.html` in the test folder.
 
 ## Author
 
