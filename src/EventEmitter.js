@@ -15,6 +15,23 @@ function EventEmitter() {
 		index = null;
 	
 	/**
+	 * Gets the index of a listener from an array
+	 */
+	function listenerIndex(stack, listener) {
+		// Loop over the stack
+		for(i = 0; i < stack.length; i += 1) {
+			// Check if the listeners match
+			if(stack[i] === listener) {
+				// It does, return the index
+				return i;
+			}
+		}
+		
+		// Default to returning -1
+		return -1;
+	}
+	
+	/**
 	 * Assigns a listener to the specified event
 	 * 
 	 * @param {String} eventName Name of the event to assign the listener to
@@ -121,7 +138,7 @@ function EventEmitter() {
 		// Check if we currently have a listener array for the specified event
 		if(listeners[eventName]) {
 			// We do, find the index of the listener
-			index = listeners[eventName].indexOf(listener);
+			index = listenerIndex(listeners[eventName], listener);
 			
 			// Make sure we found it
 			if(index !== -1) {
