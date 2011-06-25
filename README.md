@@ -4,6 +4,20 @@ This script adds the EventEmitter class to your browser. It has the same API and
 
 So you can listen for and emit events from what ever objects you choose.
 
+## Tests
+
+EventEmitter is tested and working in the following browsers.
+
+ * Chrome
+ * Firefox
+ * Safari
+ * Opera
+ * IE 5 - 9
+
+If you test it in something a little more obscure, please let me know how it turned out.
+
+To test, simply run `test.html` in the test folder.
+
 ## Author
 
 [Oliver Caldwell](http://olivercaldwell.co.uk/).
