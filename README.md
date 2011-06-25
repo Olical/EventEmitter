@@ -77,7 +77,7 @@ Returns an array of listeners for the specified event name
  * param {String} eventName Name of the event to get the listeners for
  * returns {Array} An array of listeners for the specified event
 
-## removeListener(eventName, listener)
+### removeListener(eventName, listener)
 
 Removes the specified listener
 
