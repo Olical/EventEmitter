@@ -8,6 +8,28 @@ Version 2 deters from the NodeJS implementation slightly but it is lighter and f
 
 The main thing it lacks is the emitting of a warning when you create over 10 listeners for an event.
 
+## Example
+
+	// Initialise the EventEmitter
+	var ee = new EventEmitter();
+	
+	// Initialise the listener function
+	function myListener() {
+		console.log('The foo event was emitted.');
+	}
+	
+	// Add the listener
+	ee.addListener('foo', myListener);
+	
+	// Emit the foo event
+	ee.emit('foo'); // The listener function is now called
+	
+	// Remove the listener
+	ee.removeListener('foo', myListener);
+	
+	// Log the array of listeners to show that it has been removed
+	console.log(ee.listeners('foo'));
+
 ## Known bugs
 
 I only know of one at the moment, you can not remove listeners assigned via `once`.
