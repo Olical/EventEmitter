@@ -84,4 +84,28 @@ function EventEmitter() {
 			return listeners[eventName] = [];
 		}
 	};
+	
+	/**
+	 * Assigns a listener to the specified event removes its self after the first run
+	 * 
+	 * @param {String} eventName Name of the event to assign the listener to
+	 * @param {Function} listener Function to be executed when the specified event is emitted
+	 * @returns {Object} The current instance of EventEmitter to allow chaining
+	 */
+	instance.once = function(eventName, listener) {
+		// Create the wrapper function
+		function wrapper() {
+			// Call the listener and pass down the arguments
+			listener.apply(null, arguments);
+			
+			// Remove the listener
+			instance.removeListener(eventName, wrapper);
+		}
+		
+		// Add the listener for the wrapper
+		instance.addListener(eventName, wrapper);
+		
+		// Return the instance to allow chaining
+		return instance;
+	};
 }
