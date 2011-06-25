@@ -11,7 +11,8 @@ function EventEmitter() {
 	var instance = this,
 		listeners = {},
 		i = null,
-		args = null;
+		args = null,
+		index = null;
 	
 	/**
 	 * Assigns a listener to the specified event
@@ -104,6 +105,34 @@ function EventEmitter() {
 		
 		// Add the listener for the wrapper
 		instance.addListener(eventName, wrapper);
+		
+		// Return the instance to allow chaining
+		return instance;
+	};
+	
+	/**
+	 * Removes the specified listener
+	 * 
+	 * @param {String} eventName Name of the event to remove the listener from
+	 * @param {Function} listener Listener function to be removed
+	 * @returns {Object} The current instance of EventEmitter to allow chaining
+	 */
+	instance.removeListener = function(eventName, listener) {
+		// Check if we currently have a listener array for the specified event
+		if(listeners[eventName]) {
+			// We do, find the index of the listener
+			index = listeners[eventName].indexOf(listener);
+			
+			// Make sure we found it
+			if(index !== -1) {
+				// Remove it
+				listeners[eventName].splice(index, 1);
+			}
+		}
+		else {
+			// We do not, create the empty listener array
+			listeners[eventName] = [];
+		}
 		
 		// Return the instance to allow chaining
 		return instance;
