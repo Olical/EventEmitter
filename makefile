@@ -19,4 +19,5 @@ compress:
 	@@echo 'Compressing JavaScript'
 	@@for file in ${source}; do\
 		java -jar build/compiler.jar --js $${file}.js --js_output_file $${file}.min.js;\
+		gzip -c9 $${file}.min.js > $${file}.min.js.gz;\
 	done;
