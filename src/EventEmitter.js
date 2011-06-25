@@ -137,4 +137,18 @@ function EventEmitter() {
 		// Return the instance to allow chaining
 		return instance;
 	};
+	
+	/**
+	 * Removes all listeners from the specified event
+	 * 
+	 * @param {String} eventName Name of the event to remove the listeners from
+	 * @returns {Object} The current instance of EventEmitter to allow chaining
+	 */
+	instance.removeAllListeners = function(eventName) {
+		// Replace the listener array with an empty array
+		listeners[eventName] = [];
+		
+		// Return the instance to allow chaining
+		return instance;
+	};
 }
