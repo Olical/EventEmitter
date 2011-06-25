@@ -18,6 +18,11 @@ function EventEmitter() {
 	 * Gets the index of a listener from an array
 	 */
 	function listenerIndex(stack, listener) {
+		// Use indexOf if we can
+		if(stack.indexOf) {
+			return stack.indexOf(listener);
+		}
+		
 		// Loop over the stack
 		for(i = 0; i < stack.length; i += 1) {
 			// Check if the listeners match
