@@ -104,7 +104,6 @@ function EventEmitter() {
 		if(!listeners[eventName]) {
 			// We do not, create the array
 			listeners[eventName] = [];
-			return listeners[eventName];
 		}
 		// Return it
 		return listeners[eventName];
