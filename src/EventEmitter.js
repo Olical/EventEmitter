@@ -7,6 +7,11 @@
  */
 
 function EventEmitter() {
+  // Holder for listener and scope
+  function Execution(context,listener){
+	  this.context = context;
+	  this.listener = listener;
+  }
 	// Put the instance in scope and initialise all required variables
 	var instance = this,
 		listeners = {},
@@ -17,16 +22,12 @@ function EventEmitter() {
 	/**
 	 * Gets the index of a listener from an array
 	 */
-	function listenerIndex(stack, listener) {
-		// Use indexOf if we can
-		if(stack.indexOf) {
-			return stack.indexOf(listener);
-		}
-		
+	function listenerIndex(stack, execution) {
 		// Loop over the stack
-		for(i = 0; i < stack.length; i += 1) {
+		for(var i = 0; i < stack.length; i += 1) {
 			// Check if the listeners match
-			if(stack[i] === listener) {
+			if(stack[i].listener === execution.listener &&
+					(!stack[i].scope) || (stack[i].scope === execution.scope)) {
 				// It does, return the index
 				return i;
 			}
@@ -43,20 +44,17 @@ function EventEmitter() {
 	 * @param {Function} listener Function to be executed when the specified event is emitted
 	 * @returns {Object} The current instance of EventEmitter to allow chaining
 	 */
-	instance.addListener = function(eventName, listener) {
+	instance.addListener = function(eventName, listener, scope) {
+		var execution = new Execution(scope,listener);
 		// Check if we currently have a listener array for the specified event
 		if(listeners[eventName]) {
 			// We do, push the listener onto the end
-			listeners[eventName].push(listener);
+			listeners[eventName].push(execution);
 		}
 		else {
 			// We do not, create it with our listener inside
-			listeners[eventName] = [listener];
-		}
-		
-		// Emit the new listener event
-		instance.emit('newListener', eventName, listener);
-		
+			listeners[eventName] = [execution];
+		}	
 		// Return the instance to allow chaining
 		return instance;
 	};
@@ -81,14 +79,15 @@ function EventEmitter() {
 		// Check if we currently have a listener array for the specified event
 		if(listeners[eventName]) {
 			// We do, get the arguments
-			args = Array.prototype.slice.call(arguments, 1);
-			
+			var args = Array.prototype.slice.call(arguments, 1);
 			// Loop over the listeners executing them
-			for(i = 0; i < listeners[eventName].length; i += 1) {
-				listeners[eventName][i].apply(null, args);
+			var size = listeners[eventName].length;
+			var copy = listeners[eventName].slice();
+			for(var i = 0; i < size; i++) {
+				var execution = copy[i];
+				execution.listener.apply(execution.context, args);
 			}
 		}
-		
 		// Return the instance to allow chaining
 		return instance;
 	};
@@ -119,19 +118,19 @@ function EventEmitter() {
 	 * @param {Function} listener Function to be executed when the specified event is emitted
 	 * @returns {Object} The current instance of EventEmitter to allow chaining
 	 */
-	instance.once = function(eventName, listener) {
+	instance.once = function(eventName, listener, scope) {
 		// Create the wrapper function
 		function wrapper() {
+			var args = Array.prototype.slice.call(arguments, 0);
 			// Call the listener and pass down the arguments
-			listener.apply(null, arguments);
-			
-			// Remove the listener
+			listener.apply(scope, args);
+		  	// Remove the listener
 			instance.removeListener(eventName, wrapper);
 		}
-		
+		wrapper.scope = scope;
+		wrapper.listener = listener;
 		// Add the listener for the wrapper
 		instance.addListener(eventName, wrapper);
-		
 		// Return the instance to allow chaining
 		return instance;
 	};
@@ -147,7 +146,7 @@ function EventEmitter() {
 		// Check if we currently have a listener array for the specified event
 		if(listeners[eventName]) {
 			// We do, find the index of the listener
-			index = listenerIndex(listeners[eventName], listener);
+			var index = listenerIndex(listeners[eventName], listener);
 			
 			// Make sure we found it
 			if(index !== -1) {
