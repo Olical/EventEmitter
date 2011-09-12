@@ -11,8 +11,7 @@ var src = require('fs').readFileSync(process.argv[2], 'utf8'),
 		immed: true,
 		noempty: true,
 		onevar: true,
-		plusplus: true,
-		undef: true
+		plusplus: true
 	});
 
 // Check for errors
