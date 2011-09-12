@@ -22,12 +22,22 @@ function EventEmitter() {
 		// Store arguments
 		instance.type = type;
 		instance.listener = listener;
+		instance.active = true;
+		instance.once = once;
 		
 		/**
 		 * Executes the listener
 		 */
 		instance.fire = function(args) {
-			this.listener.apply(scope || this, args);
+			// Only execute if the event is active
+			if(instance.active) {
+				this.listener.apply(scope || this, args);
+			}
+			
+			// Disable the event if this is a once only event
+			if(instance.once) {
+				instance.active = false;
+			}
 		};
 	};
 	
