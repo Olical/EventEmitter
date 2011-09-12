@@ -7,5 +7,27 @@
  */
 
 function EventEmitter() {
+	// Initialise variables
+	var listeners = {},
+		instance = this;
 	
+	/**
+	 * Event class
+	 * Contains Event methods and property storage
+	 */
+	instance.Event = function(type, listener, scope) {
+		// Initialise variables
+		var instance = this;
+		
+		// Store arguments
+		instance.type = type;
+		instance.listener = listener;
+		
+		/**
+		 * Executes the listener
+		 */
+		instance.fire = function(args) {
+			this.listener.apply(scope || this, args);
+		};
+	};
 }
