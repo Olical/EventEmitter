@@ -1,5 +1,5 @@
-default: combine validate compress
-develop: combine validate
+default: validate compress
+develop: validate
 
 validate:
 	@@echo 'Validating'
