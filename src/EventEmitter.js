@@ -15,7 +15,7 @@ function EventEmitter() {
 	 * Event class
 	 * Contains Event methods and property storage
 	 */
-	instance.Event = function(type, listener, once, scope) {
+	instance.Event = function(type, listener, scope, once) {
 		// Initialise variables
 		var instance = this;
 		
@@ -44,17 +44,17 @@ function EventEmitter() {
 	/**
 	 * Adds an event listener for the specified event
 	 */
-	instance.addListener = function(type, listener, once, scope) {
+	instance.addListener = function(type, listener, scope, once) {
 		// Create the listener array if it does not exist yet
 		if(!listeners.hasOwnProperty(type)) {
 			listeners[type] = [];
 		}
 		
 		// Push the new event to the array
-		listeners[type].push(new instance.Event(type, listener, once, scope));
+		listeners[type].push(new instance.Event(type, listener, scope, once));
 		
 		// Emit the new listener event
-		instance.emit('newListener', type, listener, once, scope);
+		instance.emit('newListener', type, listener, scope, once);
 		
 		// Return the instance to allow chaining
 		return instance;
@@ -64,4 +64,11 @@ function EventEmitter() {
 	 * Alias of the addListener method
 	 */
 	instance.on = instance.addListener;
+	
+	/**
+	 * Alias of the addListener method but will remove the event after the first use
+	 */
+	instance.once = function(type, listener, scope) {
+		instance.addListener(type, listener, scope, true);
+	};
 }
