@@ -30,4 +30,28 @@ function EventEmitter() {
 			this.listener.apply(scope || this, args);
 		};
 	};
+	
+	/**
+	 * Adds an event listener for the specified event
+	 */
+	instance.addListener = function(type, listener, scope) {
+		// Create the listener array if it does not exist yet
+		if(!listeners.hasOwnProperty(type)) {
+			listeners[type] = [];
+		}
+		
+		// Push the new event to the array
+		listeners[type].push(new instance.Event(type, listener, scope));
+		
+		// Emit the new listener event
+		instance.emit('newListener', type, listener, scope);
+		
+		// Return the instance to allow chaining
+		return instance;
+	};
+	
+	/**
+	 * Alias of the addListener method
+	 */
+	instance.on = instance.addListener;
 }
