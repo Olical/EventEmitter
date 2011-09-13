@@ -57,5 +57,15 @@
 		
 		ee.removeListener('testEvent', testListener2);
 		equal(ee.listeners('testEvent'), false, 'Retrieving any listeners (should be gone)');
+		
+		ee.addListener('removeAllTest', function() {
+			// Listener
+		});
+		ee.addListener('removeAllTest', function() {
+			// Another listener for the same event
+		});
+		equal(ee.listeners('removeAllTest')[1].type, 'removeAllTest', 'Check for a second removeAllTest listener');
+		ee.removeAllListeners('removeAllTest');
+		equal(ee.listeners('removeAllTest'), false, 'Retrieving any listeners from removeAllTest (should be gone)');
 	});
 }());
