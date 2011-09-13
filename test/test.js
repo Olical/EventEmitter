@@ -69,6 +69,24 @@
 		equal(ee.listeners('removeAllTest'), false, 'Retrieving any listeners from removeAllTest (should be gone)');
 	});
 	
+	test('Emitting events', function() {
+		var ee = new EventEmitter();
+		
+		ee.addListener('emittingTest', function() {
+			// Listener
+			ok(true, 'First called');
+		});
+		ee.addListener('emittingTest', function() {
+			// Another listener for the same event
+			ok(true, 'Second called');
+		});
+		ee.addListener('differentEvent', function() {
+			// Another listener for the same event
+			ok(false, 'Wrong event called');
+		});
+		ee.emit('emittingTest');
+	});
+	
 	test('Adding and calling a once event', function() {
 		var ee = new EventEmitter();
 		
