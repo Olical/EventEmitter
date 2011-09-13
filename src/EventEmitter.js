@@ -96,9 +96,9 @@ function EventEmitter() {
 	 * Removes the a listener for the specified event
 	 */
 	instance.removeListener = function(type, listener) {
-		instance.eachListener(type, function(listener) {
+		instance.eachListener(type, function(currentListener) {
 			// If this is the listener, disable it and break out
-			if(currentListener.listener === listener) {
+			if(currentListener.listener === currentListener) {
 				currentListener.active = false;
 				return false;
 			}
@@ -136,8 +136,8 @@ function EventEmitter() {
 	 * Emits an event executing all appropriate listeners
 	 */
 	instance.emit = function(type) {
-		instance.eachListener(type, function(listener) {
-			listener.fire(Array.prototype.slice.call(arguments, 1));
+		instance.eachListener(type, function(currentListener) {
+			currentListener.fire(Array.prototype.slice.call(arguments, 1));
 		});
 		
 		// Return the instance to allow chaining
