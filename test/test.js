@@ -68,4 +68,26 @@
 		ee.removeAllListeners('removeAllTest');
 		equal(ee.listeners('removeAllTest'), false, 'Retrieving any listeners from removeAllTest (should be gone)');
 	});
+	
+	test('Adding and calling a once event', function() {
+		var ee = new EventEmitter();
+		
+		function normalFunction() {
+			// Another listener for the same event but not a once event
+		}
+		
+		ee.once('onceTest', function() {
+			// Listener
+		});
+		ee.once('onceTest', function() {
+			// Another listener for the same event
+		});
+		ee.addListener('onceTest', normalFunction);
+		equal(ee.listeners('onceTest')[2].type, 'onceTest', 'Check for a third onceTest listener');
+		
+		// Emit the once test event
+		ee.emit('onceTest');
+		equal(ee.listeners('onceTest')[0].listener, normalFunction, 'There should only be one survivor, the normalFunction one');
+		equal(ee.listeners('onceTest')[2], undefined, 'And a second should be undefined');
+	});
 }());
