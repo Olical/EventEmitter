@@ -93,12 +93,13 @@ function EventEmitter() {
 		instance.eachListener(type, function(currentListener, index) {
 			// If this is the listener, disable it and break out
 			if(currentListener.listener === currentListener) {
-				listeners.splice(index, 1);
+				console.log(inde);
+				listeners[type].splice(index, 1);
 			}
 		});
 		
 		// Remove the property if there are no more listeners
-		if(!listeners[type].length) {
+		if(listeners[type] && listeners[type].length === 0) {
 			delete listeners[type];
 		}
 		
