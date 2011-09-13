@@ -33,6 +33,7 @@ function EventEmitter() {
 			// Remove the listener if this is a once only listener
 			if(eventInstance.once) {
 				instance.removeListener(type, listener);
+				return false;
 			}
 		};
 	};
@@ -50,7 +51,9 @@ function EventEmitter() {
 			possibleListeners = listeners[type];
 			
 			for(i = 0; i < possibleListeners.length; i += 1) {
-				callback.call(instance, possibleListeners[i], i);
+				if(callback.call(instance, possibleListeners[i], i) === false) {
+					i -= 1;
+				}
 			}
 		}
 	};
@@ -135,7 +138,7 @@ function EventEmitter() {
 	 */
 	instance.emit = function(type, args) {
 		instance.eachListener(type, function(currentListener) {
-			currentListener.fire(args);
+			return currentListener.fire(args);
 		});
 		
 		// Return the instance to allow chaining
