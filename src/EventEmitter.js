@@ -71,4 +71,13 @@ function EventEmitter() {
 	instance.once = function(type, listener, scope) {
 		instance.addListener(type, listener, scope, true);
 	};
+	
+	/**
+	 * Removes all listeners for a specified type
+	 */
+	instance.removeAllListeners = function(type) {
+		if(listeners.hasOwnProperty(type)) {
+			delete listeners[type];
+		}
+	};
 }
