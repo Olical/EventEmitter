@@ -146,6 +146,6 @@ function EventEmitter() {
 // Check for exports
 // If found, the class needs to be added to it
 // This allows server side JavaScript to use this script
-if(exports) {
+if(typeof exports !== 'undefined') {
 	exports.EventEmitter = EventEmitter;
 }
