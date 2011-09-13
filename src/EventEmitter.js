@@ -144,3 +144,10 @@ function EventEmitter() {
 		return instance;
 	};
 }
+
+// Check for exports
+// If found, the class needs to be added to it
+// This allows server side JavaScript to use this script
+if(exports) {
+	exports.EventEmitter = EventEmitter;
+}
