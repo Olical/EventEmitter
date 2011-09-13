@@ -73,11 +73,23 @@ function EventEmitter() {
 	};
 	
 	/**
-	 * Removes all listeners for a specified type
+	 * Removes all listeners for a specified event
 	 */
 	instance.removeAllListeners = function(type) {
 		if(listeners.hasOwnProperty(type)) {
 			delete listeners[type];
 		}
+	};
+	
+	/**
+	 * Retrives the array of listeners for a specified event
+	 */
+	instance.listeners = function(type) {
+		// Return the array of listeners of false if it does not exist
+		if(listeners.hasOwnProperty(type)) {
+			return listeners[type];
+		}
+		
+		return false;
 	};
 }
