@@ -97,6 +97,11 @@ function EventEmitter() {
 			}
 		});
 		
+		// Remove the property if there are no more listeners
+		if(!listeners[type].length) {
+			delete listeners[type];
+		}
+		
 		// Return the instance to allow chaining
 		return instance;
 	};
