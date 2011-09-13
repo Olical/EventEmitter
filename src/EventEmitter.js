@@ -17,26 +17,22 @@ function EventEmitter() {
 	 */
 	instance.Event = function(type, listener, scope, once) {
 		// Initialise variables
-		var instance = this;
+		var eventInstance = this;
 		
 		// Store arguments
-		instance.type = type;
-		instance.listener = listener;
-		instance.active = true;
-		instance.once = once;
+		eventInstance.type = type;
+		eventInstance.listener = listener;
+		eventInstance.once = once;
 		
 		/**
 		 * Executes the listener
 		 */
-		instance.fire = function(args) {
-			// Only execute if the event is active
-			if(instance.active) {
-				this.listener.apply(scope || this, args);
-			}
+		eventInstance.fire = function(args) {
+			this.listener.apply(scope || this, args);
 			
-			// Disable the event if this is a once only event
-			if(instance.once) {
-				instance.active = false;
+			// Remove the listener if this is a once only listener
+			if(eventInstance.once) {
+				instance.removeListener(type, listener);
 			}
 		};
 	};
