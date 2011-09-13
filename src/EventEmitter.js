@@ -122,4 +122,26 @@ function EventEmitter() {
 		
 		return false;
 	};
+	
+	/**
+	 * Emits an event executing all appropriate listeners
+	 */
+	instance.emit = function(type) {
+		// Initialise variables
+		var i = null,
+			possibleListeners = null,
+			currentListener = null;
+		
+		if(listeners.hasOwnProperty(type)) {
+			possibleListeners = listeners[type];
+			
+			for(i = 0; i < possibleListeners.length; i += 1) {
+				currentListener = possibleListeners[i];
+				currentListener.fire(Array.prototype.slice.call(arguments, 1));
+			}
+		}
+		
+		// Return the instance to allow chaining
+		return instance;
+	};
 }
