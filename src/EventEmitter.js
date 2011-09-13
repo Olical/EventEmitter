@@ -54,9 +54,7 @@ function EventEmitter() {
 			possibleListeners = listeners[type];
 			
 			for(i = 0; i < possibleListeners.length; i += 1) {
-				if(callback.call(instance, possibleListeners[i]) === false) {
-					break;
-				}
+				callback.call(instance, possibleListeners[i], i);
 			}
 		}
 	};
@@ -96,11 +94,10 @@ function EventEmitter() {
 	 * Removes the a listener for the specified event
 	 */
 	instance.removeListener = function(type, listener) {
-		instance.eachListener(type, function(currentListener) {
+		instance.eachListener(type, function(currentListener, index) {
 			// If this is the listener, disable it and break out
 			if(currentListener.listener === currentListener) {
-				currentListener.active = false;
-				return false;
+				listeners.splice(index, 1);
 			}
 		});
 		
