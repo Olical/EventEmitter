@@ -69,7 +69,7 @@ function EventEmitter() {
 	 * Alias of the addListener method but will remove the event after the first use
 	 */
 	instance.once = function(type, listener, scope) {
-		instance.addListener(type, listener, scope, true);
+		return instance.addListener(type, listener, scope, true);
 	};
 	
 	/**
@@ -94,6 +94,9 @@ function EventEmitter() {
 				}
 			}
 		}
+		
+		// Return the instance to allow chaining
+		return instance;
 	};
 	
 	/**
@@ -103,6 +106,9 @@ function EventEmitter() {
 		if(listeners.hasOwnProperty(type)) {
 			delete listeners[type];
 		}
+		
+		// Return the instance to allow chaining
+		return instance;
 	};
 	
 	/**
