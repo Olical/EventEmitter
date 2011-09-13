@@ -73,6 +73,30 @@ function EventEmitter() {
 	};
 	
 	/**
+	 * Removes the a listener for the specified event
+	 */
+	instance.removeListener = function(type, listener) {
+		// Initialise variables
+		var i = null,
+			possibleListeners = null,
+			currentListener = null;
+		
+		if(listeners.hasOwnProperty(type)) {
+			possibleListeners = listeners[type];
+			
+			for(i = 0; i < possibleListeners.length; i += 1) {
+				currentListener = possibleListeners[i];
+				
+				// If this is the listener, disable it and break out
+				if(currentListener.listener === listener) {
+					currentListener.active = false;
+					break;
+				}
+			}
+		}
+	};
+	
+	/**
 	 * Removes all listeners for a specified event
 	 */
 	instance.removeAllListeners = function(type) {
