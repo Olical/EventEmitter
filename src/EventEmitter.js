@@ -135,9 +135,9 @@ function EventEmitter() {
 	/**
 	 * Emits an event executing all appropriate listeners
 	 */
-	instance.emit = function(type) {
+	instance.emit = function(type, args) {
 		instance.eachListener(type, function(currentListener) {
-			currentListener.fire(Array.prototype.slice.call(arguments, 1));
+			currentListener.fire(args);
 		});
 		
 		// Return the instance to allow chaining
