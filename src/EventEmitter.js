@@ -24,7 +24,9 @@ function EventEmitter() {
 			possibleListeners = listeners[type];
 			
 			for(i = 0; i < possibleListeners.length; i += 1) {
-				callback.call(instance, possibleListeners[i]);
+				if(callback.call(instance, possibleListeners[i]) === false) {
+					break;
+				}
 			}
 		}
 	};
@@ -94,24 +96,13 @@ function EventEmitter() {
 	 * Removes the a listener for the specified event
 	 */
 	instance.removeListener = function(type, listener) {
-		// Initialise variables
-		var i = null,
-			possibleListeners = null,
-			currentListener = null;
-		
-		if(listeners.hasOwnProperty(type)) {
-			possibleListeners = listeners[type];
-			
-			for(i = 0; i < possibleListeners.length; i += 1) {
-				currentListener = possibleListeners[i];
-				
-				// If this is the listener, disable it and break out
-				if(currentListener.listener === listener) {
-					currentListener.active = false;
-					break;
-				}
+		instance.eachListener(type, function(listener) {
+			// If this is the listener, disable it and break out
+			if(currentListener.listener === listener) {
+				currentListener.active = false;
+				return false;
 			}
-		}
+		});
 		
 		// Return the instance to allow chaining
 		return instance;
@@ -145,19 +136,9 @@ function EventEmitter() {
 	 * Emits an event executing all appropriate listeners
 	 */
 	instance.emit = function(type) {
-		// Initialise variables
-		var i = null,
-			possibleListeners = null,
-			currentListener = null;
-		
-		if(listeners.hasOwnProperty(type)) {
-			possibleListeners = listeners[type];
-			
-			for(i = 0; i < possibleListeners.length; i += 1) {
-				currentListener = possibleListeners[i];
-				currentListener.fire(Array.prototype.slice.call(arguments, 1));
-			}
-		}
+		instance.eachListener(type, function(listener) {
+			listener.fire(Array.prototype.slice.call(arguments, 1));
+		});
 		
 		// Return the instance to allow chaining
 		return instance;
