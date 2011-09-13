@@ -12,6 +12,24 @@ function EventEmitter() {
 		instance = this;
 	
 	/**
+	 * Passes every listener for a specified event to a function one at a time
+	 */
+	instance.eachListener = function(type, callback) {
+		// Initialise variables
+		var i = null,
+			possibleListeners = null;
+		
+		// Only loop if the type exists
+		if(listeners.hasOwnProperty(type)) {
+			possibleListeners = listeners[type];
+			
+			for(i = 0; i < possibleListeners.length; i += 1) {
+				callback.call(instance, possibleListeners[i]);
+			}
+		}
+	};
+	
+	/**
 	 * Event class
 	 * Contains Event methods and property storage
 	 */
