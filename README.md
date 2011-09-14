@@ -4,9 +4,7 @@ This script adds the EventEmitter class to your browser.
 
 So you can listen for and emit events from what ever objects you choose.
 
-Version 2 deters from the NodeJS implementation slightly but it is lighter and faster.
-
-The main thing it lacks is the emitting of a warning when you create over 10 listeners for an event.
+EventEmitter deters from the NodeJS implementation slightly but it is lighter and faster.
 
 ## Example
 
