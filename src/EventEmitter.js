@@ -28,7 +28,7 @@ function EventEmitter() {
 		 * Executes the listener
 		 */
 		eventInstance.fire = function(args) {
-			listener.apply(scope || eventInstance, args);
+			listener.apply(scope || eventInstance, args || []);
 			
 			// Remove the listener if this is a once only listener
 			if(eventInstance.once) {
