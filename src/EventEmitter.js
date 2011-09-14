@@ -156,7 +156,7 @@ function EventEmitter() {
 	};
 	
 	/**
-	 * Retrives the array of listeners for a specified event
+	 * Retrieves the array of listeners for a specified event
 	 * 
 	 * @param {String} type Event type name to return all listeners from
 	 * @return {Array | Boolean} Will return either an array of listeners or false if there are none
