@@ -3,101 +3,125 @@
  */
 
 (function() {
-	var ee = new EventEmitter();
-	
-	test('Adding a listener', function() {
-		equals(ee, ee.addListener('test1', function() {
-			return true;
-		}), 'addListener should return the instance to allow chaining.');
+	test('Adding and retrieving listeners', function() {
+		var ee = new EventEmitter();
 		
-		equals(ee, ee.addListener(10, function() {
-			return true;
-		}), 'addListener should return the instance to allow chaining.');
+		equal(ee.listeners('testEvent'), false, 'Checking for any listeners');
+		
+		ee.addListener('testEvent', function() {
+			// Listener
+		});
+		equal(ee.listeners('testEvent')[0].type, 'testEvent', 'Retrieving the first listener');
+		
+		ee.addListener('testEvent', function() {
+			// Another listener for the same event
+		});
+		equal(ee.listeners('testEvent')[1].type, 'testEvent', 'Retrieving the second listener');
+		
+		ee.addListener('anotherTestEvent', function() {
+			// Listener for new event
+		});
+		equal(ee.listeners('anotherTestEvent')[0].type, 'anotherTestEvent', 'Retrieving the first listener for a different event');
+		
+		ee.addListener('anotherTestEvent', function() {
+			// Another listener for new event
+		});
+		equal(ee.listeners('anotherTestEvent')[1].type, 'anotherTestEvent', 'Retrieving the second listener for a different event');
+		
+		ee.addListener('onTest', function() {
+			// Listener via the alias
+		});
+		equal(ee.listeners('onTest')[0].type, 'onTest', 'Retrieving the first listener for a different event added via the on alias');
 	});
 	
-	test('Emitting an event', function() {
-		var checkThis = false,
-			argsTest = null;
+	test('Removing listeners', function() {
+		var ee = new EventEmitter();
 		
-		equals(ee, ee.addListener('test2', function() {
-			checkThis = true;
-		}), 'addListener should return the instance to allow chaining.');
-		equals(ee, ee.emit('test2'), 'emit should return the instance to allow chaining.');
-		equals(true, checkThis, 'checkThis should equal true.');
+		function testListener() {
+			// Listener
+		}
 		
-		equals(ee, ee.addListener('test2.1', function(bool, number, string) {
-			argsTest = [bool, number, string];
-		}), 'addListener should return the instance to allow chaining.');
-		equals(ee, ee.emit('test2.1', true, 10, 'test'), 'emit should return the instance to allow chaining.');
-		equals('test', argsTest[2], 'argsTest should equal the specified array.');
+		function testListener2() {
+			// Listener 2
+		}
+		
+		ee.addListener('testEvent', testListener);
+		equal(ee.listeners('testEvent')[0].type, 'testEvent', 'Retrieving the first listener');
+		
+		ee.addListener('testEvent', testListener2);
+		equal(ee.listeners('testEvent')[1].type, 'testEvent', 'Retrieving the second listener');
+		
+		ee.removeListener('testEvent', testListener);
+		equal(ee.listeners('testEvent')[1], undefined, 'Retrieving the second listener (should be gone)');
+		equal(ee.listeners('testEvent')[0].listener, testListener2, 'First should now be the second');
+		
+		ee.removeListener('testEvent', testListener2);
+		equal(ee.listeners('testEvent'), false, 'Retrieving any listeners (should be gone)');
+		
+		ee.addListener('removeAllTest', function() {
+			// Listener
+		});
+		ee.addListener('removeAllTest', function() {
+			// Another listener for the same event
+		});
+		equal(ee.listeners('removeAllTest')[1].type, 'removeAllTest', 'Check for a second removeAllTest listener');
+		ee.removeAllListeners('removeAllTest');
+		equal(ee.listeners('removeAllTest'), false, 'Retrieving any listeners from removeAllTest (should be gone)');
 	});
 	
-	test('Adding a listener that will only run once', function() {
-		var checkThis = 0;
+	test('Emitting events', function() {
+		var ee = new EventEmitter();
 		
-		equals(ee, ee.once('test3', function() {
-			checkThis += 1;
-		}), 'once should return the instance to allow chaining.');
-		equals(ee, ee.emit('test3'), 'emit should return the instance to allow chaining.');
-		ee.emit('test3');
-		ee.emit('test3');
-		ee.emit('test3');
-		equals(1, checkThis, 'checkThis should equal 1 after multiple emittions.');
+		ee.addListener('emittingTest', function() {
+			// Listener
+			ok(true, 'First called');
+		});
+		ee.addListener('emittingTest', function() {
+			// Another listener for the same event
+			ok(true, 'Second called');
+		});
+		ee.addListener('differentEvent', function() {
+			// Another listener for the same event
+			ok(false, 'Wrong event called');
+		});
+		ee.emit('emittingTest');
 	});
 	
-	test('Removing a listener', function() {
-		var checkThis = false;
+	test('Adding and calling a once event', function() {
+		var ee = new EventEmitter();
 		
-		function testFunction() {
-			checkThis = true;
+		function normalFunction() {
+			// Another listener for the same event but not a once event
 		}
 		
-		equals(ee, ee.addListener('test4', testFunction), 'addListener should return the instance to allow chaining.');
-		equals(ee, ee.addListener('test4.1', testFunction), 'addListener should return the instance to allow chaining.');
-		equals(ee, ee.removeListener('test4', testFunction), 'removeListener should return the instance to allow chaining.');
-		equals(ee, ee.emit('test4'), 'emit should return the instance to allow chaining.');
-		equals(false, checkThis, 'checkThis should equal false because the listener has been removed.');
+		ee.once('onceTest', function() {
+			// Listener
+		});
+		ee.once('onceTest', function() {
+			// Another listener for the same event
+		});
+		ee.addListener('onceTest', normalFunction);
+		equal(ee.listeners('onceTest')[2].type, 'onceTest', 'Check for a third onceTest listener');
 		
-		equals(ee, ee.emit('test4.1'), 'emit should return the instance to allow chaining.');
-		equals(true, checkThis, 'checkThis should equal true because the other listener should still exist.');
+		// Emit the once test event
+		ee.emit('onceTest');
+		equal(ee.listeners('onceTest')[0].listener, normalFunction, 'There should only be one survivor, the normalFunction one');
+		equal(ee.listeners('onceTest')[2], undefined, 'And a second should be undefined');
 	});
 	
-	test('Removing all listeners', function() {
-		var checkThis = false;
+	test('Passing arguments to listeners', function() {
+		var ee = new EventEmitter();
 		
-		function testFunction() {
-			checkThis = true;
-		}
+		ee.addListener('argTest', function(aBool) {
+			equal(aBool, true, 'Passing of a boolean that equals true');
+		});
 		
-		function testFunction2() {
-			checkThis = true;
-		}
+		ee.addListener('argTest2', function(aString, aBool) {
+			equal(aString, 'foo', 'Passing of a string');
+			equal(aBool, true, 'Passing of a boolean that equals true as the second argument');
+		});
 		
-		equals(ee, ee.addListener('test5', testFunction), 'addListener should return the instance to allow chaining.');
-		equals(ee, ee.addListener('test5', testFunction2), 'addListener should return the instance to allow chaining.');
-		
-		equals(ee, ee.removeAllListeners('test5'), 'removeAllListeners should return the instance to allow chaining.');
-		
-		equals(ee, ee.emit('test5'), 'emit should return the instance to allow chaining.');
-		equals(false, checkThis, 'checkThis should equal false because the listener has been removed.');
-	});
-	
-	test('List all listeners', function() {
-		function testFunction() {
-			return true;
-		}
-		
-		function testFunction2() {
-			return true;
-		}
-		
-		equals(ee, ee.addListener('test6', testFunction), 'addListener should return the instance to allow chaining.');
-		equals(ee, ee.addListener('test6', testFunction2), 'addListener should return the instance to allow chaining.');
-		
-		equals(testFunction2, ee.listeners('test6')[1], 'lisrsners should return an array containing both functions.');
-		
-		equals(ee, ee.removeAllListeners('test6'), 'removeAllListeners should return the instance to allow chaining.');
-		
-		equals(undefined, ee.listeners('test6')[0], 'listeners should return an empty array.');
+		ee.emit('argTest', [true]);
+		ee.emit('argTest2', ['foo', true]);
 	});
 }());

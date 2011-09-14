@@ -1,5 +1,5 @@
 /**
- * @preserve EventEmitter v2.0.0
+ * @preserve EventEmitter v3.0.0
  * 
  * Copyright 2011, Oliver Caldwell (olivercaldwell.co.uk)
  * Dual licensed under the MIT or GPL Version 2 licenses.
@@ -7,86 +7,133 @@
  */
 
 function EventEmitter() {
-	// Put the instance in scope and initialise all required variables
-	var instance = this,
-		listeners = {},
-		i = null,
-		args = null,
-		index = null;
+	// Initialise variables
+	var listeners = {},
+		instance = this;
 	
 	/**
-	 * Gets the index of a listener from an array
+	 * Event class
+	 * Contains Event methods and property storage
+	 * 
+	 * @param {String} type Event type name
+	 * @param {Function} listener Function to be called when the event is fired
+	 * @param {Object} scope Object that this should be set to when the listener is called
+	 * @param {Boolean} once If true then the listener will be removed after the first call
 	 */
-	function listenerIndex(stack, listener) {
-		// Use indexOf if we can
-		if(stack.indexOf) {
-			return stack.indexOf(listener);
-		}
+	instance.Event = function(type, listener, scope, once) {
+		// Initialise variables
+		var eventInstance = this;
 		
-		// Loop over the stack
-		for(i = 0; i < stack.length; i += 1) {
-			// Check if the listeners match
-			if(stack[i] === listener) {
-				// It does, return the index
-				return i;
+		// Store arguments
+		eventInstance.type = type;
+		eventInstance.listener = listener;
+		eventInstance.once = once;
+		
+		/**
+		 * Executes the listener
+		 * 
+		 * @param {Array} args List of arguments to pass to the listener
+		 * @return {Boolean} If false then it was a once event
+		 */
+		eventInstance.fire = function(args) {
+			listener.apply(scope || eventInstance, args || []);
+			
+			// Remove the listener if this is a once only listener
+			if(eventInstance.once) {
+				instance.removeListener(type, listener);
+				return false;
+			}
+		};
+	};
+	
+	/**
+	 * Passes every listener for a specified event to a function one at a time
+	 * 
+	 * @param {String} type Event type name
+	 * @param {Function} callback Function to pass each listener to
+	 */
+	instance.eachListener = function(type, callback) {
+		// Initialise variables
+		var i = null,
+			possibleListeners = null;
+		
+		// Only loop if the type exists
+		if(listeners.hasOwnProperty(type)) {
+			possibleListeners = listeners[type];
+			
+			for(i = 0; i < possibleListeners.length; i += 1) {
+				if(callback.call(instance, possibleListeners[i], i) === false) {
+					i -= 1;
+				}
 			}
 		}
-		
-		// Default to returning -1
-		return -1;
-	}
+	};
 	
 	/**
-	 * Assigns a listener to the specified event
+	 * Adds an event listener for the specified event
 	 * 
-	 * @param {String} eventName Name of the event to assign the listener to
-	 * @param {Function} listener Function to be executed when the specified event is emitted
-	 * @returns {Object} The current instance of EventEmitter to allow chaining
+	 * @param {String} type Event type name
+	 * @param {Function} listener Function to be called when the event is fired
+	 * @param {Object} scope Object that this should be set to when the listener is called
+	 * @param {Boolean} once If true then the listener will be removed after the first call
+	 * @return {Object} The current EventEmitter instance to allow chaining
 	 */
-	instance.addListener = function(eventName, listener) {
-		// Check if we currently have a listener array for the specified event
-		if(listeners[eventName]) {
-			// We do, push the listener onto the end
-			listeners[eventName].push(listener);
-		}
-		else {
-			// We do not, create it with our listener inside
-			listeners[eventName] = [listener];
+	instance.addListener = function(type, listener, scope, once) {
+		// Create the listener array if it does not exist yet
+		if(!listeners.hasOwnProperty(type)) {
+			listeners[type] = [];
 		}
 		
+		// Push the new event to the array
+		listeners[type].push(new instance.Event(type, listener, scope, once));
+		
 		// Emit the new listener event
-		instance.emit('newListener', eventName, listener);
+		instance.emit('newListener', type, listener, scope, once);
 		
 		// Return the instance to allow chaining
 		return instance;
 	};
 	
 	/**
-	 * Assigns a listener to the specified event (alias for addListener)
+	 * Alias of the addListener method
 	 * 
-	 * @param {String} eventName Name of the event to assign the listener to
-	 * @param {Function} listener Function to be executed when the specified event is emitted
-	 * @returns {Object} The current instance of EventEmitter to allow chaining
+	 * @param {String} type Event type name
+	 * @param {Function} listener Function to be called when the event is fired
+	 * @param {Object} scope Object that this should be set to when the listener is called
+	 * @param {Boolean} once If true then the listener will be removed after the first call
 	 */
 	instance.on = instance.addListener;
 	
 	/**
-	 * Emits the specified event running all listeners associated with it
+	 * Alias of the addListener method but will remove the event after the first use
 	 * 
-	 * @param {String} eventName Name of the event to execute the listeners of
-	 * @param {Mixed} arguments You can pass as many arguments as you want after the event name. These will be passed to the listeners
-	 * @returns {Object} The current instance of EventEmitter to allow chaining
+	 * @param {String} type Event type name
+	 * @param {Function} listener Function to be called when the event is fired
+	 * @param {Object} scope Object that this should be set to when the listener is called
+	 * @return {Object} The current EventEmitter instance to allow chaining
 	 */
-	instance.emit = function(eventName) {
-		// Check if we currently have a listener array for the specified event
-		if(listeners[eventName]) {
-			// We do, get the arguments
-			args = Array.prototype.slice.call(arguments, 1);
-			
-			// Loop over the listeners executing them
-			for(i = 0; i < listeners[eventName].length; i += 1) {
-				listeners[eventName][i].apply(null, args);
+	instance.once = function(type, listener, scope) {
+		return instance.addListener(type, listener, scope, true);
+	};
+	
+	/**
+	 * Removes the a listener for the specified event
+	 * 
+	 * @param {String} type Event type name the listener must have for the event to be removed
+	 * @param {Function} listener Listener the event must have to be removed
+	 * @return {Object} The current EventEmitter instance to allow chaining
+	 */
+	instance.removeListener = function(type, listener) {
+		instance.eachListener(type, function(currentListener, index) {
+			// If this is the listener, disable it and break out
+			if(currentListener.listener === listener) {
+				listeners[type].splice(index, 1);
 			}
+		});
+		
+		// Remove the property if there are no more listeners
+		if(listeners[type] && listeners[type].length === 0) {
+			delete listeners[type];
 		}
 		
 		// Return the instance to allow chaining
@@ -94,70 +141,14 @@ function EventEmitter() {
 	};
 	
 	/**
-	 * Returns an array of listeners for the specified event name
+	 * Removes all listeners for a specified event
 	 * 
-	 * @param {String} eventName Name of the event to get the listeners for
-	 * @returns {Array} An array of listeners for the specified event
+	 * @param {String} type Event type name to remove all listeners from
+	 * @return {Object} The current EventEmitter instance to allow chaining
 	 */
-	instance.listeners = function(eventName) {
-		// Check if we currently have a listener array for the specified event
-		if(listeners[eventName]) {
-			// We do, return it
-			return listeners[eventName];
-		}
-		else {
-			// We do not, create the array and return it
-			listeners[eventName] = [];
-			return listeners[eventName];
-		}
-	};
-	
-	/**
-	 * Assigns a listener to the specified event removes its self after the first run
-	 * 
-	 * @param {String} eventName Name of the event to assign the listener to
-	 * @param {Function} listener Function to be executed when the specified event is emitted
-	 * @returns {Object} The current instance of EventEmitter to allow chaining
-	 */
-	instance.once = function(eventName, listener) {
-		// Create the wrapper function
-		function wrapper() {
-			// Call the listener and pass down the arguments
-			listener.apply(null, arguments);
-			
-			// Remove the listener
-			instance.removeListener(eventName, wrapper);
-		}
-		
-		// Add the listener for the wrapper
-		instance.addListener(eventName, wrapper);
-		
-		// Return the instance to allow chaining
-		return instance;
-	};
-	
-	/**
-	 * Removes the specified listener
-	 * 
-	 * @param {String} eventName Name of the event to remove the listener from
-	 * @param {Function} listener Listener function to be removed
-	 * @returns {Object} The current instance of EventEmitter to allow chaining
-	 */
-	instance.removeListener = function(eventName, listener) {
-		// Check if we currently have a listener array for the specified event
-		if(listeners[eventName]) {
-			// We do, find the index of the listener
-			index = listenerIndex(listeners[eventName], listener);
-			
-			// Make sure we found it
-			if(index !== -1) {
-				// Remove it
-				listeners[eventName].splice(index, 1);
-			}
-		}
-		else {
-			// We do not, create the empty listener array
-			listeners[eventName] = [];
+	instance.removeAllListeners = function(type) {
+		if(listeners.hasOwnProperty(type)) {
+			delete listeners[type];
 		}
 		
 		// Return the instance to allow chaining
@@ -165,16 +156,40 @@ function EventEmitter() {
 	};
 	
 	/**
-	 * Removes all listeners from the specified event
+	 * Retrieves the array of listeners for a specified event
 	 * 
-	 * @param {String} eventName Name of the event to remove the listeners from
-	 * @returns {Object} The current instance of EventEmitter to allow chaining
+	 * @param {String} type Event type name to return all listeners from
+	 * @return {Array | Boolean} Will return either an array of listeners or false if there are none
 	 */
-	instance.removeAllListeners = function(eventName) {
-		// Replace the listener array with an empty array
-		listeners[eventName] = [];
+	instance.listeners = function(type) {
+		// Return the array of listeners of false if it does not exist
+		if(listeners.hasOwnProperty(type)) {
+			return listeners[type];
+		}
+		
+		return false;
+	};
+	
+	/**
+	 * Emits an event executing all appropriate listeners
+	 * 
+	 * @param {String} type Event type name to run all listeners from
+	 * @param {Array} args List of arguments to pass to the listener
+	 * @return {Object} The current EventEmitter instance to allow chaining
+	 */
+	instance.emit = function(type, args) {
+		instance.eachListener(type, function(currentListener) {
+			return currentListener.fire(args);
+		});
 		
 		// Return the instance to allow chaining
 		return instance;
 	};
+}
+
+// Check for exports
+// If found, the class needs to be added to it
+// This allows server side JavaScript to use this script
+if(typeof exports !== 'undefined') {
+	exports.EventEmitter = EventEmitter;
 }

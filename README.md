@@ -4,9 +4,7 @@ This script adds the EventEmitter class to your browser.
 
 So you can listen for and emit events from what ever objects you choose.
 
-Version 2 deters from the NodeJS implementation slightly but it is lighter and faster.
-
-The main thing it lacks is the emitting of a warning when you create over 10 listeners for an event.
+EventEmitter deters from the NodeJS implementation slightly but it is lighter and faster.
 
 ## Example
 
@@ -30,73 +28,20 @@ The main thing it lacks is the emitting of a warning when you create over 10 lis
 	// Log the array of listeners to show that it has been removed
 	console.log(ee.listeners('foo'));
 
-## Known bugs
-
-I only know of one at the moment, you can not remove listeners assigned via `once`.
-
-If you find any more, please put them in the issues section.
-
 ## API
 
-### addListener(eventName, listener)
+This is just the method list for the API. For in-depth argument documentation please check the source. Every method has a JSDoc comment block that explains every aspect of the method.
 
-Assigns a listener to the specified event
-
- * param {String} eventName Name of the event to assign the listener to
- * param {Function} listener Function to be executed when the specified event is emitted
- * returns {Object} The current instance of EventEmitter to allow chaining
-
-### on(eventName, listener)
-
-Assigns a listener to the specified event (alias for addListener)
-
- * param {String} eventName Name of the event to assign the listener to
- * param {Function} listener Function to be executed when the specified event is emitted
- * returns {Object} The current instance of EventEmitter to allow chaining
-
-### once(eventName, listener)
-
-Assigns a listener to the specified event removes its self after the first run
-
- * param {String} eventName Name of the event to assign the listener to
- * param {Function} listener Function to be executed when the specified event is emitted
- * returns {Object} The current instance of EventEmitter to allow chaining
-
-### emit(eventName)
-
-Emits the specified event running all listeners associated with it
-
- * param {String} eventName Name of the event to execute the listeners of
- * param {Mixed} arguments You can pass as many arguments as you want after the event name. These will be passed to the listeners
- * returns {Object} The current instance of EventEmitter to allow chaining
-
-### listeners(eventName)
-
-Returns an array of listeners for the specified event name
-
- * param {String} eventName Name of the event to get the listeners for
- * returns {Array} An array of listeners for the specified event
-
-### removeListener(eventName, listener)
-
-Removes the specified listener
-
- * param {String} eventName Name of the event to remove the listener from
- * param {Function} listener Listener function to be removed
- * returns {Object} The current instance of EventEmitter to allow chaining
-
-### removeAllListeners(eventName)
-
-Removes all listeners from the specified event
-
- * param {String} eventName Name of the event to remove the listeners from
- * returns {Object} The current instance of EventEmitter to allow chaining
-
-### Event: 'newListener'
-
-Emitted whenever a new listener is added.
-
-Passes the event name and listener that triggered it to the listeners.
+ * EventEmitter.Event(type, listener, scope, once) - Event class, used internally for listener managing.
+   * EventEmitter.Event.fire(args) - Calls the events listener with the specified array of arguments.
+ * EventEmitter.eachListener(type, callback) - Loops over every listener for an event passing them to the callback.
+ * EventEmitter.addListener(type, listener, scope, once) - Adds an event listener for the specified event.
+ * EventEmitter.on(type, listener, scope, once) - Alias of the addListener method.
+ * EventEmitter.once(type, listener, scope) - Alias of the addListener method but will remove the event after the first use.
+ * EventEmitter.removeListener(type, listener) - Removes the a listener for the specified event.
+ * EventEmitter.removeAllListeners(type) - Removes all listeners for a specified event.
+ * EventEmitter.listeners(type) - Retrieves the array of listeners for a specified event.
+ * EventEmitter.emit(type, args) - Emits an event executing all appropriate listeners.
 
 ## Tests
 
@@ -114,7 +59,7 @@ To test, simply run `test.html` in the test folder.
 
 ## Author
 
-[Oliver Caldwell](http://olivercaldwell.co.uk/).
+EventEmitter was written by [Oliver Caldwell](http://olivercaldwell.co.uk/).
 
 ## Licences
 

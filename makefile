@@ -1,23 +1,10 @@
-# Set the source directory
-src = src/
-
-# Set up the list of source files
-source = ${src}EventEmitter
-
-# Set up default list
 default: validate compress
+develop: validate
 
-# Validate JavaScript
 validate:
-	@@echo 'Validating JavaScript'
-	@@for file in ${source}; do\
-		node build/validate.js $${file}.js;\
-	done;
+	@@echo 'Validating'
+	@@node build/validate.js src/EventEmitter.js
 
-# Compress JavaScript
 compress:
-	@@echo 'Compressing JavaScript'
-	@@for file in ${source}; do\
-		java -jar build/compiler.jar --js $${file}.js --js_output_file $${file}.min.js;\
-		gzip -c9 $${file}.min.js > $${file}.min.js.gz;\
-	done;
+	@@echo 'Compressing'
+	@@java -jar build/compiler.jar --js src/EventEmitter.js --js_output_file src/EventEmitter.min.js
