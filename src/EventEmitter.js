@@ -14,6 +14,11 @@ function EventEmitter() {
 	/**
 	 * Event class
 	 * Contains Event methods and property storage
+	 * 
+	 * @param {String} type Event type name
+	 * @param {Function} listener Function to be called when the event is fired
+	 * @param {Object} scope Object that this should be set to when the listener is called
+	 * @param {Boolean} once If true then the listener will be removed after the first call
 	 */
 	instance.Event = function(type, listener, scope, once) {
 		// Initialise variables
@@ -26,6 +31,9 @@ function EventEmitter() {
 		
 		/**
 		 * Executes the listener
+		 * 
+		 * @param {Array} args List of arguments to pass to the listener
+		 * @return {Boolean} If false then it was a once event
 		 */
 		eventInstance.fire = function(args) {
 			listener.apply(scope || eventInstance, args || []);
@@ -40,6 +48,9 @@ function EventEmitter() {
 	
 	/**
 	 * Passes every listener for a specified event to a function one at a time
+	 * 
+	 * @param {String} type Event type name
+	 * @param {Function} callback Function to pass each listener to
 	 */
 	instance.eachListener = function(type, callback) {
 		// Initialise variables
@@ -60,6 +71,12 @@ function EventEmitter() {
 	
 	/**
 	 * Adds an event listener for the specified event
+	 * 
+	 * @param {String} type Event type name
+	 * @param {Function} listener Function to be called when the event is fired
+	 * @param {Object} scope Object that this should be set to when the listener is called
+	 * @param {Boolean} once If true then the listener will be removed after the first call
+	 * @return {Object} The current EventEmitter instance to allow chaining
 	 */
 	instance.addListener = function(type, listener, scope, once) {
 		// Create the listener array if it does not exist yet
@@ -79,11 +96,21 @@ function EventEmitter() {
 	
 	/**
 	 * Alias of the addListener method
+	 * 
+	 * @param {String} type Event type name
+	 * @param {Function} listener Function to be called when the event is fired
+	 * @param {Object} scope Object that this should be set to when the listener is called
+	 * @param {Boolean} once If true then the listener will be removed after the first call
 	 */
 	instance.on = instance.addListener;
 	
 	/**
 	 * Alias of the addListener method but will remove the event after the first use
+	 * 
+	 * @param {String} type Event type name
+	 * @param {Function} listener Function to be called when the event is fired
+	 * @param {Object} scope Object that this should be set to when the listener is called
+	 * @return {Object} The current EventEmitter instance to allow chaining
 	 */
 	instance.once = function(type, listener, scope) {
 		return instance.addListener(type, listener, scope, true);
@@ -91,6 +118,10 @@ function EventEmitter() {
 	
 	/**
 	 * Removes the a listener for the specified event
+	 * 
+	 * @param {String} type Event type name the listener must have for the event to be removed
+	 * @param {Function} listener Listener the event must have to be removed
+	 * @return {Object} The current EventEmitter instance to allow chaining
 	 */
 	instance.removeListener = function(type, listener) {
 		instance.eachListener(type, function(currentListener, index) {
@@ -111,6 +142,9 @@ function EventEmitter() {
 	
 	/**
 	 * Removes all listeners for a specified event
+	 * 
+	 * @param {String} type Event type name to remove all listeners from
+	 * @return {Object} The current EventEmitter instance to allow chaining
 	 */
 	instance.removeAllListeners = function(type) {
 		if(listeners.hasOwnProperty(type)) {
@@ -123,6 +157,9 @@ function EventEmitter() {
 	
 	/**
 	 * Retrives the array of listeners for a specified event
+	 * 
+	 * @param {String} type Event type name to return all listeners from
+	 * @return {Array | Boolean} Will return either an array of listeners or false if there are none
 	 */
 	instance.listeners = function(type) {
 		// Return the array of listeners of false if it does not exist
@@ -135,6 +172,10 @@ function EventEmitter() {
 	
 	/**
 	 * Emits an event executing all appropriate listeners
+	 * 
+	 * @param {String} type Event type name to run all listeners from
+	 * @param {Array} args List of arguments to pass to the listener
+	 * @return {Object} The current EventEmitter instance to allow chaining
 	 */
 	instance.emit = function(type, args) {
 		instance.eachListener(type, function(currentListener) {
