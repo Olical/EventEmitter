@@ -108,4 +108,20 @@
 		equal(ee.listeners('onceTest')[0].listener, normalFunction, 'There should only be one survivor, the normalFunction one');
 		equal(ee.listeners('onceTest')[2], undefined, 'And a second should be undefined');
 	});
+	
+	test('Passing arguments to listeners', function() {
+		var ee = new EventEmitter();
+		
+		ee.addListener('argTest', function(aBool) {
+			equal(aBool, true, 'Passing of a boolean that equals true');
+		});
+		
+		ee.addListener('argTest2', function(aString, aBool) {
+			equal(aString, 'foo', 'Passing of a string');
+			equal(aBool, true, 'Passing of a boolean that equals true as the second argument');
+		});
+		
+		ee.emit('argTest', [true]);
+		ee.emit('argTest2', ['foo', true]);
+	});
 }());
