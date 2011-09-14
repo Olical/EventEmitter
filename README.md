@@ -30,12 +30,6 @@ The main thing it lacks is the emitting of a warning when you create over 10 lis
 	// Log the array of listeners to show that it has been removed
 	console.log(ee.listeners('foo'));
 
-## Known bugs
-
-I only know of one at the moment, you can not remove listeners assigned via `once`.
-
-If you find any more, please put them in the issues section.
-
 ## API
 
 ### addListener(eventName, listener)
