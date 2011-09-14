@@ -28,6 +28,21 @@ EventEmitter deters from the NodeJS implementation slightly but it is lighter an
 	// Log the array of listeners to show that it has been removed
 	console.log(ee.listeners('foo'));
 
+## API
+
+This is just the method list for the API. For in-depth argument documentation please check the source. Every method has a JSDoc comment block that explains every aspect of the method.
+
+ * EventEmitter.Event(type, listener, scope, once) - Event class, used internally for listener managing.
+   * EventEmitter.Event.fire(args) - Calls the events listener with the specified array of arguments.
+ * EventEmitter.eachListener(type, callback) - Loops over every listener for an event passing them to the callback.
+ * EventEmitter.addListener(type, listener, scope, once) - Adds an event listener for the specified event.
+ * EventEmitter.on(type, listener, scope, once) - Alias of the addListener method.
+ * EventEmitter.once(type, listener, scope) - Alias of the addListener method but will remove the event after the first use.
+ * EventEmitter.removeListener(type, listener) - Removes the a listener for the specified event.
+ * EventEmitter.removeAllListeners(type) - Removes all listeners for a specified event.
+ * EventEmitter.listeners(type) - Retrieves the array of listeners for a specified event.
+ * EventEmitter.emit(type, args) - Emits an event executing all appropriate listeners.
+
 ## Tests
 
 EventEmitter is tested and working in the following browsers.
