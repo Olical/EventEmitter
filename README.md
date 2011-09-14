@@ -106,7 +106,7 @@ To test, simply run `test.html` in the test folder.
 
 ## Author
 
-[Oliver Caldwell](http://olivercaldwell.co.uk/).
+EventEmitter was written by [Oliver Caldwell](http://olivercaldwell.co.uk/).
 
 ## Licences
 
