@@ -51,7 +51,7 @@ EventEmitter is tested and working in the following browsers.
  * Firefox
  * Safari
  * Opera
- * IE 5 - 9
+ * IE 5+
 
 If you test it in something a little more obscure, please let me know how it turned out.
 
