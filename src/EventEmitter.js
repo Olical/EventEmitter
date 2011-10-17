@@ -19,31 +19,31 @@ function EventEmitter() {
  * @param {Function} listener Function to be called when the event is fired
  * @param {Object} scope Object that this should be set to when the listener is called
  * @param {Boolean} once If true then the listener will be removed after the first call
+ * @param {Object} instance The parent EventEmitter instance
  */
-EventEmitter.prototype.Event = function(type, listener, scope, once) {
-	// Initialise variables
-	var eventInstance = this;
-	
+EventEmitter.prototype.Event = function(type, listener, scope, once, instance) {
 	// Store arguments
-	eventInstance.type = type;
-	eventInstance.listener = listener;
-	eventInstance.once = once;
+	this.type = type;
+	this.listener = listener;
+	this.scope = scope;
+	this.once = once;
+	this.instance = instance;
+};
+
+/**
+ * Executes the listener
+ * 
+ * @param {Array} args List of arguments to pass to the listener
+ * @return {Boolean} If false then it was a once event
+ */
+EventEmitter.prototype.Event.prototype.fire = function(args) {
+	this.listener.apply(this.scope || this, args || []);
 	
-	/**
-	 * Executes the listener
-	 * 
-	 * @param {Array} args List of arguments to pass to the listener
-	 * @return {Boolean} If false then it was a once event
-	 */
-	eventInstance.fire = function(args) {
-		listener.apply(scope || eventInstance, args || []);
-		
-		// Remove the listener if this is a once only listener
-		if(eventInstance.once) {
-			instance.removeListener(type, listener);
-			return false;
-		}
-	};
+	// Remove the listener if this is a once only listener
+	if(this.once) {
+		this.instance.removeListener(this.type, this.listener);
+		return false;
+	}
 };
 
 /**
