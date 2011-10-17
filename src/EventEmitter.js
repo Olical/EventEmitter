@@ -178,12 +178,12 @@ EventEmitter.prototype.listeners = function(type) {
  * @return {Object} The current EventEmitter instance to allow chaining
  */
 EventEmitter.prototype.emit = function(type, args) {
-	instance.eachListener(type, function(currentListener) {
+	this.eachListener(type, function(currentListener) {
 		return currentListener.fire(args);
 	});
 	
 	// Return the instance to allow chaining
-	return instance;
+	return this;
 };
 
 // Check for exports
