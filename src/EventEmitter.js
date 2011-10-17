@@ -59,15 +59,21 @@
 	EventEmitter.prototype.eachListener = function(type, callback) {
 		// Initialise variables
 		var i = null,
-			possibleListeners = null;
+			possibleListeners = null,
+			result = null;
 		
 		// Only loop if the type exists
 		if(this._listeners.hasOwnProperty(type)) {
 			possibleListeners = this._listeners[type];
 			
 			for(i = 0; i < possibleListeners.length; i += 1) {
-				if(callback.call(this, possibleListeners[i], i) === false) {
+				result = callback.call(this, possibleListeners[i], i);
+				
+				if(result === false) {
 					i -= 1;
+				}
+				else if(result === true) {
+					break;
 				}
 			}
 		}
