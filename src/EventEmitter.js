@@ -163,8 +163,8 @@ EventEmitter.prototype.removeAllListeners = function(type) {
  */
 EventEmitter.prototype.listeners = function(type) {
 	// Return the array of listeners of false if it does not exist
-	if(listeners.hasOwnProperty(type)) {
-		return listeners[type];
+	if(this.listeners.hasOwnProperty(type)) {
+		return this.listeners[type];
 	}
 	
 	return false;
