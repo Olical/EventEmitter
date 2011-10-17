@@ -85,7 +85,7 @@ EventEmitter.prototype.addListener = function(type, listener, scope, once) {
 	}
 	
 	// Push the new event to the array
-	this.listeners[type].push(new instance.Event(type, listener, scope, once, this));
+	this.listeners[type].push(new this.Event(type, listener, scope, once, this));
 	
 	// Emit the new listener event
 	this.emit('newListener', type, listener, scope, once);
