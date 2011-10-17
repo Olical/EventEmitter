@@ -124,20 +124,20 @@ EventEmitter.prototype.once = function(type, listener, scope) {
  * @return {Object} The current EventEmitter instance to allow chaining
  */
 EventEmitter.prototype.removeListener = function(type, listener) {
-	instance.eachListener(type, function(currentListener, index) {
+	this.eachListener(type, function(currentListener, index) {
 		// If this is the listener, disable it and break out
 		if(currentListener.listener === listener) {
-			listeners[type].splice(index, 1);
+			this.listeners[type].splice(index, 1);
 		}
 	});
 	
 	// Remove the property if there are no more listeners
-	if(listeners[type] && listeners[type].length === 0) {
-		delete listeners[type];
+	if(this.listeners[type] && this.listeners[type].length === 0) {
+		delete this.listeners[type];
 	}
 	
 	// Return the instance to allow chaining
-	return instance;
+	return this;
 };
 
 /**
