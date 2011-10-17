@@ -7,6 +7,8 @@
  */
 
 (function(exports) {
+	'use strict';
+	
 	function EventEmitter() {
 		// Initialise the listeners object
 		this._listeners = {};
