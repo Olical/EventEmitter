@@ -189,4 +189,4 @@
 	
 	// Export the class
 	exports.EventEmitter = EventEmitter;
-}(window || exports));
+}( (typeof window === 'object') ? window : exports ));
