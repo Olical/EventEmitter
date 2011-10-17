@@ -54,6 +54,7 @@
 	 * 
 	 * @param {String} type Event type name
 	 * @param {Function} callback Function to pass each listener to
+	 * @return {Object} The current EventEmitter instance to allow chaining
 	 */
 	EventEmitter.prototype.eachListener = function(type, callback) {
 		// Initialise variables
@@ -70,6 +71,9 @@
 				}
 			}
 		}
+		
+		// Return the instance to allow chaining
+		return this;
 	};
 	
 	/**
