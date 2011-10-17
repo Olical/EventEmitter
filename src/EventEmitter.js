@@ -58,11 +58,11 @@ EventEmitter.prototype.eachListener = function(type, callback) {
 		possibleListeners = null;
 	
 	// Only loop if the type exists
-	if(listeners.hasOwnProperty(type)) {
-		possibleListeners = listeners[type];
+	if(this.listeners.hasOwnProperty(type)) {
+		possibleListeners = this.listeners[type];
 		
 		for(i = 0; i < possibleListeners.length; i += 1) {
-			if(callback.call(instance, possibleListeners[i], i) === false) {
+			if(callback.call(this, possibleListeners[i], i) === false) {
 				i -= 1;
 			}
 		}
