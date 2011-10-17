@@ -138,7 +138,7 @@
 	 */
 	EventEmitter.prototype.removeListener = function(type, listener) {
 		this.eachListener(type, function(currentListener, index) {
-			// If this is the listener, disable it and break out
+			// If this is the listener remove it from the array
 			if(currentListener.listener === listener) {
 				this._listeners[type].splice(index, 1);
 			}
