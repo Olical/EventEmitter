@@ -80,18 +80,18 @@ EventEmitter.prototype.eachListener = function(type, callback) {
  */
 EventEmitter.prototype.addListener = function(type, listener, scope, once) {
 	// Create the listener array if it does not exist yet
-	if(!listeners.hasOwnProperty(type)) {
-		listeners[type] = [];
+	if(!this.listeners.hasOwnProperty(type)) {
+		this.listeners[type] = [];
 	}
 	
 	// Push the new event to the array
-	listeners[type].push(new instance.Event(type, listener, scope, once));
+	this.listeners[type].push(new instance.Event(type, listener, scope, once, this));
 	
 	// Emit the new listener event
-	instance.emit('newListener', type, listener, scope, once);
+	this.emit('newListener', type, listener, scope, once);
 	
 	// Return the instance to allow chaining
-	return instance;
+	return this;
 };
 
 /**
