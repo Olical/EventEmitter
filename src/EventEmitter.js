@@ -113,7 +113,7 @@ EventEmitter.prototype.on = EventEmitter.prototype.addListener;
  * @return {Object} The current EventEmitter instance to allow chaining
  */
 EventEmitter.prototype.once = function(type, listener, scope) {
-	return instance.addListener(type, listener, scope, true);
+	return this.addListener(type, listener, scope, true);
 };
 
 /**
