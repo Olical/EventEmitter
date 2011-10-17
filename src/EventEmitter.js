@@ -8,7 +8,7 @@
 
 function EventEmitter() {
 	// Initialise the listeners object
-	this.listeners = {};
+	this._listeners = {};
 }
 
 /**
@@ -58,8 +58,8 @@ EventEmitter.prototype.eachListener = function(type, callback) {
 		possibleListeners = null;
 	
 	// Only loop if the type exists
-	if(this.listeners.hasOwnProperty(type)) {
-		possibleListeners = this.listeners[type];
+	if(this._listeners.hasOwnProperty(type)) {
+		possibleListeners = this._listeners[type];
 		
 		for(i = 0; i < possibleListeners.length; i += 1) {
 			if(callback.call(this, possibleListeners[i], i) === false) {
@@ -80,12 +80,12 @@ EventEmitter.prototype.eachListener = function(type, callback) {
  */
 EventEmitter.prototype.addListener = function(type, listener, scope, once) {
 	// Create the listener array if it does not exist yet
-	if(!this.listeners.hasOwnProperty(type)) {
-		this.listeners[type] = [];
+	if(!this._listeners.hasOwnProperty(type)) {
+		this._listeners[type] = [];
 	}
 	
 	// Push the new event to the array
-	this.listeners[type].push(new this.Event(type, listener, scope, once, this));
+	this._listeners[type].push(new this.Event(type, listener, scope, once, this));
 	
 	// Emit the new listener event
 	this.emit('newListener', type, listener, scope, once);
@@ -127,13 +127,13 @@ EventEmitter.prototype.removeListener = function(type, listener) {
 	this.eachListener(type, function(currentListener, index) {
 		// If this is the listener, disable it and break out
 		if(currentListener.listener === listener) {
-			this.listeners[type].splice(index, 1);
+			this._listeners[type].splice(index, 1);
 		}
 	});
 	
 	// Remove the property if there are no more listeners
-	if(this.listeners[type] && this.listeners[type].length === 0) {
-		delete this.listeners[type];
+	if(this._listeners[type] && this._listeners[type].length === 0) {
+		delete this._listeners[type];
 	}
 	
 	// Return the instance to allow chaining
@@ -147,8 +147,8 @@ EventEmitter.prototype.removeListener = function(type, listener) {
  * @return {Object} The current EventEmitter instance to allow chaining
  */
 EventEmitter.prototype.removeAllListeners = function(type) {
-	if(this.listeners.hasOwnProperty(type)) {
-		delete this.listeners[type];
+	if(this._listeners.hasOwnProperty(type)) {
+		delete this._listeners[type];
 	}
 	
 	// Return the instance to allow chaining
@@ -163,8 +163,8 @@ EventEmitter.prototype.removeAllListeners = function(type) {
  */
 EventEmitter.prototype.listeners = function(type) {
 	// Return the array of listeners of false if it does not exist
-	if(this.listeners.hasOwnProperty(type)) {
-		return this.listeners[type];
+	if(this._listeners.hasOwnProperty(type)) {
+		return this._listeners[type];
 	}
 	
 	return false;
