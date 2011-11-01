@@ -24,14 +24,14 @@
 	 * @param {Boolean} once If true then the listener will be removed after the first call
 	 * @param {Object} instance The parent EventEmitter instance
 	 */
-	EventEmitter.prototype.Event = function(type, listener, scope, once, instance) {
+	function Event(type, listener, scope, once, instance) {
 		// Store arguments
 		this.type = type;
 		this.listener = listener;
 		this.scope = scope;
 		this.once = once;
 		this.instance = instance;
-	};
+	}
 	
 	/**
 	 * Executes the listener
@@ -39,7 +39,7 @@
 	 * @param {Array} args List of arguments to pass to the listener
 	 * @return {Boolean} If false then it was a once event
 	 */
-	EventEmitter.prototype.Event.prototype.fire = function(args) {
+	Event.prototype.fire = function(args) {
 		this.listener.apply(this.scope || this, args || []);
 		
 		// Remove the listener if this is a once only listener
@@ -98,7 +98,7 @@
 		}
 		
 		// Push the new event to the array
-		this._listeners[type].push(new this.Event(type, listener, scope, once, this));
+		this._listeners[type].push(new Event(type, listener, scope, once, this));
 		
 		// Emit the new listener event
 		this.emit('newListener', type, listener, scope, once);
