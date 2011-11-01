@@ -14,8 +14,9 @@
 	 * Creates an object with event registering and firing methods
 	 */
 	function EventEmitter() {
-		// Initialise the listeners object
+		// Initialise required storage variables
 		this._listeners = {};
+		this._maxListeners = 10;
 	}
 	
 	/**
