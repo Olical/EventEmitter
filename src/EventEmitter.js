@@ -164,8 +164,13 @@
 	 * @return {Object} The current EventEmitter instance to allow chaining
 	 */
 	EventEmitter.prototype.removeAllListeners = function(type) {
-		if(this._listeners.hasOwnProperty(type)) {
+		// Check for a type, if there is none remove all listeners
+		// If there is a type however, just remove the listeners for that type
+		if(type && this._listeners.hasOwnProperty(type)) {
 			delete this._listeners[type];
+		}
+		else if(!type) {
+			this._listeners = {};
 		}
 		
 		// Return the instance to allow chaining
