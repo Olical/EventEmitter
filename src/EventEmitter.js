@@ -9,6 +9,10 @@
 (function(exports) {
 	'use strict';
 	
+	/**
+	 * EventEmitter class
+	 * Creates an object with event registering and firing methods
+	 */
 	function EventEmitter() {
 		// Initialise the listeners object
 		this._listeners = {};
