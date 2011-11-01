@@ -37,9 +37,10 @@ This is just the method list for the API. For in-depth argument documentation pl
  * EventEmitter.on(type, listener, scope, once) - Alias of the addListener method.
  * EventEmitter.once(type, listener, scope) - Alias of the addListener method but will remove the event after the first use.
  * EventEmitter.removeListener(type, listener) - Removes the a listener for the specified event.
- * EventEmitter.removeAllListeners(type) - Removes all listeners for a specified event.
+ * EventEmitter.removeAllListeners(type) - Removes all listeners for a specified event. If no event type is passed it will remove every listener.
  * EventEmitter.listeners(type) - Retrieves the array of listeners for a specified event.
  * EventEmitter.emit(type, args) - Emits an event executing all appropriate listeners.
+ * EventEmitter.setMaxListeners(maxListeners) - Sets the max listener count for the EventEmitter.
 
 ## Tests
 

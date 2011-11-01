@@ -173,6 +173,7 @@
 	
 	/**
 	 * Removes all listeners for a specified event
+	 * If no event type is passed it will remove every listener
 	 * 
 	 * @param {String} type Event type name to remove all listeners from
 	 * @return {Object} The current EventEmitter instance to allow chaining
