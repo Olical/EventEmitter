@@ -15,7 +15,7 @@
 	 */
 	function EventEmitter() {
 		// Initialise required storage variables
-		this._listeners = {};
+		this._events = {};
 		this._maxListeners = 10;
 	}
 	
@@ -68,8 +68,8 @@
 			result = null;
 		
 		// Only loop if the type exists
-		if(this._listeners.hasOwnProperty(type)) {
-			possibleListeners = this._listeners[type];
+		if(this._events.hasOwnProperty(type)) {
+			possibleListeners = this._events[type];
 			
 			for(i = 0; i < possibleListeners.length; i += 1) {
 				result = callback.call(this, possibleListeners[i], i);
@@ -98,12 +98,12 @@
 	 */
 	EventEmitter.prototype.addListener = function(type, listener, scope, once) {
 		// Create the listener array if it does not exist yet
-		if(!this._listeners.hasOwnProperty(type)) {
-			this._listeners[type] = [];
+		if(!this._events.hasOwnProperty(type)) {
+			this._events[type] = [];
 		}
 		
 		// Push the new event to the array
-		this._listeners[type].push(new Event(type, listener, scope, once, this));
+		this._events[type].push(new Event(type, listener, scope, once, this));
 		
 		// Emit the new listener event
 		this.emit('newListener', type, listener, scope, once);
@@ -111,14 +111,14 @@
 		// Check if we have exceeded the maxListener count
 		// Ignore this check if the count is 0
 		// Also don't check if we have already fired a warning
-		if(this._maxListeners && !this._listeners[type].warned && this._listeners[type].length > this._maxListeners) {
+		if(this._maxListeners && !this._events[type].warned && this._events[type].length > this._maxListeners) {
 			// The max listener count has been exceeded!
 			// My god, we have a mother flipping memory leak on our hands!
 			// Beter let the big developer in the sky know
-			console.warn('Possible EventEmitter memory leak detected. ' + this._listeners[type].length + ' listeners added. Use emitter.setMaxListeners() to increase limit.');
+			console.warn('Possible EventEmitter memory leak detected. ' + this._events[type].length + ' listeners added. Use emitter.setMaxListeners() to increase limit.');
 			
 			// Set the flag so it doesn't fire again
-			this._listeners[type].warned = true;
+			this._events[type].warned = true;
 		}
 		
 		// Return the instance to allow chaining
@@ -158,13 +158,13 @@
 		this.eachListener(type, function(currentListener, index) {
 			// If this is the listener remove it from the array
 			if(currentListener.listener === listener) {
-				this._listeners[type].splice(index, 1);
+				this._events[type].splice(index, 1);
 			}
 		});
 		
 		// Remove the property if there are no more listeners
-		if(this._listeners[type] && this._listeners[type].length === 0) {
-			delete this._listeners[type];
+		if(this._events[type] && this._events[type].length === 0) {
+			delete this._events[type];
 		}
 		
 		// Return the instance to allow chaining
@@ -180,11 +180,11 @@
 	EventEmitter.prototype.removeAllListeners = function(type) {
 		// Check for a type, if there is none remove all listeners
 		// If there is a type however, just remove the listeners for that type
-		if(type && this._listeners.hasOwnProperty(type)) {
-			delete this._listeners[type];
+		if(type && this._events.hasOwnProperty(type)) {
+			delete this._events[type];
 		}
 		else if(!type) {
-			this._listeners = {};
+			this._events = {};
 		}
 		
 		// Return the instance to allow chaining
@@ -199,8 +199,8 @@
 	 */
 	EventEmitter.prototype.listeners = function(type) {
 		// Return the array of listeners of false if it does not exist
-		if(this._listeners.hasOwnProperty(type)) {
-			return this._listeners[type];
+		if(this._events.hasOwnProperty(type)) {
+			return this._events[type];
 		}
 		
 		return false;
