@@ -69,6 +69,20 @@
 		equal(ee.listeners('removeAllTest'), false, 'Retrieving any listeners from removeAllTest (should be gone)');
 	});
 	
+	test('Removing all listeners', function() {
+		var ee = new EventEmitter();
+		
+		ee.on('foo', function() {
+			console.log('bar');
+		});
+		
+		equal(ee.listeners('foo').length, 1, 'Check that it was added');
+		
+		ee.removeAllListeners();
+		
+		equal(ee.listeners('foo'), false, 'Check that it was removed');
+	});
+	
 	test('Emitting events', function() {
 		var ee = new EventEmitter();
 		
