@@ -32,8 +32,6 @@ EventEmitter deters from the NodeJS implementation slightly but it is lighter an
 
 This is just the method list for the API. For in-depth argument documentation please check the source. Every method has a JSDoc comment block that explains every aspect of the method.
 
- * EventEmitter.Event(type, listener, scope, once) - Event class, used internally for listener managing.
-   * EventEmitter.Event.fire(args) - Calls the events listener with the specified array of arguments.
  * EventEmitter.eachListener(type, callback) - Loops over every listener for an event passing them to the callback.
  * EventEmitter.addListener(type, listener, scope, once) - Adds an event listener for the specified event.
  * EventEmitter.on(type, listener, scope, once) - Alias of the addListener method.
