@@ -209,6 +209,21 @@
 		return this;
 	};
 	
+	/**
+	 * Sets the max listener count for the EventEmitter
+	 * When the count of listeners for an event exceeds this limit a warning will be printed
+	 * Set to 0 for no limit
+	 * 
+	 * @param {Number} maxListeners The new max listener limit
+	 * @return {Object} The current EventEmitter instance to allow chaining
+	 */
+	EventEmitter.prototype.setMaxListeners = function(maxListeners) {
+		this._maxListeners = maxListeners;
+		
+		// Return the instance to allow chaining
+		return this;
+	};
+	
 	// Export the class
 	exports.EventEmitter = EventEmitter;
 }(this));
