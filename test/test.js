@@ -150,5 +150,7 @@
 				console.log('bar');
 			});
 		}
+		
+		equal(ee.listeners('foo').warned, true, 'Check if we have been warned');
 	});
 }());
