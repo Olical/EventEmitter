@@ -108,6 +108,19 @@
 		// Emit the new listener event
 		this.emit('newListener', type, listener, scope, once);
 		
+		// Check if we have exceeded the maxListener count
+		// Ignore this check if the count is 0
+		// Also don't check if we have already fired a warning
+		if(this._maxListeners && !this._listeners[type].warned && this._listeners[type].length > this._maxListeners) {
+			// The max listener count has been exceeded!
+			// My god, we have a mother flipping memory leak on our hands!
+			// Beter let the big developer in the sky know
+			console.warn('Possible EventEmitter memory leak detected. ' + this._listeners[type].length + ' listeners added. Use emitter.setMaxListeners() to increase limit.');
+			
+			// Set the flag so it doesn't fire again
+			this._listeners[type].warned = true;
+		}
+		
 		// Return the instance to allow chaining
 		return this;
 	};
