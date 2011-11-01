@@ -138,4 +138,17 @@
 		ee.emit('argTest', [true]);
 		ee.emit('argTest2', ['foo', true]);
 	});
+	
+	test('Exceeding the max listener count', function() {
+		var i = null;
+		
+		var ee = new EventEmitter();
+		ee.setMaxListeners(3);
+		
+		for(i = 0; i < 4; i += 1) {
+			ee.on('foo', function() {
+				console.log('bar');
+			});
+		}
+	});
 }());
