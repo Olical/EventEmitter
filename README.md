@@ -1,3 +1,5 @@
+# EventEmitter
+
 **Evented JavaScript for the browser**
 
 This script adds the EventEmitter class to your browser.
