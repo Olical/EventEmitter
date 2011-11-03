@@ -135,8 +135,8 @@
 			equal(aBool, true, 'Passing of a boolean that equals true as the second argument');
 		});
 		
-		ee.emit('argTest', [true]);
-		ee.emit('argTest2', ['foo', true]);
+		ee.emit('argTest', true);
+		ee.emit('argTest2', 'foo', true);
 	});
 	
 	test('Exceeding the max listener count', function() {
