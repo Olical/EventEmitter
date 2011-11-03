@@ -45,7 +45,7 @@
 	 * @return {Boolean} If false then it was a once event
 	 */
 	Event.prototype.fire = function(args) {
-		this.listener.apply(this.scope || this, args || []);
+		this.listener.apply(this.scope || this, args);
 		
 		// Remove the listener if this is a once only listener
 		if(this.once) {
@@ -209,12 +209,15 @@
 	
 	/**
 	 * Emits an event executing all appropriate listeners
+	 * All values passed after the type will be passed as arguments to the listeners
 	 * 
 	 * @param {String} type Event type name to run all listeners from
-	 * @param {Array} args List of arguments to pass to the listener
 	 * @return {Object} The current EventEmitter instance to allow chaining
 	 */
-	EventEmitter.prototype.emit = function(type, args) {
+	EventEmitter.prototype.emit = function(type) {
+		// Calculate the arguments
+		var args = [].slice.call(arguments).splice(1);
+		
 		this.eachListener(type, function(currentListener) {
 			return currentListener.fire(args);
 		});
