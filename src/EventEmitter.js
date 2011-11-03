@@ -1,5 +1,5 @@
 /**
- * @preserve EventEmitter v3.0.0
+ * @preserve EventEmitter v3.1.0
  * https://github.com/Wolfy87/EventEmitter
  * 
  * Licenced under GPL v3 http://www.gnu.org/licenses/gpl.html
