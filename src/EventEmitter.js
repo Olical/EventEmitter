@@ -1,9 +1,9 @@
 /**
  * @preserve EventEmitter v3.0.0
- * 
- * Copyright 2011, Oliver Caldwell (olivercaldwell.co.uk)
- * Dual licensed under the MIT or GPL Version 2 licenses.
  * https://github.com/Wolfy87/EventEmitter
+ * 
+ * Licenced under GPL v3 http://www.gnu.org/licenses/gpl.html
+ * Oliver Caldwell (olivercaldwell.co.uk)
  */
 
 (function(exports) {
