@@ -8,6 +8,8 @@ So you can listen for and emit events from what ever objects you choose.
 
 EventEmitter deters from the NodeJS implementation slightly but it is lighter and faster.
 
+For more information such as documentation and examples you can either skim over the rest of this readme or [visit the wiki](https://github.com/Wolfy87/EventEmitter/wiki). Any contribution to the wiki is much appreciated.
+
 ## Example
 
 	// Initialise the EventEmitter
