@@ -39,7 +39,7 @@ This is just the method list for the API. For in-depth argument documentation pl
  * EventEmitter.removeListener(type, listener) - Removes the a listener for the specified event.
  * EventEmitter.removeAllListeners(type) - Removes all listeners for a specified event. If no event type is passed it will remove every listener.
  * EventEmitter.listeners(type) - Retrieves the array of listeners for a specified event.
- * EventEmitter.emit(type, args) - Emits an event executing all appropriate listeners.
+ * EventEmitter.emit(type) - Emits an event executing all appropriate listeners. It passes any extra arguments to the listeners.
  * EventEmitter.setMaxListeners(maxListeners) - Sets the max listener count for the EventEmitter.
 
 ## Tests
