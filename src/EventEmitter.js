@@ -196,15 +196,22 @@
 	 * Retrieves the array of listeners for a specified event
 	 * 
 	 * @param {String} type Event type name to return all listeners from
-	 * @return {Array | Boolean} Will return either an array of listeners or false if there are none
+	 * @return {Array} Will return either an array of listeners or an empty array if there are none
 	 */
 	EventEmitter.prototype.listeners = function(type) {
-		// Return the array of listeners of false if it does not exist
+		// Return the array of listeners or an empty array if it does not exist
 		if(this._events.hasOwnProperty(type)) {
-			return this._events[type];
+			// It does exist, loop over building the array
+			var listeners = [];
+			
+			this.eachListener(type, function(evt) {
+				listeners.push(evt.listener);
+			});
+			
+			return listeners;
 		}
 		
-		return false;
+		return [];
 	};
 	
 	/**
