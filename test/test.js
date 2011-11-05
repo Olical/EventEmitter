@@ -6,7 +6,7 @@
 	test('Adding and retrieving listeners', function() {
 		var ee = new EventEmitter();
 		
-		equal(ee.listeners('testEvent'), false, 'Checking for any listeners');
+		equal(ee.listeners('testEvent'), [], 'Checking for any listeners');
 		
 		ee.addListener('testEvent', function() {
 			// Listener
