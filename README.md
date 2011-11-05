@@ -1,3 +1,5 @@
+# EventEmitter
+
 **Evented JavaScript for the browser**
 
 This script adds the EventEmitter class to your browser.
@@ -5,6 +7,8 @@ This script adds the EventEmitter class to your browser.
 So you can listen for and emit events from what ever objects you choose.
 
 EventEmitter deters from the NodeJS implementation slightly but it is lighter and faster.
+
+For more information such as documentation and examples you can either skim over the rest of this readme or [visit the wiki](https://github.com/Wolfy87/EventEmitter/wiki). Any contribution to the wiki is much appreciated.
 
 ## Example
 
@@ -32,16 +36,15 @@ EventEmitter deters from the NodeJS implementation slightly but it is lighter an
 
 This is just the method list for the API. For in-depth argument documentation please check the source. Every method has a JSDoc comment block that explains every aspect of the method.
 
- * EventEmitter.Event(type, listener, scope, once) - Event class, used internally for listener managing.
-   * EventEmitter.Event.fire(args) - Calls the events listener with the specified array of arguments.
  * EventEmitter.eachListener(type, callback) - Loops over every listener for an event passing them to the callback.
  * EventEmitter.addListener(type, listener, scope, once) - Adds an event listener for the specified event.
  * EventEmitter.on(type, listener, scope, once) - Alias of the addListener method.
  * EventEmitter.once(type, listener, scope) - Alias of the addListener method but will remove the event after the first use.
  * EventEmitter.removeListener(type, listener) - Removes the a listener for the specified event.
- * EventEmitter.removeAllListeners(type) - Removes all listeners for a specified event.
+ * EventEmitter.removeAllListeners(type) - Removes all listeners for a specified event. If no event type is passed it will remove every listener.
  * EventEmitter.listeners(type) - Retrieves the array of listeners for a specified event.
- * EventEmitter.emit(type, args) - Emits an event executing all appropriate listeners.
+ * EventEmitter.emit(type) - Emits an event executing all appropriate listeners. It passes any extra arguments to the listeners.
+ * EventEmitter.setMaxListeners(maxListeners) - Sets the max listener count for the EventEmitter.
 
 ## Tests
 
@@ -61,30 +64,8 @@ To test, simply run `test.html` in the test folder.
 
 EventEmitter was written by [Oliver Caldwell](http://olivercaldwell.co.uk/).
 
-## Licences
+## Licence (GPL v3)
 
-### MIT
-Copyright (C) 2011 Oliver Caldwell
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-
-### GPL
 Copyright (C) 2011 Oliver Caldwell
 
 This program is free software: you can redistribute it and/or modify
