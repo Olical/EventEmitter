@@ -224,7 +224,12 @@
 	 */
 	EventEmitter.prototype.emit = function(type) {
 		// Calculate the arguments
-		var args = [].slice.call(arguments).splice(1);
+		var args = [],
+			i = null;
+		
+		for(i = 1; i < arguments.length; i += 1) {
+			args.push(arguments[i]);
+		}
 		
 		this.eachListener(type, function(currentListener) {
 			return currentListener.fire(args);
