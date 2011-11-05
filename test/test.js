@@ -10,28 +10,33 @@
 		
 		ee.addListener('testEvent', function() {
 			// Listener
+			return true;
 		});
-		equal(ee.listeners('testEvent')[0].type, 'testEvent', 'Retrieving the first listener');
+		equal(ee.listeners('testEvent')[0](), true, 'Retrieving the first listener');
 		
 		ee.addListener('testEvent', function() {
 			// Another listener for the same event
+			return true;
 		});
-		equal(ee.listeners('testEvent')[1].type, 'testEvent', 'Retrieving the second listener');
+		equal(ee.listeners('testEvent')[1](), true, 'Retrieving the second listener');
 		
 		ee.addListener('anotherTestEvent', function() {
 			// Listener for new event
+			return true;
 		});
-		equal(ee.listeners('anotherTestEvent')[0].type, 'anotherTestEvent', 'Retrieving the first listener for a different event');
+		equal(ee.listeners('anotherTestEvent')[0](), true, 'Retrieving the first listener for a different event');
 		
 		ee.addListener('anotherTestEvent', function() {
 			// Another listener for new event
+			return true;
 		});
-		equal(ee.listeners('anotherTestEvent')[1].type, 'anotherTestEvent', 'Retrieving the second listener for a different event');
+		equal(ee.listeners('anotherTestEvent')[1](), true, 'Retrieving the second listener for a different event');
 		
 		ee.addListener('onTest', function() {
 			// Listener via the alias
+			return true;
 		});
-		equal(ee.listeners('onTest')[0].type, 'onTest', 'Retrieving the first listener for a different event added via the on alias');
+		equal(ee.listeners('onTest')[0](), true, 'Retrieving the first listener for a different event added via the on alias');
 	});
 	
 	test('Removing listeners', function() {
