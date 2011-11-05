@@ -113,9 +113,10 @@
 		// Also don't check if we have already fired a warning
 		if(this._maxListeners && !this._events[type].warned && this._events[type].length > this._maxListeners) {
 			// The max listener count has been exceeded!
-			// My god, we have a mother flipping memory leak on our hands!
-			// Beter let the big developer in the sky know
-			console.warn('Possible EventEmitter memory leak detected. ' + this._events[type].length + ' listeners added. Use emitter.setMaxListeners() to increase limit.');
+			// Warn via the console if it exists
+			if(typeof console !== 'undefined') {
+				console.warn('Possible EventEmitter memory leak detected. ' + this._events[type].length + ' listeners added. Use emitter.setMaxListeners() to increase limit.');
+			}
 			
 			// Set the flag so it doesn't fire again
 			this._events[type].warned = true;
