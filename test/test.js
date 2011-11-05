@@ -6,32 +6,37 @@
 	test('Adding and retrieving listeners', function() {
 		var ee = new EventEmitter();
 		
-		equal(ee.listeners('testEvent'), false, 'Checking for any listeners');
+		equal(ee.listeners('testEvent').length, 0, 'Checking for any listeners');
 		
 		ee.addListener('testEvent', function() {
 			// Listener
+			return true;
 		});
-		equal(ee.listeners('testEvent')[0].type, 'testEvent', 'Retrieving the first listener');
+		equal(ee.listeners('testEvent')[0](), true, 'Retrieving the first listener');
 		
 		ee.addListener('testEvent', function() {
 			// Another listener for the same event
+			return true;
 		});
-		equal(ee.listeners('testEvent')[1].type, 'testEvent', 'Retrieving the second listener');
+		equal(ee.listeners('testEvent')[1](), true, 'Retrieving the second listener');
 		
 		ee.addListener('anotherTestEvent', function() {
 			// Listener for new event
+			return true;
 		});
-		equal(ee.listeners('anotherTestEvent')[0].type, 'anotherTestEvent', 'Retrieving the first listener for a different event');
+		equal(ee.listeners('anotherTestEvent')[0](), true, 'Retrieving the first listener for a different event');
 		
 		ee.addListener('anotherTestEvent', function() {
 			// Another listener for new event
+			return true;
 		});
-		equal(ee.listeners('anotherTestEvent')[1].type, 'anotherTestEvent', 'Retrieving the second listener for a different event');
+		equal(ee.listeners('anotherTestEvent')[1](), true, 'Retrieving the second listener for a different event');
 		
 		ee.addListener('onTest', function() {
 			// Listener via the alias
+			return true;
 		});
-		equal(ee.listeners('onTest')[0].type, 'onTest', 'Retrieving the first listener for a different event added via the on alias');
+		equal(ee.listeners('onTest')[0](), true, 'Retrieving the first listener for a different event added via the on alias');
 	});
 	
 	test('Removing listeners', function() {
@@ -39,34 +44,38 @@
 		
 		function testListener() {
 			// Listener
+			return true;
 		}
 		
 		function testListener2() {
 			// Listener 2
+			return true;
 		}
 		
 		ee.addListener('testEvent', testListener);
-		equal(ee.listeners('testEvent')[0].type, 'testEvent', 'Retrieving the first listener');
+		equal(ee.listeners('testEvent')[0](), true, 'Retrieving the first listener');
 		
 		ee.addListener('testEvent', testListener2);
-		equal(ee.listeners('testEvent')[1].type, 'testEvent', 'Retrieving the second listener');
+		equal(ee.listeners('testEvent')[1](), true, 'Retrieving the second listener');
 		
 		ee.removeListener('testEvent', testListener);
 		equal(ee.listeners('testEvent')[1], undefined, 'Retrieving the second listener (should be gone)');
-		equal(ee.listeners('testEvent')[0].listener, testListener2, 'First should now be the second');
+		equal(ee.listeners('testEvent')[0], testListener2, 'First should now be the second');
 		
 		ee.removeListener('testEvent', testListener2);
-		equal(ee.listeners('testEvent'), false, 'Retrieving any listeners (should be gone)');
+		ok(ee.listeners('testEvent'), 'Retrieving any listeners (should be gone)');
 		
 		ee.addListener('removeAllTest', function() {
 			// Listener
+			return true;
 		});
 		ee.addListener('removeAllTest', function() {
 			// Another listener for the same event
+			return true;
 		});
-		equal(ee.listeners('removeAllTest')[1].type, 'removeAllTest', 'Check for a second removeAllTest listener');
+		equal(ee.listeners('removeAllTest')[1](), true, 'Check for a second removeAllTest listener');
 		ee.removeAllListeners('removeAllTest');
-		equal(ee.listeners('removeAllTest'), false, 'Retrieving any listeners from removeAllTest (should be gone)');
+		equal(ee.listeners('removeAllTest').length, 0, 'Retrieving any listeners from removeAllTest (should be gone)');
 	});
 	
 	test('Removing all listeners', function() {
@@ -106,20 +115,23 @@
 		
 		function normalFunction() {
 			// Another listener for the same event but not a once event
+			return true;
 		}
 		
 		ee.once('onceTest', function() {
 			// Listener
+			return true;
 		});
 		ee.once('onceTest', function() {
 			// Another listener for the same event
+			return true;
 		});
 		ee.addListener('onceTest', normalFunction);
-		equal(ee.listeners('onceTest')[2].type, 'onceTest', 'Check for a third onceTest listener');
+		equal(ee.listeners('onceTest')[2](), true, 'Check for a third onceTest listener');
 		
 		// Emit the once test event
 		ee.emit('onceTest');
-		equal(ee.listeners('onceTest')[0].listener, normalFunction, 'There should only be one survivor, the normalFunction one');
+		equal(ee.listeners('onceTest')[0], normalFunction, 'There should only be one survivor, the normalFunction one');
 		equal(ee.listeners('onceTest')[2], undefined, 'And a second should be undefined');
 	});
 	
@@ -135,8 +147,8 @@
 			equal(aBool, true, 'Passing of a boolean that equals true as the second argument');
 		});
 		
-		ee.emit('argTest', [true]);
-		ee.emit('argTest2', ['foo', true]);
+		ee.emit('argTest', true);
+		ee.emit('argTest2', 'foo', true);
 	});
 	
 	test('Exceeding the max listener count', function() {
@@ -151,6 +163,6 @@
 			});
 		}
 		
-		equal(ee.listeners('foo').warned, true, 'Check if we have been warned');
+		equal(ee._events.foo.warned, true, 'Check if we have been warned');
 	});
 }());

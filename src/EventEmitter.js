@@ -1,5 +1,5 @@
 /**
- * @preserve EventEmitter v3.0.0
+ * @preserve EventEmitter v3.1.0
  * https://github.com/Wolfy87/EventEmitter
  * 
  * Licenced under GPL v3 http://www.gnu.org/licenses/gpl.html
@@ -113,9 +113,10 @@
 		// Also don't check if we have already fired a warning
 		if(this._maxListeners && !this._events[type].warned && this._events[type].length > this._maxListeners) {
 			// The max listener count has been exceeded!
-			// My god, we have a mother flipping memory leak on our hands!
-			// Beter let the big developer in the sky know
-			console.warn('Possible EventEmitter memory leak detected. ' + this._events[type].length + ' listeners added. Use emitter.setMaxListeners() to increase limit.');
+			// Warn via the console if it exists
+			if(typeof console !== 'undefined') {
+				console.warn('Possible EventEmitter memory leak detected. ' + this._events[type].length + ' listeners added. Use emitter.setMaxListeners() to increase limit.');
+			}
 			
 			// Set the flag so it doesn't fire again
 			this._events[type].warned = true;
@@ -196,15 +197,22 @@
 	 * Retrieves the array of listeners for a specified event
 	 * 
 	 * @param {String} type Event type name to return all listeners from
-	 * @return {Array | Boolean} Will return either an array of listeners or false if there are none
+	 * @return {Array} Will return either an array of listeners or an empty array if there are none
 	 */
 	EventEmitter.prototype.listeners = function(type) {
-		// Return the array of listeners of false if it does not exist
+		// Return the array of listeners or an empty array if it does not exist
 		if(this._events.hasOwnProperty(type)) {
-			return this._events[type];
+			// It does exist, loop over building the array
+			var listeners = [];
+			
+			this.eachListener(type, function(evt) {
+				listeners.push(evt.listener);
+			});
+			
+			return listeners;
 		}
 		
-		return false;
+		return [];
 	};
 	
 	/**
@@ -216,7 +224,12 @@
 	 */
 	EventEmitter.prototype.emit = function(type) {
 		// Calculate the arguments
-		var args = [].slice.call(arguments).splice(1);
+		var args = [],
+			i = null;
+		
+		for(i = 1; i < arguments.length; i += 1) {
+			args.push(arguments[i]);
+		}
 		
 		this.eachListener(type, function(currentListener) {
 			return currentListener.fire(args);

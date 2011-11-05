@@ -1,3 +1,5 @@
+# EventEmitter
+
 **Evented JavaScript for the browser**
 
 This script adds the EventEmitter class to your browser.
@@ -5,6 +7,8 @@ This script adds the EventEmitter class to your browser.
 So you can listen for and emit events from what ever objects you choose.
 
 EventEmitter deters from the NodeJS implementation slightly but it is lighter and faster.
+
+For more information such as documentation and examples you can either skim over the rest of this readme or [visit the wiki](https://github.com/Wolfy87/EventEmitter/wiki). Any contribution to the wiki is much appreciated.
 
 ## Example
 
