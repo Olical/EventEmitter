@@ -32,7 +32,7 @@
 		});
 		equal(ee.listeners('anotherTestEvent')[1](), true, 'Retrieving the second listener for a different event');
 		
-		ee.addListener('onTest', function() {
+		ee.on('onTest', function() {
 			// Listener via the alias
 			return true;
 		});
