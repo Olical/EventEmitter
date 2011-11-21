@@ -37,6 +37,17 @@
 			return true;
 		});
 		equal(ee.listeners('onTest')[0](), true, 'Retrieving the first listener for a different event added via the on alias');
+		
+		var scopeTarget = {
+			foo: false
+		};
+		ee.addListener('scopeTest', function() {
+			// Scope test
+			this.foo = true;
+		}, scopeTarget);
+		equal(scopeTarget.foo, false, 'Check that the scope target is currently false');
+		ee.emit('scopeTest');
+		equal(scopeTarget.foo, true, 'Check that the scope target has been changed to true');
 	});
 	
 	test('Removing listeners', function() {
