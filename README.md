@@ -46,7 +46,7 @@ To test, simply run `test.html` in the test folder.
 
 ## Author
 
-EventEmitter was written by [Oliver Caldwell](http://olivercaldwell.co.uk/).
+EventEmitter was written by Oliver Caldwell [[website](http://olivercaldwell.co.uk/) | [twitter](https://twitter.com/#!/OliverCaldwell)].
 
 ## Licence (GPL v3)
 
