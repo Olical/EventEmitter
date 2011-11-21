@@ -2,7 +2,7 @@
  * EventEmitter v3.1.0
  * https://github.com/Wolfy87/EventEmitter
  * 
- * Licenced under GPL v3 http://www.gnu.org/licenses/gpl.html
+ * Licenced under MIT http://www.opensource.org/licenses/mit-license.php
  * Oliver Caldwell (olivercaldwell.co.uk)
  */
 
