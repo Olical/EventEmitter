@@ -87,6 +87,15 @@
 		equal(ee.listeners('removeAllTest')[1](), true, 'Check for a second removeAllTest listener');
 		ee.removeAllListeners('removeAllTest');
 		equal(ee.listeners('removeAllTest').length, 0, 'Retrieving any listeners from removeAllTest (should be gone)');
+		
+		var scopeTarget = {
+			foo: false
+		};
+		ee.addListener('scopeTest', testListener, scopeTarget);
+		ee.addListener('scopeTest', testListener);
+		equal(ee.listeners('scopeTest')[1](), true, 'Check that both scope tests are there');
+		ee.removeListener('scopeTest', testListener, scopeTarget);
+		equal(ee.listeners('scopeTest')[0](), true, 'There should still be one left because only the one with the correct scope was removed.');
 	});
 	
 	test('Removing all listeners', function() {
