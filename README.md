@@ -32,20 +32,6 @@ For more information such as documentation and examples you can either skim over
 	// Log the array of listeners to show that it has been removed
 	console.log(ee.listeners('foo'));
 
-## API
-
-This is just the method list for the API. For in-depth argument documentation please check the source. Every method has a JSDoc comment block that explains every aspect of the method.
-
- * EventEmitter.eachListener(type, callback) - Loops over every listener for an event passing them to the callback.
- * EventEmitter.addListener(type, listener, scope, once) - Adds an event listener for the specified event.
- * EventEmitter.on(type, listener, scope, once) - Alias of the addListener method.
- * EventEmitter.once(type, listener, scope) - Alias of the addListener method but will remove the event after the first use.
- * EventEmitter.removeListener(type, listener) - Removes the a listener for the specified event.
- * EventEmitter.removeAllListeners(type) - Removes all listeners for a specified event. If no event type is passed it will remove every listener.
- * EventEmitter.listeners(type) - Retrieves the array of listeners for a specified event.
- * EventEmitter.emit(type) - Emits an event executing all appropriate listeners. It passes any extra arguments to the listeners.
- * EventEmitter.setMaxListeners(maxListeners) - Sets the max listener count for the EventEmitter.
-
 ## Tests
 
 EventEmitter is tested and working in the following browsers.
