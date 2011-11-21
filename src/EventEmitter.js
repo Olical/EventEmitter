@@ -153,12 +153,14 @@
 	 * 
 	 * @param {String} type Event type name the listener must have for the event to be removed
 	 * @param {Function} listener Listener the event must have to be removed
+	 * @param {Object} scope The scope the event must have to be removed
 	 * @return {Object} The current EventEmitter instance to allow chaining
 	 */
-	EventEmitter.prototype.removeListener = function(type, listener) {
+	EventEmitter.prototype.removeListener = function(type, listener, scope) {
 		this.eachListener(type, function(currentListener, index) {
 			// If this is the listener remove it from the array
-			if(currentListener.listener === listener) {
+			// We also compare the scope if it was passed
+			if(currentListener.listener === listener && (!scope || listener.scope === scope)) {
 				this._events[type].splice(index, 1);
 			}
 		});
