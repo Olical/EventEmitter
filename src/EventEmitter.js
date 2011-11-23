@@ -1,8 +1,8 @@
 /**
- * @preserve EventEmitter v3.1.0
+ * EventEmitter v3.1.0
  * https://github.com/Wolfy87/EventEmitter
  * 
- * Licenced under GPL v3 http://www.gnu.org/licenses/gpl.html
+ * Licensed under the MIT license: http://www.opensource.org/licenses/mit-license.php
  * Oliver Caldwell (olivercaldwell.co.uk)
  */
 
@@ -49,7 +49,7 @@
 		
 		// Remove the listener if this is a once only listener
 		if(this.once) {
-			this.instance.removeListener(this.type, this.listener);
+			this.instance.removeListener(this.type, this.listener, this.scope);
 			return false;
 		}
 	};
@@ -153,12 +153,14 @@
 	 * 
 	 * @param {String} type Event type name the listener must have for the event to be removed
 	 * @param {Function} listener Listener the event must have to be removed
+	 * @param {Object} scope The scope the event must have to be removed
 	 * @return {Object} The current EventEmitter instance to allow chaining
 	 */
-	EventEmitter.prototype.removeListener = function(type, listener) {
+	EventEmitter.prototype.removeListener = function(type, listener, scope) {
 		this.eachListener(type, function(currentListener, index) {
 			// If this is the listener remove it from the array
-			if(currentListener.listener === listener) {
+			// We also compare the scope if it was passed
+			if(currentListener.listener === listener && (!scope || currentListener.scope === scope)) {
 				this._events[type].splice(index, 1);
 			}
 		});

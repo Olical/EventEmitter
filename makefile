@@ -7,4 +7,4 @@ validate:
 
 compress:
 	@@echo 'Compressing'
-	@@java -jar build/compiler.jar --js src/EventEmitter.js --js_output_file src/EventEmitter.min.js
+	@@uglifyjs -o src/EventEmitter.min.js src/EventEmitter.js

@@ -32,11 +32,22 @@
 		});
 		equal(ee.listeners('anotherTestEvent')[1](), true, 'Retrieving the second listener for a different event');
 		
-		ee.addListener('onTest', function() {
+		ee.on('onTest', function() {
 			// Listener via the alias
 			return true;
 		});
 		equal(ee.listeners('onTest')[0](), true, 'Retrieving the first listener for a different event added via the on alias');
+		
+		var scopeTarget = {
+			foo: false
+		};
+		ee.addListener('scopeTest', function() {
+			// Scope test
+			this.foo = true;
+		}, scopeTarget);
+		equal(scopeTarget.foo, false, 'Check that the scope target is currently false');
+		ee.emit('scopeTest');
+		equal(scopeTarget.foo, true, 'Check that the scope target has been changed to true');
 	});
 	
 	test('Removing listeners', function() {
@@ -76,6 +87,20 @@
 		equal(ee.listeners('removeAllTest')[1](), true, 'Check for a second removeAllTest listener');
 		ee.removeAllListeners('removeAllTest');
 		equal(ee.listeners('removeAllTest').length, 0, 'Retrieving any listeners from removeAllTest (should be gone)');
+		
+		var scopeTarget = {
+			foo: false
+		};
+		ee.addListener('scopeTest', testListener);
+		ee.addListener('scopeTest', testListener);
+		ee.addListener('scopeTest', testListener, scopeTarget);
+		ee.addListener('scopeTest', testListener);
+		equal(ee._events['scopeTest'][2].scope, scopeTarget, 'Check that the one with the scope exists.');
+		equal(ee.listeners('scopeTest')[2](), true, 'Make sure we can execute the scoped listener.')
+		ee.removeListener('scopeTest', testListener, scopeTarget);
+		equal(ee._events['scopeTest'][0].scope, undefined, 'The last three should have no scope. (1)');
+		equal(ee._events['scopeTest'][1].scope, undefined, 'The last three should have no scope. (2)');
+		equal(ee._events['scopeTest'][2].scope, undefined, 'The last three should have no scope. (3)');
 	});
 	
 	test('Removing all listeners', function() {
