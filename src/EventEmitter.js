@@ -49,7 +49,7 @@
 		
 		// Remove the listener if this is a once only listener
 		if(this.once) {
-			this.instance.removeListener(this.type, this.listener);
+			this.instance.removeListener(this.type, this.listener, this.scope);
 			return false;
 		}
 	};
