@@ -160,7 +160,7 @@
 		this.eachListener(type, function(currentListener, index) {
 			// If this is the listener remove it from the array
 			// We also compare the scope if it was passed
-			if(currentListener.listener === listener && (!scope || listener.scope === scope)) {
+			if(currentListener.listener === listener && (!scope || currentListener.scope === scope)) {
 				this._events[type].splice(index, 1);
 			}
 		});
