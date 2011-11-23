@@ -91,11 +91,16 @@
 		var scopeTarget = {
 			foo: false
 		};
+		ee.addListener('scopeTest', testListener);
+		ee.addListener('scopeTest', testListener);
 		ee.addListener('scopeTest', testListener, scopeTarget);
 		ee.addListener('scopeTest', testListener);
-		equal(ee.listeners('scopeTest')[1](), true, 'Check that both scope tests are there');
+		equal(ee._events['scopeTest'][2].scope, scopeTarget, 'Check that the one with the scope exists.');
+		equal(ee.listeners('scopeTest')[2](), true, 'Make sure we can execute the scoped listener.')
 		ee.removeListener('scopeTest', testListener, scopeTarget);
-		equal(ee.listeners('scopeTest')[0](), true, 'There should still be one left because only the one with the correct scope was removed.');
+		equal(ee._events['scopeTest'][0].scope, undefined, 'The last three should have no scope. (1)');
+		equal(ee._events['scopeTest'][1].scope, undefined, 'The last three should have no scope. (2)');
+		equal(ee._events['scopeTest'][2].scope, undefined, 'The last three should have no scope. (3)');
 	});
 	
 	test('Removing all listeners', function() {
