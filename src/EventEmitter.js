@@ -257,12 +257,12 @@
 	};
 	
 	// Export the class
-  if (typeof define === 'function' && define.amd) {
-    define(function() {
-      return EventEmitter;
-    });
-  } else {
-    exports.EventEmitter = EventEmitter;
-  }
-
+	if(typeof define === 'function' && define.amd) {
+		define(function() {
+			return EventEmitter;
+		});
+	}
+	else {
+		exports.EventEmitter = EventEmitter;
+	}
 }(this));
