@@ -10,6 +10,7 @@
 	// JSHint config
 	/*global define:true*/
 	
+	// Place the script into strict mode
 	'use strict';
 	
 	/**
