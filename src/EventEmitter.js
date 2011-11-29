@@ -5,11 +5,11 @@
  * Licensed under the MIT license: http://www.opensource.org/licenses/mit-license.php
  * Oliver Caldwell (olivercaldwell.co.uk)
  */
- 
- // JSHint config
- /*global define:true*/
 
 (function(exports) {
+	// JSHint config
+	/*global define:true*/
+	
 	'use strict';
 	
 	/**
