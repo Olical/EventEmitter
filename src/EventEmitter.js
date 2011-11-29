@@ -1,5 +1,5 @@
 /**
- * EventEmitter v3.1.1
+ * EventEmitter v3.1.2
  * https://github.com/Wolfy87/EventEmitter
  * 
  * Licensed under the MIT license: http://www.opensource.org/licenses/mit-license.php
@@ -7,6 +7,10 @@
  */
 
 (function(exports) {
+	// JSHint config
+	/*global define:true*/
+	
+	// Place the script into strict mode
 	'use strict';
 	
 	/**
@@ -257,5 +261,12 @@
 	};
 	
 	// Export the class
-	exports.EventEmitter = EventEmitter;
+	if(typeof define === 'function' && define.amd) {
+		define(function() {
+			return EventEmitter;
+		});
+	}
+	else {
+		exports.EventEmitter = EventEmitter;
+	}
 }(this));
