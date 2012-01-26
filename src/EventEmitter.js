@@ -1,5 +1,5 @@
 /**
- * EventEmitter v3.1.2
+ * EventEmitter v3.1.3
  * https://github.com/Wolfy87/EventEmitter
  * 
  * Licensed under the MIT license: http://www.opensource.org/licenses/mit-license.php
