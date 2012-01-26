@@ -1,9 +1,4 @@
-default: validate compress
-develop: validate
-
-validate:
-	@@echo 'Validating'
-	@@node build/validate.js src/EventEmitter.js
+default: compress
 
 compress:
 	@@echo 'Compressing'

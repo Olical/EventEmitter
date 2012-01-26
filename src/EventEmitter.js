@@ -1,5 +1,5 @@
 /**
- * EventEmitter v3.1.2
+ * EventEmitter v3.1.3
  * https://github.com/Wolfy87/EventEmitter
  * 
  * Licensed under the MIT license: http://www.opensource.org/licenses/mit-license.php
@@ -49,7 +49,7 @@
 	 * @return {Boolean} If false then it was a once event
 	 */
 	Event.prototype.fire = function(args) {
-		this.listener.apply(this.scope || this, args);
+		this.listener.apply(this.scope || this.instance, args);
 		
 		// Remove the listener if this is a once only listener
 		if(this.once) {
