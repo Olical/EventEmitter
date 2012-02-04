@@ -179,6 +179,16 @@
 	};
 	
 	/**
+	 * Alias of the removeListener method
+	 * 
+	 * @param {String} type Event type name the listener must have for the event to be removed
+	 * @param {Function} listener Listener the event must have to be removed
+	 * @param {Object} scope The scope the event must have to be removed
+	 * @return {Object} The current EventEmitter instance to allow chaining
+	 */
+	EventEmitter.prototype.off = EventEmitter.prototype.removeListener;
+	
+	/**
 	 * Removes all listeners for a specified event
 	 * If no event type is passed it will remove every listener
 	 * 
