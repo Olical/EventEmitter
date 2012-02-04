@@ -8,6 +8,7 @@
 
 (function(exports) {
 	// JSHint config
+	/*jshint smarttabs:true*/
 	/*global define:true*/
 	
 	// Place the script into strict mode
