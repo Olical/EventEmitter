@@ -1,5 +1,5 @@
 /**
- * EventEmitter v3.1.3
+ * EventEmitter v3.1.4
  * https://github.com/Wolfy87/EventEmitter
  * 
  * Licensed under the MIT license: http://www.opensource.org/licenses/mit-license.php
@@ -177,6 +177,16 @@
 		// Return the instance to allow chaining
 		return this;
 	};
+	
+	/**
+	 * Alias of the removeListener method
+	 * 
+	 * @param {String} type Event type name the listener must have for the event to be removed
+	 * @param {Function} listener Listener the event must have to be removed
+	 * @param {Object} scope The scope the event must have to be removed
+	 * @return {Object} The current EventEmitter instance to allow chaining
+	 */
+	EventEmitter.prototype.off = EventEmitter.prototype.removeListener;
 	
 	/**
 	 * Removes all listeners for a specified event
