@@ -1,7 +1,7 @@
 /**
  * EventEmitter v3.1.4
  * https://github.com/Wolfy87/EventEmitter
- * 
+ *
  * Licensed under the MIT license: http://www.opensource.org/licenses/mit-license.php
  * Oliver Caldwell (olivercaldwell.co.uk)
  */
@@ -27,7 +27,7 @@
 	/**
 	 * Event class
 	 * Contains Event methods and property storage
-	 * 
+	 *
 	 * @param {String} type Event type name
 	 * @param {Function} listener Function to be called when the event is fired
 	 * @param {Object} scope Object that this should be set to when the listener is called
@@ -45,7 +45,7 @@
 	
 	/**
 	 * Executes the listener
-	 * 
+	 *
 	 * @param {Array} args List of arguments to pass to the listener
 	 * @return {Boolean} If false then it was a once event
 	 */
@@ -61,7 +61,7 @@
 	
 	/**
 	 * Passes every listener for a specified event to a function one at a time
-	 * 
+	 *
 	 * @param {String} type Event type name
 	 * @param {Function} callback Function to pass each listener to
 	 * @return {Object} The current EventEmitter instance to allow chaining
@@ -94,7 +94,7 @@
 	
 	/**
 	 * Adds an event listener for the specified event
-	 * 
+	 *
 	 * @param {String} type Event type name
 	 * @param {Function} listener Function to be called when the event is fired
 	 * @param {Object} scope Object that this should be set to when the listener is called
@@ -133,7 +133,7 @@
 	
 	/**
 	 * Alias of the addListener method
-	 * 
+	 *
 	 * @param {String} type Event type name
 	 * @param {Function} listener Function to be called when the event is fired
 	 * @param {Object} scope Object that this should be set to when the listener is called
@@ -143,7 +143,7 @@
 	
 	/**
 	 * Alias of the addListener method but will remove the event after the first use
-	 * 
+	 *
 	 * @param {String} type Event type name
 	 * @param {Function} listener Function to be called when the event is fired
 	 * @param {Object} scope Object that this should be set to when the listener is called
@@ -155,7 +155,7 @@
 	
 	/**
 	 * Removes the a listener for the specified event
-	 * 
+	 *
 	 * @param {String} type Event type name the listener must have for the event to be removed
 	 * @param {Function} listener Listener the event must have to be removed
 	 * @param {Object} scope The scope the event must have to be removed
@@ -181,7 +181,7 @@
 	
 	/**
 	 * Alias of the removeListener method
-	 * 
+	 *
 	 * @param {String} type Event type name the listener must have for the event to be removed
 	 * @param {Function} listener Listener the event must have to be removed
 	 * @param {Object} scope The scope the event must have to be removed
@@ -192,7 +192,7 @@
 	/**
 	 * Removes all listeners for a specified event
 	 * If no event type is passed it will remove every listener
-	 * 
+	 *
 	 * @param {String} type Event type name to remove all listeners from
 	 * @return {Object} The current EventEmitter instance to allow chaining
 	 */
@@ -212,7 +212,7 @@
 	
 	/**
 	 * Retrieves the array of listeners for a specified event
-	 * 
+	 *
 	 * @param {String} type Event type name to return all listeners from
 	 * @return {Array} Will return either an array of listeners or an empty array if there are none
 	 */
@@ -235,7 +235,7 @@
 	/**
 	 * Emits an event executing all appropriate listeners
 	 * All values passed after the type will be passed as arguments to the listeners
-	 * 
+	 *
 	 * @param {String} type Event type name to run all listeners from
 	 * @return {Object} The current EventEmitter instance to allow chaining
 	 */
@@ -260,7 +260,7 @@
 	 * Sets the max listener count for the EventEmitter
 	 * When the count of listeners for an event exceeds this limit a warning will be printed
 	 * Set to 0 for no limit
-	 * 
+	 *
 	 * @param {Number} maxListeners The new max listener limit
 	 * @return {Object} The current EventEmitter instance to allow chaining
 	 */
