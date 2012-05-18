@@ -44,10 +44,6 @@ If you test it in something a little more obscure, please let me know how it tur
 
 To test, simply run `test.html` in the test folder.
 
-## Author
-
-EventEmitter was written by [Oliver Caldwell](http://oli.me.uk/).
-
 ## License
 
 [![Creative Commons License](http://i.creativecommons.org/l/by/3.0/88x31.png)](http://creativecommons.org/licenses/by/3.0/)
