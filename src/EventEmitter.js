@@ -297,12 +297,13 @@
 	};
 	
 	// Export the class
+	// If AMD is available then use it
 	if(typeof define === 'function' && define.amd) {
 		define(function() {
 			return EventEmitter;
 		});
 	}
-	else {
-		exports.EventEmitter = EventEmitter;
-	}
+	
+	// No matter what it will be added to the global object
+	exports.EventEmitter = EventEmitter;
 }(this));
