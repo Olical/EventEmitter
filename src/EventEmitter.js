@@ -271,6 +271,31 @@
 		return this;
 	};
 	
+	/**
+	 * Builds a clone of the prototype object for you to extend with
+	 *
+	 * @return {Object} A clone of the EventEmitter prototype object
+	 */
+	EventEmitter.extend = function() {
+		// First thing we need to do is create our new prototype
+		// Then we loop over the current one copying each method out
+		// When done, simply return the clone
+		var clone = {},
+			current = this.prototype,
+			key = null;
+		
+		for(key in current) {
+			// Make sure this is actually a property of the object before copying it
+			// We don't want any default object methods leaking though
+			if(current.hasOwnProperty(key)) {
+				clone[key] = current[key];
+			}
+		}
+		
+		// All done, return the clone
+		return clone;
+	};
+	
 	// Export the class
 	if(typeof define === 'function' && define.amd) {
 		define(function() {
