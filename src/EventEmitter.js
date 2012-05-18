@@ -2,8 +2,8 @@
  * EventEmitter v3.1.4
  * https://github.com/Wolfy87/EventEmitter
  *
- * Licensed under the MIT license: http://www.opensource.org/licenses/mit-license.php
- * Oliver Caldwell <http://oli.me.uk/>
+ * Oliver Caldwell (http://oli.me.uk)
+ * Creative Commons Attribution 3.0 Unported License (http://creativecommons.org/licenses/by/3.0/)
  */
 
 ;(function(exports) {
