@@ -6,7 +6,7 @@
  * Oliver Caldwell (olivercaldwell.co.uk)
  */
 
-(function(exports) {
+;(function(exports) {
 	// JSHint config
 	/*jshint smarttabs:true,devel:true*/
 	/*global define:true*/
