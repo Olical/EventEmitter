@@ -3,7 +3,7 @@
  * https://github.com/Wolfy87/EventEmitter
  *
  * Licensed under the MIT license: http://www.opensource.org/licenses/mit-license.php
- * Oliver Caldwell (olivercaldwell.co.uk)
+ * Oliver Caldwell <http://oli.me.uk/>
  */
 
 ;(function(exports) {
