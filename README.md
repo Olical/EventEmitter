@@ -22,6 +22,17 @@ When testing in the more modern browsers, not Internet Explorer basically, I run
 
 EventEmitter will always be tested and working perfectly in all of them before a release. I will not release anything I think is riddled with bugs. However, if you do spot one, please [submit it as an issue](https://github.com/Wolfy87/EventEmitter/issues) and I will get right on it.
 
+## Cloning
+
+You can clone the repository with your generic clone commands as a standalone repository or submodule.
+
+    git clone git://github.com/Wolfy87/EventEmitter.git
+    git submodule add git://github.com/Wolfy87/EventEmitter.git assets/js/EventEmitter
+
+If you wish to run the tests you will also need to fetch the required submodules. You can do that with the following command.
+
+    git submodule update --init
+
 ## License (MIT)
 
 Copyright (c) 2012 Oliver Caldwell
