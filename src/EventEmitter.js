@@ -51,11 +51,21 @@
      */
     Event.prototype.fire = function(args) {
         this.listener.apply(this.scope || this.instance, args);
-        
+
         // Remove the listener if this is a once only listener
         if(this.once) {
+            // By storing the original value we can make sure it was actually removed
+            // There was a bug in which you would get an infinite loop if you called removeAllListeners from a once event
+            // By doing this if the event is lost it will not make the loop go back one
+            var original = this.instance.listeners(this.type).length;
+
             this.instance.removeListener(this.type, this.listener, this.scope);
-            return false;
+
+            // Only return false if the length has changed
+            // This is a fix for issue #26
+            if(original !== this.instance.listeners(this.type).length) {
+                return false;
+            }
         }
     };
     
