@@ -22,7 +22,7 @@ When testing in the more modern browsers, not Internet Explorer basically, I run
 
 EventEmitter will always be tested and working perfectly in all of them before a release. I will not release anything I think is riddled with bugs. However, if you do spot one, please [submit it as an issue](https://github.com/Wolfy87/EventEmitter/issues) and I will get right on it.
 
-## Licence (MIT)
+## License (MIT)
 
 Copyright (c) 2012 Oliver Caldwell
 
