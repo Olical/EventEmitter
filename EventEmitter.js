@@ -38,6 +38,21 @@
         return events[evt] || (events[evt] = []);
     };
 
+    /**
+     * Adds a listener function to the specified event.
+     *
+     * @param {String} evt Name of the event to attach the listener to.
+     * @param {Function} listener Method to be called when the event is emitted.
+     * @returns {Object} Current instance of EventEmitter for chaining.
+     */
+    EventEmitter.fn.addListener = function(evt, listener) {
+        // Get the listener array for the event and push the listener into it
+        this.getListeners(evt).push(listener);
+
+        // Return the instance of EventEmitter to allow chaining
+        return this;
+    };
+
     // Expose the class either via AMD or the global object
     if(typeof define === 'function' && define.amd) {
         define(function() {
