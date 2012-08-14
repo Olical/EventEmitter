@@ -21,6 +21,23 @@
      */
     EventEmitter.fn = EventEmitter.prototype;
 
+    /**
+     * Returns the listener array for the specified event.
+     * Will initialise the event object and listener arrays if required.
+     *
+     * @param {string} evt Name of the event to return the listeners from.
+     * @returns {array} All listener functions for the event.
+     */
+    EventEmitter.fn.getListeners = function(evt) {
+        // Create a shortcut to the storage object
+        // Initialise it if it does not exists yet
+        var events = this._events || this._events = {};
+
+        // Return the listener array
+        // Initialise it if it does not exist
+        return events[evt] || events[evt] = [];
+    };
+
     // Expose the class either via AMD or the global object
     if(typeof define === 'function' && define.amd) {
         define(function() {
