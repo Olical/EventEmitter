@@ -41,16 +41,13 @@
     /**
      * Finds the index of the listener for the event in it's storage array
      *
-     * @param {String} evt Name of the event to look in.
      * @param {Function} listener Method to look for.
+     * @param {Function[]} listeners Array of listeners to search through.
      * @returns {Number} Index of the specified listener, -1 if not found
      */
-    EventEmitter.fn.indexOfListener = function(evt, listener) {
-        // Fetch the listeners
-        var listeners = this.getListeners(evt);
-
+    EventEmitter.fn.indexOfListener = function(listener, listeners) {
         // Return the index via the native method if possible
-        if(Array.prototype.indexOf) {
+        if(listeners.indexOf) {
             return listeners.indexOf(listener);
         }
 
@@ -75,8 +72,13 @@
      * @returns {Object} Current instance of EventEmitter for chaining.
      */
     EventEmitter.fn.addListener = function(evt, listener) {
-        // Get the listener array for the event and push the listener into it
-        this.getListeners(evt).push(listener);
+        // Fetch the listeners
+        var listeners = this.getListeners(evt);
+
+        // Push the listener into the array if it is not already there
+        if(this.indexOfListener(listener, listeners) === -1) {
+            listeners.push(listener);
+        }
 
         // Return the instance of EventEmitter to allow chaining
         return this;
