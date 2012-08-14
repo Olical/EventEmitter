@@ -6,6 +6,9 @@
  */
 
 ;(function(exports) {
+    // JSHint config - http://www.jshint.com/
+    /*global define:true*/
+
     // Place the script in strict mode
     'use strict';
 
