@@ -67,5 +67,31 @@ describe('EventEmitter.fn.indexOfListener', function() {
     });
 });
 
+describe('EventEmitter.fn.addListener', function() {
+    var ee,
+        fn = function(){},
+        fn2 = function(){};
+
+    beforeEach(function() {
+        ee = new EventEmitter();
+    });
+
+    it('adds a listener to the specified event', function() {
+        ee.addListener('foo', fn);
+        expect(ee.getListeners('foo')).toEqual([fn]);
+    });
+
+    it('does not allow duplicate listeners', function() {
+        ee.addListener('bar', fn);
+        expect(ee.getListeners('bar')).toEqual([fn]);
+
+        ee.addListener('bar', fn2);
+        expect(ee.getListeners('bar')).toEqual([fn, fn2]);
+
+        ee.addListener('bar', fn);
+        expect(ee.getListeners('bar')).toEqual([fn, fn2]);
+    });
+});
+
 // Run Jasmine
 jasmineEnv.execute();
