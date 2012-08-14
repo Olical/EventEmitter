@@ -1,5 +1,5 @@
 /**
- * EventEmitter v3.1.6
+ * EventEmitter v3.1.7
  * https://github.com/Wolfy87/EventEmitter
  *
  * Oliver Caldwell (http://oli.me.uk)
