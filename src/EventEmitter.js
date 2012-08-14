@@ -1,5 +1,5 @@
 /**
- * EventEmitter v3.1.6
+ * EventEmitter v3.1.7
  * https://github.com/Wolfy87/EventEmitter
  *
  * Oliver Caldwell (http://oli.me.uk)
@@ -86,7 +86,7 @@
         if(this._events.hasOwnProperty(type)) {
             possibleListeners = this._events[type];
             
-            for(i = possibleListeners.length; i--;) {
+            for(i = 0; i < possibleListeners.length; i += 1) {
                 result = callback.call(this, possibleListeners[i], i);
                 
                 if(result === false) {
