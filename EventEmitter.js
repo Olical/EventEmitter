@@ -39,6 +39,35 @@
     };
 
     /**
+     * Finds the index of the listener for the event in it's storage array
+     *
+     * @param {String} evt Name of the event to look in.
+     * @param {Function} listener Method to look for.
+     * @returns {Number} Index of the specified listener, -1 if not found
+     */
+    EventEmitter.fn.indexOfListener = function(evt, listener) {
+        // Fetch the listeners
+        var listeners = this.getListeners(evt);
+
+        // Return the index via the native method if possible
+        if(Array.prototype.indexOf) {
+            return listeners.indexOf(listener);
+        }
+
+        // There is no native method
+        // Use a manual loop to find the index
+        for(var i = listeners.length; i--;) {
+            // If the listener matches, return it's index
+            if(listeners[i] === listener) {
+                return listener;
+            }
+        }
+
+        // Default to returning -1
+        return -1;
+    };
+
+    /**
      * Adds a listener function to the specified event.
      *
      * @param {String} evt Name of the event to attach the listener to.
