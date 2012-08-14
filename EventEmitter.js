@@ -66,6 +66,7 @@
 
     /**
      * Adds a listener function to the specified event.
+     * The listener will not be added if it is a duplicate.
      *
      * @param {String} evt Name of the event to attach the listener to.
      * @param {Function} listener Method to be called when the event is emitted.
