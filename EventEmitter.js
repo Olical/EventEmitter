@@ -31,11 +31,11 @@
     EventEmitter.fn.getListeners = function(evt) {
         // Create a shortcut to the storage object
         // Initialise it if it does not exists yet
-        var events = this._events || this._events = {};
+        var events = this._events || (this._events = {});
 
         // Return the listener array
         // Initialise it if it does not exist
-        return events[evt] || events[evt] = [];
+        return events[evt] || (events[evt] = []);
     };
 
     // Expose the class either via AMD or the global object
