@@ -62,7 +62,7 @@
         for(var i = listeners.length; i--;) {
             // If the listener matches, return it's index
             if(listeners[i] === listener) {
-                return listener;
+                return i;
             }
         }
 
