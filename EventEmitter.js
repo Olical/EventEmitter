@@ -17,7 +17,7 @@
     /**
      * Provides a shortcut to the prototype.
      *
-     * @property {object} Shortcut to the prototype object.
+     * @property {Object} Shortcut to the prototype object.
      */
     EventEmitter.fn = EventEmitter.prototype;
 
@@ -25,8 +25,8 @@
      * Returns the listener array for the specified event.
      * Will initialise the event object and listener arrays if required.
      *
-     * @param {string} evt Name of the event to return the listeners from.
-     * @returns {array} All listener functions for the event.
+     * @param {String} evt Name of the event to return the listeners from.
+     * @returns {Function[]} All listener functions for the event.
      */
     EventEmitter.fn.getListeners = function(evt) {
         // Create a shortcut to the storage object
