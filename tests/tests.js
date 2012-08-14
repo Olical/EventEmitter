@@ -12,12 +12,31 @@ jasmineEnv.specFilter = function(spec) {
 
 // Configure the tests
 describe('EventEmitter.fn.getListeners', function() {
-    var ee = new EventEmitter();
+    var ee;
+
+    beforeEach(function() {
+        ee = new EventEmitter();
+    });
 
     it('initialises the event object and a listener array', function() {
         ee.getListeners('foo');
         expect(ee._events).toEqual({
             foo: []
+        });
+    });
+
+    it('does not overwrite listener arrays', function() {
+        var listeners = ee.getListeners('foo');
+        listeners.push('bar');
+
+        expect(ee._events).toEqual({
+            foo: ['bar']
+        });
+
+        ee.getListeners('foo');
+
+        expect(ee._events).toEqual({
+            foo: ['bar']
         });
     });
 });
