@@ -138,5 +138,31 @@ describe('EventEmitter.fn.removeListener', function() {
     });
 });
 
+describe('EventEmitter.fn.removeListeners', function() {
+    var ee,
+        fn1 = function(){},
+        fn2 = function(){},
+        fn3 = function(){},
+        fn4 = function(){},
+        fn5 = function(){};
+
+    beforeEach(function() {
+        ee = new EventEmitter();
+    });
+
+    it('removes all listeners for the specified event', function() {
+        var foo = ee.getListeners('foo'),
+            bar = ee.getListeners('bar');
+
+        ee.addListener('foo', fn1);
+        ee.addListener('foo', fn2);
+        ee.addListener('bar', fn3);
+        ee.addListener('bar', fn4);
+        ee.addListener('bar', fn5);
+        expect(foo).toEqual([fn1, fn2]);
+        expect(bar).toEqual([fn3, fn4, fn5]);
+    });
+});
+
 // Run Jasmine
 jasmineEnv.execute();
