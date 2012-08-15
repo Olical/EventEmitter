@@ -59,7 +59,8 @@
 
         // There is no native method
         // Use a manual loop to find the index
-        for(var i = listeners.length; i--;) {
+        var i = listeners.length;
+        while(i--) {
             // If the listener matches, return it's index
             if(listeners[i] === listener) {
                 return i;
