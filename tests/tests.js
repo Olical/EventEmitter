@@ -98,7 +98,8 @@ describe('EventEmitter.fn.removeListener', function() {
         fn1 = function(){},
         fn2 = function(){},
         fn3 = function(){},
-        fn4 = function(){};
+        fn4 = function(){},
+        fnX = function(){};
 
     beforeEach(function() {
         ee = new EventEmitter();
@@ -108,6 +109,32 @@ describe('EventEmitter.fn.removeListener', function() {
         var orig = ee.getListeners('foo').length;
         ee.removeListener('foo', fn1);
         expect(ee.getListeners('foo').length).toEqual(orig);
+    });
+
+    it('removes listeners', function() {
+        var listeners = ee.getListeners('bar');
+
+        ee.addListener('bar', fn1);
+        ee.addListener('bar', fn2);
+        ee.addListener('bar', fn3);
+        ee.addListener('bar', fn3); // Make sure doubling up does nothing
+        ee.addListener('bar', fn4);
+        expect(listeners).toEqual([fn1, fn2, fn3, fn4]);
+
+        ee.removeListener('bar', fn3);
+        expect(listeners).toEqual([fn1, fn2, fn4]);
+
+        ee.removeListener('bar', fnX);
+        expect(listeners).toEqual([fn1, fn2, fn4]);
+
+        ee.removeListener('bar', fn1);
+        expect(listeners).toEqual([fn2, fn4]);
+
+        ee.removeListener('bar', fn4);
+        expect(listeners).toEqual([fn2]);
+
+        ee.removeListener('bar', fn2);
+        expect(ee._events.bar).not.toBeDefined();
     });
 });
 
