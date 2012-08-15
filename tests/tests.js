@@ -69,7 +69,7 @@ describe('EventEmitter.fn.indexOfListener', function() {
 
 describe('EventEmitter.fn.addListener', function() {
     var ee,
-        fn = function(){},
+        fn1 = function(){},
         fn2 = function(){};
 
     beforeEach(function() {
@@ -77,19 +77,37 @@ describe('EventEmitter.fn.addListener', function() {
     });
 
     it('adds a listener to the specified event', function() {
-        ee.addListener('foo', fn);
-        expect(ee.getListeners('foo')).toEqual([fn]);
+        ee.addListener('foo', fn1);
+        expect(ee.getListeners('foo')).toEqual([fn1]);
     });
 
     it('does not allow duplicate listeners', function() {
-        ee.addListener('bar', fn);
-        expect(ee.getListeners('bar')).toEqual([fn]);
+        ee.addListener('bar', fn1);
+        expect(ee.getListeners('bar')).toEqual([fn1]);
 
         ee.addListener('bar', fn2);
-        expect(ee.getListeners('bar')).toEqual([fn, fn2]);
+        expect(ee.getListeners('bar')).toEqual([fn1, fn2]);
 
-        ee.addListener('bar', fn);
-        expect(ee.getListeners('bar')).toEqual([fn, fn2]);
+        ee.addListener('bar', fn1);
+        expect(ee.getListeners('bar')).toEqual([fn1, fn2]);
+    });
+});
+
+describe('EventEmitter.fn.removeListener', function() {
+    var ee,
+        fn1 = function(){},
+        fn2 = function(){},
+        fn3 = function(){},
+        fn4 = function(){};
+
+    beforeEach(function() {
+        ee = new EventEmitter();
+    });
+
+    it('does nothing when the listener is not found', function() {
+        var orig = ee.getListeners('foo').length;
+        ee.removeListener('foo', fn1);
+        expect(ee.getListeners('foo').length).toEqual(orig);
     });
 });
 
