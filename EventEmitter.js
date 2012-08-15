@@ -118,6 +118,29 @@
         return this;
     };
 
+    /**
+     * Removes all listeners from a specified event.
+     * If you do not specify an event then all listeners will be removed.
+     * That means every event will be emptied.
+     *
+     * @param {String} [evt] Optional name of the event to remove all listeners for. Will remove from every event if not passed.
+     * @returns {Object} Current instance of EventEmitter for chaining.
+     */
+    EventEmitter.fn.removeListeners = function(evt) {
+        // Remove different things depending on the state of evt
+        if(evt) {
+            // Remove all listeners for the specified event
+            delete this._events[evt];
+        }
+        else {
+            // Remove all listeners in all events
+            delete this._events;
+        }
+
+        // Return the instance of EventEmitter to allow chaining
+        return this;
+    };
+
     // Expose the class either via AMD or the global object
     if(typeof define === 'function' && define.amd) {
         define(function() {
