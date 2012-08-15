@@ -1,6 +1,5 @@
 /**
  * EventEmitter v4.0.0 - github.com/Wolfy87/EventEmitter
- *
  * Oliver Caldwell
  * MIT license
  */
