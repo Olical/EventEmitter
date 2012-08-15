@@ -108,11 +108,11 @@
         // If the listener was found then remove it
         if(index !== -1) {
             listeners.splice(index, 1);
-        }
 
-        // If there are no more listeners in this array then remove it
-        if(listeners.length === 0) {
-            delete this._events[evt];
+            // If there are no more listeners in this array then remove it
+            if(listeners.length === 0) {
+                delete this._events[evt];
+            }
         }
 
         // Return the instance of EventEmitter to allow chaining
