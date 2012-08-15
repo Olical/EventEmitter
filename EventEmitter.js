@@ -141,6 +141,17 @@
         return this;
     };
 
+    EventEmitter.fn.emitEvent = function(evt, args) {
+        // Get the listeners for the event
+        // Also initialise any other required variables
+        var listeners = this.getListeners(evt),
+            i = listeners.length;
+        
+        while(i--) {
+
+        }
+    };
+
     // Expose the class either via AMD or the global object
     if(typeof define === 'function' && define.amd) {
         define(function() {
