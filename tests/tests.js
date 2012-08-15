@@ -148,19 +148,34 @@ describe('EventEmitter.fn.removeListeners', function() {
 
     beforeEach(function() {
         ee = new EventEmitter();
-    });
-
-    it('removes all listeners for the specified event', function() {
-        var foo = ee.getListeners('foo'),
-            bar = ee.getListeners('bar');
 
         ee.addListener('foo', fn1);
         ee.addListener('foo', fn2);
         ee.addListener('bar', fn3);
         ee.addListener('bar', fn4);
-        ee.addListener('bar', fn5);
-        expect(foo).toEqual([fn1, fn2]);
-        expect(bar).toEqual([fn3, fn4, fn5]);
+        ee.addListener('baz', fn5);
+        expect(ee.getListeners('foo')).toEqual([fn1, fn2]);
+        expect(ee.getListeners('bar')).toEqual([fn3, fn4]);
+        expect(ee.getListeners('baz')).toEqual([fn5]);
+    });
+
+    it('removes all listeners for the specified event', function() {
+        ee.removeListeners('bar');
+        expect(ee.getListeners('foo')).toEqual([fn1, fn2]);
+        expect(ee.getListeners('bar')).toEqual([]);
+        expect(ee.getListeners('baz')).toEqual([fn5]);
+
+        ee.removeListeners('baz');
+        expect(ee.getListeners('foo')).toEqual([fn1, fn2]);
+        expect(ee.getListeners('bar')).toEqual([]);
+        expect(ee.getListeners('baz')).toEqual([]);
+    });
+
+    it('removes all events when no event is specified', function() {
+        ee.removeListeners();
+        expect(ee.getListeners('foo')).toEqual([]);
+        expect(ee.getListeners('bar')).toEqual([]);
+        expect(ee.getListeners('baz')).toEqual([]);
     });
 });
 
