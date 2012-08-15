@@ -207,6 +207,20 @@ describe('EventEmitter.fn.emitEvent', function() {
 
         expect(key).toEqual(42);
     });
+
+    it('executes multiple listeners', function() {
+        var count = 0;
+
+        ee.addListener('baz', function() { count++; });
+        ee.addListener('baz', function() { count++; });
+        ee.addListener('baz', function() { count++; });
+        ee.addListener('baz', function() { count++; });
+        ee.addListener('baz', function() { count++; });
+
+        ee.emitEvent('baz');
+
+        expect(count).toEqual(5);
+    });
 });
 
 // Run Jasmine
