@@ -179,5 +179,35 @@ describe('EventEmitter.fn.removeListeners', function() {
     });
 });
 
+describe('EventEmitter.fn.emitEvent', function() {
+    var ee;
+
+    beforeEach(function() {
+        ee = new EventEmitter();
+    });
+
+    it('executes attached listeners', function() {
+        var run = false;
+
+        ee.addListener('foo', function() {
+            run = true;
+        });
+        ee.emitEvent('foo');
+
+        expect(run).toEqual(true);
+    });
+
+    it('executes attached with arguments', function() {
+        var key = null;
+
+        ee.addListener('bar', function(passedKey) {
+            key = passedKey;
+        });
+        ee.emitEvent('bar', [42]);
+
+        expect(key).toEqual(42);
+    });
+});
+
 // Run Jasmine
 jasmineEnv.execute();
