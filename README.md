@@ -2,9 +2,9 @@
 
 ## Event based JavaScript for the browser
 
-As the subtitle suggests, this script brings the power of events from platforms such as [node.js](http://nodejs.org/) to your browser.
+As the subtitle suggests, this script brings the power of events from platforms such as [node.js](http://nodejs.org/) to your browser. Although it can be used in any other platform, I just built it with browsers in mind.
 
-This is actually the forth full rewrite of EventEmitter, my aim is for it to be faster and lighter than ever before.
+This is actually the fourth full rewrite of EventEmitter, my aim is for it to be faster and lighter than ever before.
 
 I have been working on it for over a year so far and in that time my skills in JavaScript have come a long way. This script is a culmination of my learning which you can hopefully find very useful.
 
@@ -26,7 +26,10 @@ EventEmitter will always be tested and working perfectly in all of them before a
 
 You can clone the repository with your generic clone commands as a standalone repository or submodule.
 
+    # Full repository
     git clone git://github.com/Wolfy87/EventEmitter.git
+
+    # Or submodule
     git submodule add git://github.com/Wolfy87/EventEmitter.git assets/js/EventEmitter
 
 If you wish to run the tests you will also need to fetch the required submodules. You can do that with the following command.
