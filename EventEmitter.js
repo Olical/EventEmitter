@@ -142,15 +142,31 @@
         return this;
     };
 
+    /**
+     * Emits an event of your choice.
+     * When emitted, every listener attached to that event will be executed.
+     * If you pass the optional argument array then those arguments will be passed to every listener upon execution.
+     * Because it uses `apply`, your array of arguments will be passed as if you wrote them out separately.
+     * So they will not arrive within the array on the other side, they will be separate.
+     *
+     * @param {String} evt Name of the event to emit and execute listeners for.
+     * @param {Array} [args] Optional array of arguments to be passed to each argument.
+     * @returns {Object} Current instance of EventEmitter for chaining.
+     */
     EventEmitter.fn.emitEvent = function(evt, args) {
         // Get the listeners for the event
         // Also initialise any other required variables
         var listeners = this.getListeners(evt),
             i = listeners.length;
-        
-        while(i--) {
 
+        while(i--) {
+            // Execute every listener attached to the event
+            // Apply the arguments array to each listener too
+            listeners[i].apply(null, args);
         }
+
+        // Return the instance of EventEmitter to allow chaining
+        return this;
     };
 
     // Expose the class either via AMD or the global object
