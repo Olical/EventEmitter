@@ -91,6 +91,46 @@
         return this;
     };
 
+    /**
+     * Removes a listener function from the specified event.
+     * If you only pass the event name, then all listeners for that event will be removed.
+     * If you pass no arguments, then all listeners in all events will be removed.
+     *
+     * @param {String} [evt] Name of the event to remove the listener from.
+     * @param {Function} [listener] Method to remove from the event.
+     * @returns {Object} Current instance of EventEmitter for chaining.
+     */
+    EventEmitter.fn.removeListener = function(evt, listener) {
+        // Remove different listeners depending on the arguments
+        if(!evt) {
+            // Remove all listeners if there is no event name
+            delete this._events;
+        }
+        else if(!listener) {
+            // Remove all listeners for a single event if there is no listener
+            delete this._events[evt];
+        }
+        else {
+            // Fetch the listeners
+            // And get the index of the listener in the array
+            var listeners = this.getListeners(evt),
+                index = this.indexOfListener(listener, listeners);
+
+            // If the listener was found then remove it
+            if(index !== -1) {
+                listeners.splice(index, 1);
+            }
+
+            // If there are no more listeners in this array then remove it
+            if(listeners.length === 0) {
+                delete this._events[evt];
+            }
+
+            // Return the instance of EventEmitter to allow chaining
+            return this;
+        }
+    };
+
     // Expose the class either via AMD or the global object
     if(typeof define === 'function' && define.amd) {
         define(function() {
