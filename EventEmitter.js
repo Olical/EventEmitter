@@ -92,6 +92,33 @@
     };
 
     /**
+     * Removes a listener function from the specified event.
+     *
+     * @param {String} evt Name of the event to remove the listener from.
+     * @param {Function} listener Method to remove from the event.
+     * @returns {Object} Current instance of EventEmitter for chaining.
+     */
+    EventEmitter.fn.removeListener = function(evt, listener) {
+        // Fetch the listeners
+        // And get the index of the listener in the array
+        var listeners = this.getListeners(evt),
+            index = this.indexOfListener(listener, listeners);
+
+        // If the listener was found then remove it
+        if(index !== -1) {
+            listeners.splice(index, 1);
+
+            // If there are no more listeners in this array then remove it
+            if(listeners.length === 0) {
+                delete this._events[evt];
+            }
+        }
+
+        // Return the instance of EventEmitter to allow chaining
+        return this;
+    };
+
+    /**
      * Edits listeners in bulk. The addListeners and removeListeners methods both use this to do their job. You should really use those instead, this is a little lower level.
      * The first argument will determine if the listeners are removed (true) or added (false).
      * If you pass an object as the second argument you can add/remove from multiple events at once. The object should be key value pairs of events to listeners or listener arrays.
@@ -131,33 +158,6 @@
             i = listeners.length;
             while(i--) {
                 multiple(evt, listeners[i]);
-            }
-        }
-
-        // Return the instance of EventEmitter to allow chaining
-        return this;
-    };
-
-    /**
-     * Removes a listener function from the specified event.
-     *
-     * @param {String} evt Name of the event to remove the listener from.
-     * @param {Function} listener Method to remove from the event.
-     * @returns {Object} Current instance of EventEmitter for chaining.
-     */
-    EventEmitter.fn.removeListener = function(evt, listener) {
-        // Fetch the listeners
-        // And get the index of the listener in the array
-        var listeners = this.getListeners(evt),
-            index = this.indexOfListener(listener, listeners);
-
-        // If the listener was found then remove it
-        if(index !== -1) {
-            listeners.splice(index, 1);
-
-            // If there are no more listeners in this array then remove it
-            if(listeners.length === 0) {
-                delete this._events[evt];
             }
         }
 
