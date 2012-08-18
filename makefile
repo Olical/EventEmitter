@@ -9,4 +9,4 @@ server:
 
 # Builds the API documentation
 docs:
-	dox < EventEmitter.js
+	dox < EventEmitter.js > docs/data.json
