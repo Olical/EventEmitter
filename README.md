@@ -40,7 +40,9 @@ If you wish to run the tests you will also need to fetch the required submodules
 
 ### Documentation
 
-First you will need to install [dox](https://github.com/visionmedia/dox). Then you can run `make docs` to build from the JSDoc comments found within the source code.
+First you will need to install [dox](https://github.com/visionmedia/dox) and [dust](http://akdubya.github.com/dustjs/) using [npm](https://npmjs.org/). Then you can run `make docs` to build from the JSDoc comments found within the source code.
+
+The built documentation will be placed in `docs/api.md`. I actually keep this inside the repository so each version will have it's documentation stored with it.
 
 ## License (MIT)
 
