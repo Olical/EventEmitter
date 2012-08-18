@@ -281,5 +281,42 @@ describe('EventEmitter.fn.manipulateListeners', function() {
     });
 });
 
+describe('EventEmitter.fn.addListeners', function() {
+    var ee,
+        fn1 = function(){},
+        fn2 = function(){},
+        fn3 = function(){},
+        fn4 = function(){},
+        fn5 = function(){};
+
+    beforeEach(function() {
+        ee = new EventEmitter();
+    });
+
+    it('adds with an array', function() {
+        ee.addListeners('foo', [fn1, fn2, fn3]);
+        expect(ee.getListeners('foo')).toEqual([fn3, fn2, fn1]);
+
+        ee.addListeners('foo', [fn4, fn5]);
+        expect(ee.getListeners('foo')).toEqual([fn3, fn2, fn1, fn5, fn4]);
+    });
+
+    it('adds with an object', function() {
+        ee.addListeners({
+            foo: fn1,
+            bar: [fn2, fn3]
+        });
+        expect(ee.getListeners('foo')).toEqual([fn1]);
+        expect(ee.getListeners('bar')).toEqual([fn3, fn2]);
+
+        ee.addListeners({
+            foo: [fn4],
+            bar: fn5
+        });
+        expect(ee.getListeners('foo')).toEqual([fn1, fn4]);
+        expect(ee.getListeners('bar')).toEqual([fn3, fn2, fn5]);
+    });
+});
+
 // Run Jasmine
 jasmineEnv.execute();
