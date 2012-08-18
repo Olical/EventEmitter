@@ -170,11 +170,11 @@
                 if(evt.hasOwnProperty(i) && (value = evt[i])) {
                     // Pass the single listener straight through to the singular method
                     if(typeof value === 'function') {
-                        single(i, value);
+                        single.call(this, i, value);
                     }
                     else {
                         // Otherwise pass back to the multiple function
-                        multiple(i, value);
+                        multiple.call(this, i, value);
                     }
                 }
             }
@@ -185,7 +185,7 @@
             // Loop over it and pass each one to the multiple method
             i = listeners.length;
             while(i--) {
-                multiple(evt, listeners[i]);
+                single.call(this, evt, listeners[i]);
             }
         }
 
