@@ -1,5 +1,5 @@
 default:
-	@@echo "Available commands: server"
+	@@echo "Available commands: server, docs"
 
 .PHONY: docs
 
