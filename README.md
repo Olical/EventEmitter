@@ -2,7 +2,7 @@
 
 ## Event based JavaScript for the browser
 
-As the subtitle suggests, this script brings the power of events from platforms such as [node.js](http://nodejs.org/) to your browser. Although it can be used in any other platform, I just built it with browsers in mind.
+As the subtitle suggests, this script brings the power of events from platforms such as [node.js](http://nodejs.org/) to your browser. Although it can be used on any other platform, I just built it with browsers in mind.
 
 This is actually the fourth full rewrite of EventEmitter, my aim is for it to be faster and lighter than ever before. It also has a remapped API which just makes a lot more sense. Because the methods now have more descriptive names it is friendlier to extension into other classes. You will be able to distinguish event method from your own methods.
 
