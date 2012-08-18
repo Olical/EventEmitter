@@ -1,6 +1,3 @@
 [submodule "tests/jasmine"]
 	path = tests/jasmine
 	url = git://github.com/pivotal/jasmine.git
-[submodule "docs/dox"]
-	path = docs/dox
-	url = git://github.com/visionmedia/dox.git
