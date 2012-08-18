@@ -119,9 +119,37 @@
     };
 
     /**
+     * Adds listeners in bulk using the manipulateListeners method.
+     * If you pass an object as the second argument you can add to multiple events at once. The object should contain key value pairs of events and listeners or listener arrays.
+     * You can also pass it an event name and an array of listeners to be added.
+     *
+     * @param {String|Object} evt An event name if you will pass an array of listeners next. An object if you wish to add to multiple events at once.
+     * @param {Function[]} [listeners] An optional array of listener functions to add.
+     * @returns {Object} Current instance of EventEmitter for chaining.
+     */
+    EventEmitter.fn.addListeners = function(evt, listeners) {
+        // Pass through to manipulateListeners
+        return this.manipulateListeners(false, evt, listeners);
+    };
+
+    /**
+     * Removes listeners in bulk using the manipulateListeners method.
+     * If you pass an object as the second argument you can remove from multiple events at once. The object should contain key value pairs of events and listeners or listener arrays.
+     * You can also pass it an event name and an array of listeners to be removed.
+     *
+     * @param {String|Object} evt An event name if you will pass an array of listeners next. An object if you wish to remove from multiple events at once.
+     * @param {Function[]} [listeners] An optional array of listener functions to remove.
+     * @returns {Object} Current instance of EventEmitter for chaining.
+     */
+    EventEmitter.fn.removeListeners = function(evt, listeners) {
+        // Pass through to manipulateListeners
+        return this.manipulateListeners(true, evt, listeners);
+    };
+
+    /**
      * Edits listeners in bulk. The addListeners and removeListeners methods both use this to do their job. You should really use those instead, this is a little lower level.
      * The first argument will determine if the listeners are removed (true) or added (false).
-     * If you pass an object as the second argument you can add/remove from multiple events at once. The object should be key value pairs of events to listeners or listener arrays.
+     * If you pass an object as the second argument you can add/remove from multiple events at once. The object should contain key value pairs of events and listeners or listener arrays.
      * You can also pass it an event name and an array of listeners to be added/removed.
      *
      * @param {Boolean} remove True if you want to remove listeners, false if you want to add.
