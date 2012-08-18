@@ -318,5 +318,51 @@ describe('EventEmitter.fn.addListeners', function() {
     });
 });
 
+describe('EventEmitter.fn.removeListeners', function() {
+    var ee,
+        fn1 = function(){},
+        fn2 = function(){},
+        fn3 = function(){},
+        fn4 = function(){},
+        fn5 = function(){};
+
+    beforeEach(function() {
+        ee = new EventEmitter();
+    });
+
+    it('removes with an array', function() {
+        ee.addListeners('foo', [fn1, fn2, fn3, fn4, fn5]);
+        ee.removeListeners('foo', [fn2, fn3]);
+        expect(ee.getListeners('foo')).toEqual([fn5, fn4, fn1]);
+
+        ee.removeListeners('foo', [fn5, fn4]);
+        expect(ee.getListeners('foo')).toEqual([fn1]);
+
+        ee.removeListeners('foo', [fn1]);
+        expect(ee.getListeners('foo')).toEqual([]);
+    });
+
+    it('removes with an object', function() {
+        ee.addListeners({
+            foo: [fn1, fn2, fn3, fn4, fn5],
+            bar: [fn1, fn2, fn3, fn4, fn5]
+        });
+
+        ee.removeListeners({
+            foo: fn2,
+            bar: [fn3, fn4, fn5]
+        });
+        expect(ee.getListeners('foo')).toEqual([fn5, fn4, fn3, fn1]);
+        expect(ee.getListeners('bar')).toEqual([fn2, fn1]);
+
+        ee.removeListeners({
+            foo: [fn3],
+            bar: [fn2, fn1]
+        });
+        expect(ee.getListeners('foo')).toEqual([fn5, fn4, fn1]);
+        expect(ee.getListeners('bar')).toEqual([]);
+    });
+});
+
 // Run Jasmine
 jasmineEnv.execute();
