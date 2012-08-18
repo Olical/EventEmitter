@@ -13,10 +13,20 @@ fs.readFile('docs/api.dust.js', function(err, data) {
     dust.loadSource(data);
 
     // Load the data
-    fs.readFile('docs/data.json', function(err, data) {
+    fs.readFile('docs/data.json', function(err, raw) {
         // Throw any errors
         if(err) {
             throw err;
+        }
+
+        // Build the data object
+        var data = {
+            properties: [],
+            functions: []
+        };
+
+        for(i = 0; i < raw.length; i += 1) {
+            
         }
 
         // Pipe the data into the template
