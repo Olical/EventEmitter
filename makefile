@@ -10,3 +10,4 @@ server:
 # Builds the API documentation
 docs:
 	dox < EventEmitter.js > docs/data.json
+	dustc docs/api.dust docs/api.dust.js
