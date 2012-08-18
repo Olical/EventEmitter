@@ -224,12 +224,12 @@ describe('EventEmitter.fn.emitEvent', function() {
 });
 
 describe('EventEmitter.fn.manipulateListeners', function() {
-    var ee;
-    function fn1(){}
-    function fn2(){}
-    function fn3(){}
-    function fn4(){}
-    function fn5(){}
+    var ee,
+        fn1 = function(){},
+        fn2 = function(){},
+        fn3 = function(){},
+        fn4 = function(){},
+        fn5 = function(){};
 
     beforeEach(function() {
         ee = new EventEmitter();
