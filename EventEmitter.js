@@ -92,6 +92,53 @@
     };
 
     /**
+     * Edits listeners in bulk. The addListeners and removeListeners methods both use this to do their job. You should really use those instead, this is a little lower level.
+     * The first argument will determine if the listeners are removed (true) or added (false).
+     * If you pass an object as the second argument you can add/remove from multiple events at once. The object should be key value pairs of events to listeners or listener arrays.
+     * You can also pass it an event name and an array of listeners to be added/removed.
+     *
+     * @param {Boolean} remove True if you want to remove listeners, false if you want to add.
+     * @param {String|Object} evt An event name if you will pass an array of listeners next. An object if you wish to add/remove from multiple events at once.
+     * @param {Function[]} [listeners] An optional array of listener functions to add/remove.
+     * @returns {Object} Current instance of EventEmitter for chaining.
+     */
+    EventEmitter.fn.manipulateListeners = function(remove, evt, listeners) {
+        // Initialise any required variables
+        var i,
+            value,
+            single = remove ? this.removeListener : this.addListener,
+            multiple = remove ? this.removeListeners : this.addListeners;
+
+        // If evt is an object then pass each of it's properties to this method
+        if(typeof evt === 'object') {
+            for(i in evt) {
+                if(evt.hasOwnProperty(i) && (value = evt[i])) {
+                    // Pass the single listener straight through to the singular method
+                    if(typeof value === 'function') {
+                        single(i, value);
+                    }
+                    else {
+                        // Otherwise pass back to the multiple function
+                        multiple(i, value);
+                    }
+                }
+            }
+        }
+        else {
+            // So evt must be a string
+            // And listeners must be an array of listeners
+            // Loop over it and pass each one to the multiple method
+            i = listeners.length;
+            while(i--) {
+                multiple(evt, listeners[i]);
+            }
+        }
+
+        // Return the instance of EventEmitter to allow chaining
+        return this;
+    };
+
+    /**
      * Removes a listener function from the specified event.
      *
      * @param {String} evt Name of the event to remove the listener from.
