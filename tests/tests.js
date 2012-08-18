@@ -138,7 +138,7 @@ describe('EventEmitter.fn.removeListener', function() {
     });
 });
 
-describe('EventEmitter.fn.removeListeners', function() {
+describe('EventEmitter.fn.removeEvent', function() {
     var ee,
         fn1 = function(){},
         fn2 = function(){},
@@ -160,19 +160,19 @@ describe('EventEmitter.fn.removeListeners', function() {
     });
 
     it('removes all listeners for the specified event', function() {
-        ee.removeListeners('bar');
+        ee.removeEvent('bar');
         expect(ee.getListeners('foo')).toEqual([fn1, fn2]);
         expect(ee.getListeners('bar')).toEqual([]);
         expect(ee.getListeners('baz')).toEqual([fn5]);
 
-        ee.removeListeners('baz');
+        ee.removeEvent('baz');
         expect(ee.getListeners('foo')).toEqual([fn1, fn2]);
         expect(ee.getListeners('bar')).toEqual([]);
         expect(ee.getListeners('baz')).toEqual([]);
     });
 
     it('removes all events when no event is specified', function() {
-        ee.removeListeners();
+        ee.removeEvent();
         expect(ee.getListeners('foo')).toEqual([]);
         expect(ee.getListeners('bar')).toEqual([]);
         expect(ee.getListeners('baz')).toEqual([]);

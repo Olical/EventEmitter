@@ -126,7 +126,7 @@
      * @param {String} [evt] Optional name of the event to remove all listeners for. Will remove from every event if not passed.
      * @returns {Object} Current instance of EventEmitter for chaining.
      */
-    EventEmitter.fn.removeListeners = function(evt) {
+    EventEmitter.fn.removeEvent = function(evt) {
         // Remove different things depending on the state of evt
         if(evt) {
             // Remove all listeners for the specified event
