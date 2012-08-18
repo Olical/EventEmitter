@@ -36,6 +36,12 @@ If you wish to run the tests you will also need to fetch the required submodules
 
     git submodule update --init
 
+## Building
+
+### Documentation
+
+First you will need to install [dox](https://github.com/visionmedia/dox). Then you can run `make docs` to build from the JSDoc comments found within the source code.
+
 ## License (MIT)
 
 Copyright (c) 2012 Oliver Caldwell
