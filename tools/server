@@ -1,4 +1,0 @@
-#!/bin/bash
-
-# Boots a Python HTTP server for testing with
-python -m SimpleHTTPServer
