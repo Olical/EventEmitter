@@ -249,6 +249,36 @@ describe('EventEmitter.fn.manipulateListeners', function() {
         ee.manipulateListeners(true, 'foo', [fn4, fn1]);
         expect(ee.getListeners('foo')).toEqual([]);
     });
+
+    it('manipulates with an object', function() {
+        ee.manipulateListeners(false, {
+            foo: [fn1, fn2, fn3],
+            bar: fn4
+        });
+
+        ee.manipulateListeners(false, {
+            bar: [fn5, fn1]
+        });
+
+        expect(ee.getListeners('foo')).toEqual([fn3, fn2, fn1]);
+        expect(ee.getListeners('bar')).toEqual([fn4, fn1, fn5]);
+
+        ee.manipulateListeners(true, {
+            foo: fn1,
+            bar: [fn5, fn4]
+        });
+
+        expect(ee.getListeners('foo')).toEqual([fn3, fn2]);
+        expect(ee.getListeners('bar')).toEqual([fn1]);
+
+        ee.manipulateListeners(true, {
+            foo: [fn3, fn2],
+            bar: fn1
+        });
+
+        expect(ee.getListeners('foo')).toEqual([]);
+        expect(ee.getListeners('bar')).toEqual([]);
+    });
 });
 
 // Run Jasmine
