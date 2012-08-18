@@ -42,7 +42,7 @@ If you wish to run the tests you will also need to fetch the required submodules
 
 First you will need to install [dox](https://github.com/visionmedia/dox) and [LinkedIn's fork of dust](http://linkedin.github.com/dustjs/) using [npm](https://npmjs.org/). You can do that with the following command.
 
-    [sudo] npm install -g dox dustjs-linkedin
+    npm install dox dustjs-linkedin
 
 Then you can run `make docs` to build from the JSDoc comments found within the source code. The built documentation will be placed in `docs/api.md`. I actually keep this inside the repository so each version will have it's documentation stored with it.
 
