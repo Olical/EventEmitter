@@ -108,7 +108,7 @@ describe('EventEmitter.fn.removeListener', function() {
         expect(listeners).toEqual([fn2]);
 
         ee.removeListener('bar', fn2);
-        expect(ee._events.bar).not.toBeDefined();
+        expect(ee._events.bar).toEqual(null);
     });
 });
 
