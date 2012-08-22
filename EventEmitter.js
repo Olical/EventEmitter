@@ -6,6 +6,7 @@
 
 ;(function(exports) {
     // JSHint config - http://www.jshint.com/
+    /*jshint laxcomma:true*/
     /*global define:true*/
 
     // Place the script in strict mode
@@ -97,8 +98,8 @@
     proto.removeListener = function(evt, listener) {
         // Fetch the listeners
         // And get the index of the listener in the array
-        var listeners = this.getListeners(evt),
-            index = indexOfListener(listener, listeners);
+        var listeners = this.getListeners(evt)
+          , index = indexOfListener(listener, listeners);
 
         // If the listener was found then remove it
         if(index !== -1) {
@@ -155,10 +156,10 @@
      */
     proto.manipulateListeners = function(remove, evt, listeners) {
         // Initialise any required variables
-        var i,
-            value,
-            single = remove ? this.removeListener : this.addListener,
-            multiple = remove ? this.removeListeners : this.addListeners;
+        var i
+          , value
+          , single = remove ? this.removeListener : this.addListener
+          , multiple = remove ? this.removeListeners : this.addListeners;
 
         // If evt is an object then pass each of it's properties to this method
         if(typeof evt === 'object') {
@@ -226,8 +227,8 @@
     proto.emitEvent = function(evt, args) {
         // Get the listeners for the event
         // Also initialise any other required variables
-        var listeners = this.getListeners(evt),
-            i = listeners.length;
+        var listeners = this.getListeners(evt)
+          , i = listeners.length;
 
         // Make args default to an empty array
         args = args || [];
