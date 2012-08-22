@@ -47,7 +47,7 @@
 
         // Default to returning -1
         return -1;
-    };
+    }
 
     /**
      * Returns the listener array for the specified event.
