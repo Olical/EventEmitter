@@ -19,11 +19,7 @@
      */
     function EventEmitter(){}
 
-    /**
-     * Provides a shortcut to the prototype.
-     *
-     * @property {Object} Shortcut to the prototype object.
-     */
+    // Provides a shortcut to the prototype.
     var proto = EventEmitter.prototype;
 
     /**
