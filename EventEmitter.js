@@ -27,30 +27,13 @@
     var proto = EventEmitter.prototype;
 
     /**
-     * Returns the listener array for the specified event.
-     * Will initialise the event object and listener arrays if required.
-     *
-     * @param {String} evt Name of the event to return the listeners from.
-     * @returns {Function[]} All listener functions for the event.
-     */
-    proto.getListeners = function(evt) {
-        // Create a shortcut to the storage object
-        // Initialise it if it does not exists yet
-        var events = this._events || (this._events = {});
-
-        // Return the listener array
-        // Initialise it if it does not exist
-        return events[evt] || (events[evt] = []);
-    };
-
-    /**
      * Finds the index of the listener for the event in it's storage array
      *
      * @param {Function} listener Method to look for.
      * @param {Function[]} listeners Array of listeners to search through.
      * @returns {Number} Index of the specified listener, -1 if not found
      */
-    proto.indexOfListener = function(listener, listeners) {
+    function indexOfListener(listener, listeners) {
         // Return the index via the native method if possible
         if(listeners.indexOf) {
             return listeners.indexOf(listener);
@@ -71,6 +54,23 @@
     };
 
     /**
+     * Returns the listener array for the specified event.
+     * Will initialise the event object and listener arrays if required.
+     *
+     * @param {String} evt Name of the event to return the listeners from.
+     * @returns {Function[]} All listener functions for the event.
+     */
+    proto.getListeners = function(evt) {
+        // Create a shortcut to the storage object
+        // Initialise it if it does not exists yet
+        var events = this._events || (this._events = {});
+
+        // Return the listener array
+        // Initialise it if it does not exist
+        return events[evt] || (events[evt] = []);
+    };
+
+    /**
      * Adds a listener function to the specified event.
      * The listener will not be added if it is a duplicate.
      *
@@ -83,7 +83,7 @@
         var listeners = this.getListeners(evt);
 
         // Push the listener into the array if it is not already there
-        if(this.indexOfListener(listener, listeners) === -1) {
+        if(indexOfListener(listener, listeners) === -1) {
             listeners.push(listener);
         }
 
@@ -102,7 +102,7 @@
         // Fetch the listeners
         // And get the index of the listener in the array
         var listeners = this.getListeners(evt),
-            index = this.indexOfListener(listener, listeners);
+            index = indexOfListener(listener, listeners);
 
         // If the listener was found then remove it
         if(index !== -1) {
