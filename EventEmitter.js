@@ -24,7 +24,7 @@
      *
      * @property {Object} Shortcut to the prototype object.
      */
-    EventEmitter.fn = EventEmitter.prototype;
+    var proto = EventEmitter.prototype;
 
     /**
      * Returns the listener array for the specified event.
@@ -33,7 +33,7 @@
      * @param {String} evt Name of the event to return the listeners from.
      * @returns {Function[]} All listener functions for the event.
      */
-    EventEmitter.fn.getListeners = function(evt) {
+    proto.getListeners = function(evt) {
         // Create a shortcut to the storage object
         // Initialise it if it does not exists yet
         var events = this._events || (this._events = {});
@@ -50,7 +50,7 @@
      * @param {Function[]} listeners Array of listeners to search through.
      * @returns {Number} Index of the specified listener, -1 if not found
      */
-    EventEmitter.fn.indexOfListener = function(listener, listeners) {
+    proto.indexOfListener = function(listener, listeners) {
         // Return the index via the native method if possible
         if(listeners.indexOf) {
             return listeners.indexOf(listener);
@@ -78,7 +78,7 @@
      * @param {Function} listener Method to be called when the event is emitted.
      * @returns {Object} Current instance of EventEmitter for chaining.
      */
-    EventEmitter.fn.addListener = function(evt, listener) {
+    proto.addListener = function(evt, listener) {
         // Fetch the listeners
         var listeners = this.getListeners(evt);
 
@@ -98,7 +98,7 @@
      * @param {Function} listener Method to remove from the event.
      * @returns {Object} Current instance of EventEmitter for chaining.
      */
-    EventEmitter.fn.removeListener = function(evt, listener) {
+    proto.removeListener = function(evt, listener) {
         // Fetch the listeners
         // And get the index of the listener in the array
         var listeners = this.getListeners(evt),
@@ -127,7 +127,7 @@
      * @param {Function[]} [listeners] An optional array of listener functions to add.
      * @returns {Object} Current instance of EventEmitter for chaining.
      */
-    EventEmitter.fn.addListeners = function(evt, listeners) {
+    proto.addListeners = function(evt, listeners) {
         // Pass through to manipulateListeners
         return this.manipulateListeners(false, evt, listeners);
     };
@@ -141,7 +141,7 @@
      * @param {Function[]} [listeners] An optional array of listener functions to remove.
      * @returns {Object} Current instance of EventEmitter for chaining.
      */
-    EventEmitter.fn.removeListeners = function(evt, listeners) {
+    proto.removeListeners = function(evt, listeners) {
         // Pass through to manipulateListeners
         return this.manipulateListeners(true, evt, listeners);
     };
@@ -157,7 +157,7 @@
      * @param {Function[]} [listeners] An optional array of listener functions to add/remove.
      * @returns {Object} Current instance of EventEmitter for chaining.
      */
-    EventEmitter.fn.manipulateListeners = function(remove, evt, listeners) {
+    proto.manipulateListeners = function(remove, evt, listeners) {
         // Initialise any required variables
         var i,
             value,
@@ -201,7 +201,7 @@
      * @param {String} [evt] Optional name of the event to remove all listeners for. Will remove from every event if not passed.
      * @returns {Object} Current instance of EventEmitter for chaining.
      */
-    EventEmitter.fn.removeEvent = function(evt) {
+    proto.removeEvent = function(evt) {
         // Remove different things depending on the state of evt
         if(evt) {
             // Remove all listeners for the specified event
@@ -227,7 +227,7 @@
      * @param {Array} [args] Optional array of arguments to be passed to each argument.
      * @returns {Object} Current instance of EventEmitter for chaining.
      */
-    EventEmitter.fn.emitEvent = function(evt, args) {
+    proto.emitEvent = function(evt, args) {
         // Get the listeners for the event
         // Also initialise any other required variables
         var listeners = this.getListeners(evt),
