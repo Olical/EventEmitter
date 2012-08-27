@@ -11,7 +11,7 @@ I have been working on it for over a year so far and in that time my skills in J
 ## Documentation
 
  * Guide _(working on it...)_
- * [API](./docs/api.md)
+ * [API](./rewrite-4/docs/api.md)
 
 ### Building the documentation
 
