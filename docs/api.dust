@@ -1,3 +1,12 @@
-{#sections}
-    {{ test }}
-{/sections}
+# API{~n}
+{~n}
+{#.}
+## {ctx.name}{~n}
+{~n}
+{description.full|s}{~n}
+{~n}
+{#tags}
+{~s}* **{type}**{?types} ({#types}{.}{@sep} | {/sep}{/types}){/types}{?name} _{name}_{/name}{?description} - {description}{/description}{~n}
+{/tags}
+{~n}
+{/.}
