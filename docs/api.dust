@@ -8,5 +8,5 @@
 {#tags}
 {~s}* **{type}**{?types} ({#types}{.}{@sep} | {/sep}{/types}){/types}{?name} _{name}_{/name}{?description} - {description}{/description}{~n}
 {/tags}
-{~n}
+{@sep}{~n}{/sep}
 {/.}
