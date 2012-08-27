@@ -1,5 +1,7 @@
 # API{~n}
 {~n}
+Each of the methods listed in the API are accessed through an instance of EventEmitter. You can create an instance with `var ee = new EventEmitter();`. Then you can call API methods from `ee`, for example `ee.emitEvent('foo');`.{~n}
+{~n}
 {#.}
 ## {ctx.name}{~n}
 {~n}
