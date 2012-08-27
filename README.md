@@ -21,20 +21,6 @@ First you will need to install [dox](https://github.com/visionmedia/dox) and [Li
 
 Then you can run `make docs` to build from the JSDoc comments found within the source code. The built documentation will be placed in `docs/api.md`. I actually keep this inside the repository so each version will have it's documentation stored with it.
 
-## Testing
-
-Tests are performed using Jasmine in the following browsers via [BrowserStack](http://www.browserstack.com/).
-
- * Firefox
- * Chrome
- * Opera
- * Safari
- * IE6+
-
-When testing in the more modern browsers, not Internet Explorer basically, I run it through the very early versions, some midrange versions and the very latest ones too. I don't just do the latest version.
-
-EventEmitter will always be tested and working perfectly in all of them before a release. I will not release anything I think is riddled with bugs. However, if you do spot one, please [submit it as an issue](https://github.com/Wolfy87/EventEmitter/issues) and I will get right on it.
-
 ## Cloning
 
 You can clone the repository with your generic clone commands as a standalone repository or submodule.
@@ -48,6 +34,20 @@ You can clone the repository with your generic clone commands as a standalone re
 If you wish to run the tests you will also need to fetch the required submodules. You can do that with the following command.
 
     git submodule update --init
+
+## Testing
+
+Tests are performed using Jasmine in the following browsers via [BrowserStack](http://www.browserstack.com/).
+
+ * Firefox
+ * Chrome
+ * Opera
+ * Safari
+ * IE6+
+
+When testing in the more modern browsers, not Internet Explorer basically, I run it through the very early versions, some midrange versions and the very latest ones too. I don't just do the latest version.
+
+EventEmitter will always be tested and working perfectly in all of them before a release. I will not release anything I think is riddled with bugs. However, if you do spot one, please [submit it as an issue](https://github.com/Wolfy87/EventEmitter/issues) and I will get right on it.
 
 ## License (MIT)
 
