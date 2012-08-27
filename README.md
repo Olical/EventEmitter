@@ -8,6 +8,19 @@ This is actually the fourth full rewrite of EventEmitter, my aim is for it to be
 
 I have been working on it for over a year so far and in that time my skills in JavaScript have come a long way. This script is a culmination of my learnings which you can hopefully find very useful.
 
+## Documentation
+
+ * Guide _(working on it...)_
+ * [API](./docs/api.md)
+
+### Building the documentation
+
+First you will need to install [dox](https://github.com/visionmedia/dox) and [LinkedIn's fork of dust](http://linkedin.github.com/dustjs/) using [npm](https://npmjs.org/). You can do that with the following command.
+
+    npm install dox dustjs-linkedin
+
+Then you can run `make docs` to build from the JSDoc comments found within the source code. The built documentation will be placed in `docs/api.md`. I actually keep this inside the repository so each version will have it's documentation stored with it.
+
 ## Testing
 
 Tests are performed using Jasmine in the following browsers via [BrowserStack](http://www.browserstack.com/).
@@ -35,16 +48,6 @@ You can clone the repository with your generic clone commands as a standalone re
 If you wish to run the tests you will also need to fetch the required submodules. You can do that with the following command.
 
     git submodule update --init
-
-## Building
-
-### Documentation
-
-First you will need to install [dox](https://github.com/visionmedia/dox) and [LinkedIn's fork of dust](http://linkedin.github.com/dustjs/) using [npm](https://npmjs.org/). You can do that with the following command.
-
-    npm install dox dustjs-linkedin
-
-Then you can run `make docs` to build from the JSDoc comments found within the source code. The built documentation will be placed in `docs/api.md`. I actually keep this inside the repository so each version will have it's documentation stored with it.
 
 ## License (MIT)
 
