@@ -13,20 +13,33 @@ fs.readFile('docs/api.dust.js', function(err, data) {
     dust.loadSource(data);
 
     // Load the data
-    fs.readFile('docs/data.json', function(err, raw) {
+    fs.readFile('docs/data.json', function(err, rawJSON) {
         // Throw any errors
         if(err) {
             throw err;
         }
 
-        // Build the data object
-        var data = {
-            properties: [],
-            functions: []
-        };
+        // Parse the JSON
+        var raw = JSON.parse(rawJSON);
 
-        for(i = 0; i < raw.length; i += 1) {
-            
+        // Build the data array
+        var data = [];
+
+        // Loop over all JSDoc block
+        for(var i = 0; i < raw.length; i += 1) {
+            // Loop over any tags found in the block
+            if(raw[i].tags) {
+                for(var t = 0; t < raw[i].tags.length; t += 1) {
+                    // If it is a doc tag then add method to the data array
+                    if(raw[i].tags[t].type === 'doc') {
+                        // Add the method to the data object
+                        data.push(raw[i]);
+
+                        // And remove the doc tag
+                        raw[i].tags.splice(t, 1);
+                    }
+                }
+            }
         }
 
         // Pipe the data into the template
