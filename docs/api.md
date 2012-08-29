@@ -1,6 +1,6 @@
 # API
 
-Each of the methods listed in the API are accessed through an instance of EventEmitter. You can create an instance with `var ee = new EventEmitter();`. Then you can call API methods from `ee`, for example: `ee.emitEvent('foo');`.
+Each of the methods listed in the API are accessed through an instance of EventEmitter. You can create an instance with `var ee = new EventEmitter();`. Then you can call API methods from `ee`, for example `ee.emitEvent('foo');`.
 
 ## getListeners
 
@@ -11,10 +11,10 @@ Each of the methods listed in the API are accessed through an instance of EventE
 
 ## addListener
 
-<p>Adds a listener function to the specified event.<br />The listener will not be added if it is a duplicate.</p>
+<p>Adds a listener function to the specified event.<br />The listener will not be added if it is a duplicate.<br />If the listener returns true then it will be removed after it is called.</p>
 
  * **param** (String) _evt_ - Name of the event to attach the listener to.
- * **param** (Function) _listener_ - Method to be called when the event is emitted.
+ * **param** (Function) _listener_ - Method to be called when the event is emitted. If the function returns true then it will be removed after calling.
  * **return** (Object) - Current instance of EventEmitter for chaining.
 
 ## removeListener
