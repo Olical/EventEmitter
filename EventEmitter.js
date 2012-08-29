@@ -241,10 +241,13 @@
         // Make args default to an empty array
         args = args || [];
 
+        // Loop over all listeners assigned to the event
+        // Apply the arguments array to each listener function
         while(i--) {
-            // Execute every listener attached to the event
-            // Apply the arguments array to each listener too
-            listeners[i].apply(null, args);
+            // If the listener returns true then it shall be removed from the event
+            if(listeners[i].apply(null, args) === true) {
+                this.removeListener(evt, listeners[i]);
+            }
         }
 
         // Return the instance of EventEmitter to allow chaining
