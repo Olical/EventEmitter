@@ -195,6 +195,23 @@ describe('EventEmitter.fn.emitEvent', function() {
 
         expect(count).toEqual(5);
     });
+
+    it('executes multiple listeners after one has been removed', function() {
+        var count = 0,
+            toRemove = function() { count++; };
+
+        ee.addListener('baz', function() { count++; });
+        ee.addListener('baz', function() { count++; });
+        ee.addListener('baz', toRemove);
+        ee.addListener('baz', function() { count++; });
+        ee.addListener('baz', function() { count++; });
+
+        ee.removeListener('baz', toRemove);
+
+        ee.emitEvent('baz');
+
+        expect(count).toEqual(4);
+    });
 });
 
 describe('EventEmitter.fn.manipulateListeners', function() {
