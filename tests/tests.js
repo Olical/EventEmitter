@@ -212,6 +212,21 @@ describe('EventEmitter.fn.emitEvent', function() {
 
         expect(count).toEqual(4);
     });
+
+    it('executes multiple listeners and removes those that return true', function() {
+        var count = 0;
+
+        ee.addListener('baz', function() { count++; });
+        ee.addListener('baz', function() { count++; return true; });
+        ee.addListener('baz', function() { count++; return false; });
+        ee.addListener('baz', function() { count++; return 1; });
+        ee.addListener('baz', function() { count++; return true; });
+
+        ee.emitEvent('baz');
+        ee.emitEvent('baz');
+
+        expect(count).toEqual(8);
+    });
 });
 
 describe('EventEmitter.fn.manipulateListeners', function() {
