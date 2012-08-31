@@ -285,6 +285,26 @@ describe('EventEmitter.fn.manipulateListeners', function() {
         expect(ee.getListeners('foo')).toEqual([]);
         expect(ee.getListeners('bar')).toEqual([]);
     });
+
+    it('does not execute listeners just after they are added in another listeners', function() {
+        var count = 0;
+
+        ee.addListener('baz', function() { count++; });
+        ee.addListener('baz', function() { count++; });
+        ee.addListener('baz', function() {
+            count++;
+
+            ee.addListener('baz', function() {
+                count++;
+            });
+        });
+        ee.addListener('baz', function() { count++; });
+        ee.addListener('baz', function() { count++; });
+
+        ee.emitEvent('baz');
+
+        expect(count).toEqual(5);
+    });
 });
 
 describe('EventEmitter.fn.addListeners', function() {
