@@ -44,3 +44,17 @@ This is pretty simple, just require the file and load the `EventEmitter` attribu
 
     var EventEmitter = require('./assets/js/EventEmitter').EventEmitter;
     var ee = new EventEmitter();
+
+## Extending with the EventEmitter class
+
+You probably won't want to use EventEmitter as a raw class. You will probably want to write a `Player` class or something like that and implement EventEmitter's methods into it. To do this you will need to clone and merge EventEmitter's prototype object into your classes prototype object. Here is how I would do that with MooTools, I am sure there are alternatives for almost all other frameworks.
+
+    function Player(){}
+    Player.prototype = Object.clone(EventEmitter.prototype);
+
+If you do not want to use a huge framework like that then you might want to use this script I wrote, [Heir](https://github.com/Wolfy87/Heir). It just makes prototypical inheritance nice and easy. So here is how you would inherit EventEmitter's methods with Heir.
+
+    function Player(){}
+    Player.inherit(EventEmitter);
+
+That's all there is to it.
