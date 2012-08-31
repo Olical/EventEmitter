@@ -135,3 +135,27 @@ You can also remove whole events and all of their attached listeners with the `r
     ee.removeEvent('foo');
 
 However, if you leave it blank and do not pass an event name, then **all** events will be removed. It will wipe everything.
+
+### Emitting events
+
+So once you have added your listeners and you are ready to start executing them, you can start to use the `emitEvent` method. At it's most basic level it will just execute all listeners attached to an event.
+
+    function listener1() {
+        console.log('ONE');
+    }
+    
+    function listener2() {
+        console.log('TWO');
+    }
+    
+    ee.addListeners('foo', [listener1, listener2]);
+    ee.emitEvent('foo');
+
+For more control, you can pass an arguments array as the second argument. This array will be applied to every listener as individual arguments.
+
+    function adder(a, b) {
+        console.log(a + b);
+    }
+    
+    ee.addListener('addStuff', adder);
+    ee.emitEvent('addStuff', [10, 20]);
