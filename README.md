@@ -21,6 +21,12 @@ First you will need to install [dox](https://github.com/visionmedia/dox) and [Li
 
 Then you can run `make docs` to build from the JSDoc comments found within the source code. The built documentation will be placed in `docs/api.md`. I actually keep this inside the repository so each version will have it's documentation stored with it.
 
+## Minifying
+
+You can grab minified versions of EventEmitter from [the downloads page](https://github.com/Wolfy87/EventEmitter/downloads). If you need to build a custom version then you will first need to install the uglifyjs node module (`npm install uglify-js`) and then you can run `tools/dist.sh`. The script takes one optional argument which specifies the version that should be placed in the minified files name, `4.0.0` for example. If not passed then it defaults to `dev`.
+
+So with a version passed you will get a file name like `dist/EventEmitter-4.0.0.min.js`, without one you will be left with this `dist/EventEmitter-dev.min.js`.
+
 ## Cloning
 
 You can clone the repository with your generic clone commands as a standalone repository or submodule.
