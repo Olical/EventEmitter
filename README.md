@@ -41,6 +41,8 @@ If you wish to run the tests you will also need to fetch the required submodules
 
     git submodule update --init
 
+If you only need the script itself you may want to look at [the downloads page](https://github.com/Wolfy87/EventEmitter/downloads).
+
 ## Testing
 
 Tests are performed using Jasmine in the following browsers via [BrowserStack](http://www.browserstack.com/).
