@@ -32,7 +32,7 @@ You can then access it in your code like so.
 
 ### Browser via AMD
 
-I love AMD, so I implemented it in EventEmitter. If the script is loaded into a page containing an AMD loaded then it will not be placed in the global namespace as it usually is. Instead it must be accessed via AMD like this.
+I love AMD, so I implemented it in EventEmitter. If the script is loaded into a page containing an AMD loader (such as [RequireJS](http://requirejs.org/)) then it will not be placed in the global namespace as it usually is. Instead it must be accessed via AMD like this.
 
     require(['EventEmitter'], function(EventEmitter) {
         var ee = new EventEmitter();
