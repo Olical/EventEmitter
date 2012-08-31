@@ -33,7 +33,7 @@ You can clone the repository with your generic clone commands as a standalone re
 
     # Full repository
     git clone git://github.com/Wolfy87/EventEmitter.git
-
+    
     # Or submodule
     git submodule add git://github.com/Wolfy87/EventEmitter.git assets/js/EventEmitter
 
