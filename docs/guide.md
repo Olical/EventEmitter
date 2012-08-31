@@ -58,3 +58,80 @@ If you do not want to use a huge framework like that then you might want to use 
     Player.inherit(EventEmitter);
 
 That's all there is to it.
+
+## Using EventEmitter
+
+So by now you should be able to download a copy of the script, load it into your page and either use it on it's own or implement it's methods into your own classes. Now you need to work out how to actually use the script.
+
+For all of the following examples we are going to presume the following code has already been executed.
+
+    var ee = new EventEmitter();
+
+This code simply creates an instance of EventEmitter to be used.
+
+### Adding listeners
+
+A listener is a function that is executed when an event is emitted. You can add them in a multitude of ways, the simplest of which is with the `addListener` method.
+
+    function listener() {
+        console.log('The foo event has been emitted.');
+    }
+    
+    ee.addListener('foo', listener);
+
+You can also add in bulk using the `addListeners` method (notice the "s" on the end). You can interact with addListeners in two ways, the first is to pass it an event name and array of listeners to add.
+
+    function listener1() {
+        console.log('ONE');
+    }
+    
+    function listener2() {
+        console.log('TWO');
+    }
+    
+    ee.addListeners('foo', [listener1, listener2]);
+
+The second way of calling addListeners involves passing an object of event names and listeners. You can either pass a single listener for each event or an array, just as you can see above.
+
+    function listener1() {
+        console.log('ONE');
+    }
+    
+    function listener2() {
+        console.log('TWO');
+    }
+    
+    function listener3() {
+        console.log('THREE');
+    }
+    
+    ee.addListeners({
+        foo: [listener1, listener2],
+        bar: listener3
+    });
+
+### Removing listeners
+
+This works in the _exact_ same way as adding listeners. The only difference is that you replace the `add` in the method names with `remove`. Like this:
+
+    function listener() {
+        console.log('The foo event has been emitted.');
+    }
+    
+    ee.addListener('foo', listener);
+    ee.removeListener('foo', listener);
+
+You can also remove whole events and all of their attached listeners with the `removeEvent` method. If you pass an event name to the method then it will remove that event and it's listeners.
+
+    function listener1() {
+        console.log('ONE');
+    }
+    
+    function listener2() {
+        console.log('TWO');
+    }
+    
+    ee.addListeners('foo', [listener1, listener2]);
+    ee.removeEvent('foo');
+
+However, if you leave it blank and do not pass an event name, then **all** events will be removed. It will wipe everything.
