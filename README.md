@@ -10,8 +10,8 @@ I have been working on it for over a year so far and in that time my skills in J
 
 ## Documentation
 
- * Guide _(working on it...)_
- * [API](./rewrite-4/docs/api.md)
+ * [Guide](https://github.com/Wolfy87/EventEmitter/blob/rewrite-4/docs/guide.md)
+ * [API](https://github.com/Wolfy87/EventEmitter/blob/rewrite-4/docs/api.md)
 
 ### Building the documentation
 
