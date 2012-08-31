@@ -239,9 +239,6 @@
         var listeners = this.getListeners(evt)
           , i = listeners.length;
 
-        // Make args default to an empty array
-        args = args || [];
-
         // Loop over all listeners assigned to the event
         // Apply the arguments array to each listener function
         while(i--) {
