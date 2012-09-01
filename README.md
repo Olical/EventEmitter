@@ -19,7 +19,7 @@ First you will need to install [dox](https://github.com/visionmedia/dox) and [Li
 
     npm install dox dustjs-linkedin
 
-Then you can run `make docs` to build from the JSDoc comments found within the source code. The built documentation will be placed in `docs/api.md`. I actually keep this inside the repository so each version will have it's documentation stored with it.
+Then you can run `tools/doc.sh` to build from the JSDoc comments found within the source code. The built documentation will be placed in `docs/api.md`. I actually keep this inside the repository so each version will have it's documentation stored with it.
 
 ## Minifying
 
