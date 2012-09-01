@@ -121,6 +121,23 @@ This works in the _exact_ same way as adding listeners. The only difference is t
     ee.addListener('foo', listener);
     ee.removeListener('foo', listener);
 
+If you want a listener to remove itself after it has been called or after a condition has been met then all you need to do is return true.
+
+    function listener1() {
+        // If a condition is met then remove the listener
+        if(completed) {
+            return true;
+        }
+    }
+    
+    function listener2() {
+        // Always remove after use
+        return true;
+    }
+    
+    ee.addListeners('foo', [listener1, listener2]);
+    ee.emitEvent('foo');
+
 You can also remove whole events and all of their attached listeners with the `removeEvent` method. If you pass an event name to the method then it will remove that event and it's listeners.
 
     function listener1() {
