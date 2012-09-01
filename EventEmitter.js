@@ -243,7 +243,7 @@
         // Apply the arguments array to each listener function
         while(i--) {
             // If the listener returns true then it shall be removed from the event
-            if(listeners[i].apply(null, args) === true) {
+            if(listeners[i].apply(null, args || []) === true) {
                 this.removeListener(evt, listeners[i]);
             }
         }
