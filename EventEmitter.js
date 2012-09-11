@@ -1,5 +1,5 @@
 /**
- * EventEmitter v4.0.0 - git.io/gTW-jg
+ * EventEmitter v4.0.1 - git.io/gTW-jg
  * Oliver Caldwell
  * MIT license
  */
