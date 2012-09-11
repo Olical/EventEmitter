@@ -171,13 +171,24 @@ describe('emitEvent', function() {
         expect(run).toEqual(true);
     });
 
+    it('executes attached with a single argument', function() {
+        var key = null;
+
+        ee.addListener('bar', function(a) {
+            key = a;
+        });
+        ee.emitEvent('bar', [50]);
+
+        expect(key).toEqual(50);
+    });
+
     it('executes attached with arguments', function() {
         var key = null;
 
-        ee.addListener('bar', function(passedKey) {
-            key = passedKey;
+        ee.addListener('bar2', function(a, b) {
+            key = a + b;
         });
-        ee.emitEvent('bar', [42]);
+        ee.emitEvent('bar2', [40, 2]);
 
         expect(key).toEqual(42);
     });
