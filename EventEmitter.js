@@ -29,7 +29,7 @@
       , argumentsPlaceholder = []
 
       // Existence of a native index
-      , nativeIndexOf = argumentsPlaceholder.indexOf;
+      , nativeIndexOf = argumentsPlaceholder.indexOf ? true : false;
 
     /**
      * Finds the index of the listener for the event in it's storage array
