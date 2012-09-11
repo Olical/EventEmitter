@@ -11,7 +11,7 @@ jasmineEnv.specFilter = function(spec) {
 };
 
 // Configure the tests
-describe('EventEmitter.fn.getListeners', function() {
+describe('getListeners', function() {
     var ee;
 
     beforeEach(function() {
@@ -41,7 +41,7 @@ describe('EventEmitter.fn.getListeners', function() {
     });
 });
 
-describe('EventEmitter.fn.addListener', function() {
+describe('addListener', function() {
     var ee,
         fn1 = function(){},
         fn2 = function(){};
@@ -67,7 +67,7 @@ describe('EventEmitter.fn.addListener', function() {
     });
 });
 
-describe('EventEmitter.fn.removeListener', function() {
+describe('removeListener', function() {
     var ee,
         fn1 = function(){},
         fn2 = function(){},
@@ -112,7 +112,7 @@ describe('EventEmitter.fn.removeListener', function() {
     });
 });
 
-describe('EventEmitter.fn.removeEvent', function() {
+describe('removeEvent', function() {
     var ee,
         fn1 = function(){},
         fn2 = function(){},
@@ -153,7 +153,7 @@ describe('EventEmitter.fn.removeEvent', function() {
     });
 });
 
-describe('EventEmitter.fn.emitEvent', function() {
+describe('emitEvent', function() {
     var ee;
 
     beforeEach(function() {
@@ -229,7 +229,7 @@ describe('EventEmitter.fn.emitEvent', function() {
     });
 });
 
-describe('EventEmitter.fn.manipulateListeners', function() {
+describe('manipulateListeners', function() {
     var ee,
         fn1 = function(){},
         fn2 = function(){},
@@ -307,7 +307,7 @@ describe('EventEmitter.fn.manipulateListeners', function() {
     });
 });
 
-describe('EventEmitter.fn.addListeners', function() {
+describe('addListeners', function() {
     var ee,
         fn1 = function(){},
         fn2 = function(){},
@@ -344,7 +344,7 @@ describe('EventEmitter.fn.addListeners', function() {
     });
 });
 
-describe('EventEmitter.fn.removeListeners', function() {
+describe('removeListeners', function() {
     var ee,
         fn1 = function(){},
         fn2 = function(){},
