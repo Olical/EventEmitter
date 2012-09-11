@@ -221,6 +221,10 @@
         return this;
     };
 
+    // A blank array for emitEvent to use when no arguments are passed
+    // Saves creating a new array each time
+    var argumentsPlaceholder = [];
+
     /**
      * Emits an event of your choice.
      * When emitted, every listener attached to that event will be executed.
@@ -243,7 +247,7 @@
         // Apply the arguments array to each listener function
         while(i--) {
             // If the listener returns true then it shall be removed from the event
-            if(listeners[i].apply(null, args || []) === true) {
+            if(listeners[i].apply(null, args || argumentsPlaceholder) === true) {
                 this.removeListener(evt, listeners[i]);
             }
         }
