@@ -401,5 +401,11 @@ describe('removeListeners', function() {
     });
 });
 
+describe('AMD', function() {
+    beforeEach(function() {
+        //ee = new EventEmitter();
+    });
+});
+
 // Run Jasmine
 jasmineEnv.execute();
