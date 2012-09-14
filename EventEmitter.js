@@ -1,5 +1,5 @@
 /**
- * EventEmitter v4.0.1 - git.io/gTW-jg
+ * EventEmitter v4.0.2 - git.io/ee
  * Oliver Caldwell
  * MIT license
  */
@@ -25,11 +25,8 @@
         // Easy access to the prototype
     var proto = EventEmitter.prototype
 
-        // Blank array used when no arguments are passed to emitEvent
-      , argumentsPlaceholder = []
-
-      // Existence of a native index
-      , nativeIndexOf = argumentsPlaceholder.indexOf ? true : false;
+      // Existence of a native indexOf
+      , nativeIndexOf = Array.prototype.indexOf ? true : false;
 
     /**
      * Finds the index of the listener for the event in it's storage array
@@ -245,13 +242,16 @@
         // Get the listeners for the event
         // Also initialise any other required variables
         var listeners = this.getListeners(evt)
-          , i = listeners.length;
+          , i = listeners.length
+          , response;
 
         // Loop over all listeners assigned to the event
         // Apply the arguments array to each listener function
         while(i--) {
             // If the listener returns true then it shall be removed from the event
-            if(listeners[i].apply(null, args || argumentsPlaceholder) === true) {
+            // The function is executed either with a basic call or an apply if there is an args array
+            response = args ? listeners[i].apply(null, args) : listeners[i]();
+            if(response === true) {
                 this.removeListener(evt, listeners[i]);
             }
         }

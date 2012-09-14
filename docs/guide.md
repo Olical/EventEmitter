@@ -14,6 +14,14 @@ This will copy the whole repository, including all documentation and build scrip
 
 You can get pre-built versions of EventEmitter from [the downloads page](https://github.com/Wolfy87/EventEmitter/downloads). I would recommend using the latest version. It's the latest for a reason.
 
+### Installing the component with Bower
+
+EventEmitter can also be found in the [Bower package manager](https://github.com/twitter/bower). You can install with the following line.
+
+    bower install eventEmitter
+
+You can also register EventEmitter as a dependency of your own Bower components for easy installation.
+
 ## Loading the script
 
 ### Browser via script tag

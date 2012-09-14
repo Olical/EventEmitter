@@ -47,6 +47,10 @@ Alternatively you can execute `tools/deps.sh` to fetch all required dependencies
 
 If you only need the script itself you may want to look at [the downloads page](https://github.com/Wolfy87/EventEmitter/downloads).
 
+### Bower
+
+You can also get a copy of EventEmitter through the [Bower package manager](https://github.com/twitter/bower). Simply run `bower install eventEmitter`.
+
 ## Testing
 
 Tests are performed using Jasmine in the following browsers via [BrowserStack](http://www.browserstack.com/).
