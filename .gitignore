@@ -2,3 +2,4 @@
 /docs/api.dust.js
 /node_modules/
 /dist/
+/EventEmitter.min.js
