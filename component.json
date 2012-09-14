@@ -1,0 +1,10 @@
+{
+    "name": "eventEmitter",
+    "version": "4.0.1",
+    "main": [
+        "EventEmitter.js",
+        "EventEmitter.min.js"
+    ],
+    "dependencies": {
+    }
+}
