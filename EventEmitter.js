@@ -95,6 +95,7 @@
         // Return the instance of EventEmitter to allow chaining
         return this;
     };
+    proto.on = proto.addListener;
 
     /**
      * Removes a listener function from the specified event.
@@ -123,6 +124,7 @@
         // Return the instance of EventEmitter to allow chaining
         return this;
     };
+    proto.off = proto.removeListener;
 
     /**
      * Adds listeners in bulk using the manipulateListeners method.
@@ -259,6 +261,7 @@
         // Return the instance of EventEmitter to allow chaining
         return this;
     };
+    proto.trigger = proto.emitEvent;
 
     // Expose the class either via AMD or the global object
     if(typeof define === 'function' && define.amd) {
