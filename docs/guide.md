@@ -199,3 +199,11 @@ For more control, you can pass an arguments array as the second argument. This a
     
     ee.addListener('addStuff', adder);
     ee.emitEvent('addStuff', [10, 20]);
+
+### Method aliases
+
+[Hebo](https://github.com/Hebo), from GitHub, [contributed three aliases](https://github.com/Wolfy87/EventEmitter/pull/35#issuecomment-9920932) to add, remove and emit. The aliases can be found in the [API documentation](https://github.com/Wolfy87/EventEmitter/blob/master/docs/api.md) but here is the mapping.
+
+ * `on` - `addListener`
+ * `off` - `removeListener`
+ * `trigger` - `emitEvent`

@@ -1,5 +1,5 @@
 /**
- * EventEmitter v4.0.2 - git.io/ee
+ * EventEmitter v4.0.3 - git.io/ee
  * Oliver Caldwell
  * MIT license
  */
@@ -97,6 +97,12 @@
     };
 
     /**
+     * Alias of addListener
+     * @doc
+     */
+    proto.on = proto.addListener;
+
+    /**
      * Removes a listener function from the specified event.
      *
      * @param {String} evt Name of the event to remove the listener from.
@@ -123,6 +129,12 @@
         // Return the instance of EventEmitter to allow chaining
         return this;
     };
+
+    /**
+     * Alias of removeListener
+     * @doc
+     */
+    proto.off = proto.removeListener;
 
     /**
      * Adds listeners in bulk using the manipulateListeners method.
@@ -259,6 +271,12 @@
         // Return the instance of EventEmitter to allow chaining
         return this;
     };
+
+    /**
+     * Alias of emitEvent
+     * @doc
+     */
+    proto.trigger = proto.emitEvent;
 
     // Expose the class either via AMD or the global object
     if(typeof define === 'function' && define.amd) {
