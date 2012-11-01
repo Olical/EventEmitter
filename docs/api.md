@@ -19,6 +19,11 @@ You may also be interested in [the guide](https://github.com/Wolfy87/EventEmitte
  * **param** (Function) _listener_ - Method to be called when the event is emitted. If the function returns true then it will be removed after calling.
  * **return** (Object) - Current instance of EventEmitter for chaining.
 
+## on
+
+<p>Alias of addListener</p>
+
+
 ## removeListener
 
 <p>Removes a listener function from the specified event.</p>
@@ -26,6 +31,11 @@ You may also be interested in [the guide](https://github.com/Wolfy87/EventEmitte
  * **param** (String) _evt_ - Name of the event to remove the listener from.
  * **param** (Function) _listener_ - Method to remove from the event.
  * **return** (Object) - Current instance of EventEmitter for chaining.
+
+## off
+
+<p>Alias of removeListener</p>
+
 
 ## addListeners
 
@@ -66,3 +76,8 @@ You may also be interested in [the guide](https://github.com/Wolfy87/EventEmitte
  * **param** (String) _evt_ - Name of the event to emit and execute listeners for.
  * **param** (Array) _[args]_ - Optional array of arguments to be passed to each argument.
  * **return** (Object) - Current instance of EventEmitter for chaining.
+
+## trigger
+
+<p>Alias of emitEvent</p>
+
