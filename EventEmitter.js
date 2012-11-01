@@ -95,6 +95,11 @@
         // Return the instance of EventEmitter to allow chaining
         return this;
     };
+
+    /**
+     * Alias of addListener
+     * @doc
+     */
     proto.on = proto.addListener;
 
     /**
@@ -124,6 +129,11 @@
         // Return the instance of EventEmitter to allow chaining
         return this;
     };
+
+    /**
+     * Alias of removeListener
+     * @doc
+     */
     proto.off = proto.removeListener;
 
     /**
@@ -261,6 +271,11 @@
         // Return the instance of EventEmitter to allow chaining
         return this;
     };
+
+    /**
+     * Alias of emitEvent
+     * @doc
+     */
     proto.trigger = proto.emitEvent;
 
     // Expose the class either via AMD or the global object
