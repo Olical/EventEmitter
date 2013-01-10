@@ -1,7 +1,8 @@
 /**
- * EventEmitter v4.0.3 - git.io/ee
+ * EventEmitter v4.0.4 - git.io/ee
  * Oliver Caldwell
  * MIT license
+ * @preserve
  */
 
 ;(function(exports) {
@@ -56,6 +57,15 @@
     }
 
     /**
+     * Fetches the events object and creates one if required.
+     *
+     * @return {Object} The events storage object.
+     */
+    proto._getEvents = function() {
+        return this._events || (this._events = {});
+    };
+
+    /**
      * Returns the listener array for the specified event.
      * Will initialise the event object and listener arrays if required.
      *
@@ -66,7 +76,7 @@
     proto.getListeners = function(evt) {
         // Create a shortcut to the storage object
         // Initialise it if it does not exists yet
-        var events = this._events || (this._events = {});
+        var events = this._getEvents();
 
         // Return the listener array
         // Initialise it if it does not exist
@@ -122,7 +132,7 @@
 
             // If there are no more listeners in this array then remove it
             if(listeners.length === 0) {
-                this._events[evt] = null;
+                this.removeEvent(evt);
             }
         }
 
@@ -227,11 +237,11 @@
         // Remove different things depending on the state of evt
         if(evt) {
             // Remove all listeners for the specified event
-            this._events[evt] = null;
+            delete this._getEvents()[evt];
         }
         else {
             // Remove all listeners in all events
-            this._events = null;
+            delete this._events;
         }
 
         // Return the instance of EventEmitter to allow chaining

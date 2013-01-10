@@ -86,6 +86,17 @@ define(['../EventEmitter'], function(EventEmitter) {
             expect(ee.getListeners('foo').length).toEqual(orig);
         });
 
+        it('can handle removing events that have not been added', function() {
+            expect(ee._events).toBeUndefined();
+            ee.removeEvent('foo');
+            expect(ee._events).not.toBeUndefined();
+        });
+
+        it('actually removes events', function() {
+            ee.removeEvent('foo');
+            expect(ee._events.foo).toBeUndefined();
+        });
+
         it('removes listeners', function() {
             var listeners = ee.getListeners('bar');
 
