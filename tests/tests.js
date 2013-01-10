@@ -86,6 +86,10 @@ define(['../EventEmitter'], function(EventEmitter) {
             expect(ee.getListeners('foo').length).toEqual(orig);
         });
 
+        it('can handle removing events that have not been added', function() {
+            ee.removeEvent('foo');
+        });
+
         it('removes listeners', function() {
             var listeners = ee.getListeners('bar');
 
