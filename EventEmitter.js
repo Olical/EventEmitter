@@ -131,7 +131,7 @@
 
             // If there are no more listeners in this array then remove it
             if(listeners.length === 0) {
-                this._getEvents()[evt] = null;
+                this.removeEvent(evt);
             }
         }
 
@@ -236,11 +236,11 @@
         // Remove different things depending on the state of evt
         if(evt) {
             // Remove all listeners for the specified event
-            this._getEvents()[evt] = null;
+            delete this._getEvents()[evt];
         }
         else {
             // Remove all listeners in all events
-            this._events = null;
+            delete this._events;
         }
 
         // Return the instance of EventEmitter to allow chaining
