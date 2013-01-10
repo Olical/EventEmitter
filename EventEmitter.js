@@ -2,6 +2,7 @@
  * EventEmitter v4.0.4 - git.io/ee
  * Oliver Caldwell
  * MIT license
+ * @preserve
  */
 
 ;(function(exports) {
