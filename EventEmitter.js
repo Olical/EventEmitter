@@ -256,7 +256,7 @@
      * So they will not arrive within the array on the other side, they will be separate.
      *
      * @param {String} evt Name of the event to emit and execute listeners for.
-     * @param {Array} [args] Optional array of arguments to be passed to each argument.
+     * @param {Array} [args] Optional array of arguments to be passed to each listener.
      * @return {Object} Current instance of EventEmitter for chaining.
      * @doc
      */
@@ -288,6 +288,20 @@
      */
     proto.trigger = proto.emitEvent;
 
+    /**
+     * Subtly different from emitEvent in that it will pass its arguments on to the listeners, as
+     * opposed to taking a single array of arguments to pass on.
+     *
+     * @param {String} evt Name of the event to emit and execute listeners for.
+     * @param ... Optional additional arguments to be passed to each listener.
+     * @return {Object} Current instance of EventEmitter for chaining.
+     * @doc
+     */
+    proto.emit = function(evt) {
+        var args = Array.prototype.splice.call(arguments,1);
+        return this.emitEvent(evt, args);
+    }
+    
     // Expose the class either via AMD or the global object
     if(typeof define === 'function' && define.amd) {
         define(function() {
