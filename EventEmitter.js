@@ -293,15 +293,15 @@
      * opposed to taking a single array of arguments to pass on.
      *
      * @param {String} evt Name of the event to emit and execute listeners for.
-     * @param ... Optional additional arguments to be passed to each listener.
+     * @param {...*} Optional additional arguments to be passed to each listener.
      * @return {Object} Current instance of EventEmitter for chaining.
      * @doc
      */
     proto.emit = function(evt) {
-        var args = Array.prototype.splice.call(arguments,1);
+        var args = Array.prototype.slice.call(arguments, 1);
         return this.emitEvent(evt, args);
-    }
-    
+    };
+
     // Expose the class either via AMD or the global object
     if(typeof define === 'function' && define.amd) {
         define(function() {
