@@ -192,6 +192,9 @@ define(['../EventEmitter'], function(EventEmitter) {
             ee.emitEvent('bar', [50]);
 
             expect(key).toEqual(50);
+
+            ee.emit('bar', 60);
+            expect(key).toEqual(60);
         });
 
         it('executes attached with arguments', function() {

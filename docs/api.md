@@ -74,10 +74,18 @@ You may also be interested in [the guide](https://github.com/Wolfy87/EventEmitte
 <p>Emits an event of your choice.<br />When emitted, every listener attached to that event will be executed.<br />If you pass the optional argument array then those arguments will be passed to every listener upon execution.<br />Because it uses <code>apply</code>, your array of arguments will be passed as if you wrote them out separately.<br />So they will not arrive within the array on the other side, they will be separate.</p>
 
  * **param** (String) _evt_ - Name of the event to emit and execute listeners for.
- * **param** (Array) _[args]_ - Optional array of arguments to be passed to each argument.
+ * **param** (Array) _[args]_ - Optional array of arguments to be passed to each listener.
  * **return** (Object) - Current instance of EventEmitter for chaining.
 
 ## trigger
 
 <p>Alias of emitEvent</p>
 
+
+## emit
+
+<p>Subtly different from emitEvent in that it will pass its arguments on to the listeners, as<br />opposed to taking a single array of arguments to pass on.</p>
+
+ * **param** (String) _evt_ - Name of the event to emit and execute listeners for.
+ * **param** (...*) _Optional_ - additional arguments to be passed to each listener.
+ * **return** (Object) - Current instance of EventEmitter for chaining.
