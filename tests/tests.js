@@ -28,6 +28,21 @@ define(['../EventEmitter'], function(EventEmitter) {
 				foo: ['bar']
 			});
 		});
+
+		it('allows you to fetch listeners by regex', function ()
+		{
+			var count = 0;
+
+			ee.addListener('foo', function() { count++; });
+			ee.addListener('bar', function() { count++; return 'bar'; });
+			ee.addListener('baz', function() { count++; return 'baz'; });
+
+			var listeners = ee.getListeners(/ba[rz]/);
+
+			expect(listeners.length).toEqual(2);
+			expect(listeners[0]()).toEqual('bar');
+			expect(listeners[1]()).toEqual('baz');
+		});
 	});
 
 	describe('addListener', function() {
@@ -151,6 +166,21 @@ define(['../EventEmitter'], function(EventEmitter) {
 			expect(ee.getListeners('bar')).toEqual([]);
 			expect(ee.getListeners('baz')).toEqual([]);
 		});
+
+		it('removes listeners when passed a regex', function ()
+		{
+			var count = 0;
+
+			ee.addListener('foo', function() { count++; return 'foo'; });
+			ee.addListener('bar', function() { count++; return 'bar'; });
+			ee.addListener('baz', function() { count++; return 'baz'; });
+
+			ee.removeListeners(/ba[rz]/);
+			var listeners = ee.getListeners();
+
+			expect(listeners.length).toEqual(1);
+			expect(listeners[0]()).toEqual('foo');
+		});
 	});
 
 	describe('emitEvent', function() {
@@ -240,6 +270,18 @@ define(['../EventEmitter'], function(EventEmitter) {
 			ee.emitEvent('baz');
 
 			expect(count).toEqual(8);
+		});
+
+		it('executes all listeners that match a regular expression', function ()
+		{
+			var count = 0;
+
+			ee.addListener('foo', function() { count++; });
+			ee.addListener('bar', function() { count++; });
+			ee.addListener('baz', function() { count++; });
+
+			ee.emitEvent(/ba[rz]/);
+			expect(count).toEqual(2);
 		});
 	});
 
