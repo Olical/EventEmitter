@@ -207,3 +207,19 @@ For more control, you can pass an arguments array as the second argument. This a
  * `on` - `addListener`
  * `off` - `removeListener`
  * `trigger` - `emitEvent`
+
+### Using regular expressions
+
+You can pass a regular expression to pretty much every function in EventEmitter in place of an event name string. So if you have two events, say, bar and baz, you can manipulate both of them with `/ba[rz]/`.
+
+This applies to adding, removing and emitting events as well as a few others. There is one thing you have to remember when using this though, you must have the event defined before you use it in a regex.
+
+By defined I mean, it has to have some other listener added to it, or you have to explicitly define it with the `defineEvent` / `defineEvents` functions. Here is an example of defining some events and adding to both with a regular expression.
+
+```javascript
+ee.defineEvents(['bar', 'baz']);
+ee.addListener(/ba[rz]/, function () {
+    console.log('Now you are thinking with regular expressions.');
+});
+ee.emitEvent(/ba[rz]/);
+```
