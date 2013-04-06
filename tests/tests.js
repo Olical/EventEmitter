@@ -69,6 +69,19 @@ define(['../EventEmitter'], function(EventEmitter) {
 			ee.addListener('bar', fn1);
 			expect(ee.getListeners('bar')).toEqual([fn1, fn2]);
 		});
+
+		it('allows you to add listeners by regex', function ()
+		{
+			ee.removeEvent();
+			var count = 0;
+
+			ee.addListener('foo', function() { count++; });
+			ee.addListener(/ba[rz]/, function() { count++; });
+			ee.emitEvent('bar');
+			ee.emitEvent('baz');
+
+			expect(count).toEqual(2);
+		});
 	});
 
 	describe('removeListener', function() {
@@ -411,6 +424,19 @@ define(['../EventEmitter'], function(EventEmitter) {
 			});
 			expect(ee.getListeners('foo')).toEqual([fn1, fn4]);
 			expect(ee.getListeners('bar')).toEqual([fn3, fn2, fn5]);
+		});
+
+		it('allows you to add listeners by regex', function ()
+		{
+			ee.removeEvent();
+			var count = 0;
+
+			ee.addListener('foo', [function() { count++; }]);
+			ee.addListener(/ba[rz]/, [function() { count++; }, function() { count++; }]);
+			ee.emitEvent('bar');
+			ee.emitEvent('baz');
+
+			expect(count).toEqual(4);
 		});
 	});
 
