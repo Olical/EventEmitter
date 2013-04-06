@@ -79,7 +79,6 @@
 		// Initialise it if it does not exists yet
 		var events = this._getEvents(),
 			response,
-			matchedEvents,
 			key;
 
 		// Return a concatenated array of all matching events if
