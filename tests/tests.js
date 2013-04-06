@@ -125,6 +125,19 @@ define(['../EventEmitter'], function(EventEmitter) {
 			ee.removeListener('bar', fn2);
 			expect(ee._events.bar).toEqual(undefined);
 		});
+
+		it('removes with a regex', function() {
+			ee.addListeners({
+				foo: [fn1, fn2, fn3, fn4, fn5],
+				bar: [fn1, fn2, fn3, fn4, fn5],
+				baz: [fn1, fn2, fn3, fn4, fn5]
+			});
+
+			ee.removeListener(/ba[rz]/, fn3);
+			expect(ee.getListeners('foo')).toEqual([fn1, fn2, fn3, fn4, fn5]);
+			expect(ee.getListeners('bar')).toEqual([fn1, fn2, fn4, fn5]);
+			expect(ee.getListeners('baz')).toEqual([fn1, fn2, fn4, fn5]);
+		});
 	});
 
 	describe('removeEvent', function() {
@@ -444,6 +457,19 @@ define(['../EventEmitter'], function(EventEmitter) {
 			});
 			expect(ee.getListeners('foo')).toEqual([fn5, fn4, fn1]);
 			expect(ee.getListeners('bar')).toEqual([]);
+		});
+
+		it('removes with a regex', function() {
+			ee.addListeners({
+				foo: [fn1, fn2, fn3, fn4, fn5],
+				bar: [fn1, fn2, fn3, fn4, fn5],
+				baz: [fn1, fn2, fn3, fn4, fn5]
+			});
+
+			ee.removeListeners(/ba[rz]/, [fn3, fn4]);
+			expect(ee.getListeners('foo')).toEqual([fn1, fn2, fn3, fn4, fn5]);
+			expect(ee.getListeners('bar')).toEqual([fn1, fn2, fn5]);
+			expect(ee.getListeners('baz')).toEqual([fn1, fn2, fn5]);
 		});
 	});
 });
