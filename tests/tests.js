@@ -108,7 +108,7 @@ define(['../EventEmitter'], function(EventEmitter) {
 			expect(listeners).toEqual([fn2]);
 
 			ee.removeListener('bar', fn2);
-			expect(ee._events.bar).toEqual(null);
+			expect(ee._events.bar).toEqual(undefined);
 		});
 	});
 
