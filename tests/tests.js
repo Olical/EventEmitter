@@ -39,9 +39,9 @@ define(['../EventEmitter'], function(EventEmitter) {
 
 			var listeners = ee.getListeners(/ba[rz]/);
 
-			expect(listeners.length).toEqual(2);
-			expect(listeners[0]()).toEqual('bar');
-			expect(listeners[1]()).toEqual('baz');
+			expect(listeners.bar.length + listeners.baz.length).toEqual(2);
+			expect(listeners.bar[0]()).toEqual('bar');
+			expect(listeners.baz[0]()).toEqual('baz');
 		});
 	});
 
@@ -75,10 +75,10 @@ define(['../EventEmitter'], function(EventEmitter) {
 			ee.removeEvent();
 			var count = 0;
 
+			ee.defineEvents(['bar', 'baz']);
 			ee.addListener('foo', function() { count++; });
 			ee.addListener(/ba[rz]/, function() { count++; });
-			ee.emitEvent('bar');
-			ee.emitEvent('baz');
+			ee.emitEvent(/ba[rz]/);
 
 			expect(count).toEqual(2);
 		});
@@ -90,6 +90,7 @@ define(['../EventEmitter'], function(EventEmitter) {
 			fn2 = function(){},
 			fn3 = function(){},
 			fn4 = function(){},
+			fn5 = function(){},
 			fnX = function(){};
 
 		beforeEach(function() {
@@ -147,9 +148,71 @@ define(['../EventEmitter'], function(EventEmitter) {
 			});
 
 			ee.removeListener(/ba[rz]/, fn3);
-			expect(ee.getListeners('foo')).toEqual([fn1, fn2, fn3, fn4, fn5]);
-			expect(ee.getListeners('bar')).toEqual([fn1, fn2, fn4, fn5]);
-			expect(ee.getListeners('baz')).toEqual([fn1, fn2, fn4, fn5]);
+			expect(ee.getListeners('foo')).toEqual([fn5, fn4, fn3, fn2, fn1]);
+			expect(ee.getListeners('bar')).toEqual([fn5, fn4, fn2, fn1]);
+			expect(ee.getListeners('baz')).toEqual([fn5, fn4, fn2, fn1]);
+		});
+	});
+
+	describe('getListenersAsObject', function () {
+		beforeEach(function() {
+			ee = new EventEmitter();
+			ee.addListener('bar', function(){});
+			ee.addListener('baz', function(){});
+		});
+
+		it('returns an object for strings', function () {
+			var listeners = ee.getListenersAsObject('bar');
+			expect(typeof listeners).toEqual('object');
+			expect(listeners instanceof Array).toEqual(false);
+			expect(listeners.bar.length).toEqual(1);
+		});
+
+		it('returns an object for regexs', function () {
+			var listeners = ee.getListenersAsObject(/ba[rz]/);
+			expect(typeof listeners).toEqual('object');
+			expect(listeners instanceof Array).toEqual(false);
+			expect(listeners.bar.length).toEqual(1);
+			expect(listeners.baz.length).toEqual(1);
+		});
+	});
+
+	describe('defineEvent', function () {
+		beforeEach(function() {
+			ee = new EventEmitter();
+		});
+
+		it('defines an event when there is nothing else inside', function () {
+			ee.defineEvent('foo');
+			expect(ee._events.foo).toEqual([]);
+		});
+
+		it('defines an event when there are other events already', function () {
+			var f = function(){};
+			ee.addListener('foo', f);
+			ee.defineEvent('bar');
+
+			expect(ee._events.foo).toEqual([f]);
+			expect(ee._events.bar).toEqual([]);
+		});
+
+		it('does not overwrite existing events', function () {
+			var f = function(){};
+			ee.addListener('foo', f);
+			ee.defineEvent('foo');
+			expect(ee._events.foo).toEqual([f]);
+		});
+	});
+
+	describe('defineEvents', function () {
+		beforeEach(function() {
+			ee = new EventEmitter();
+		});
+
+		it('defines multiple events', function () {
+			ee.defineEvents(['foo', 'bar']);
+			expect(ee._events.foo).toEqual([]);
+			expect(ee._events.bar).toEqual([]);
 		});
 	});
 
@@ -431,10 +494,10 @@ define(['../EventEmitter'], function(EventEmitter) {
 			ee.removeEvent();
 			var count = 0;
 
-			ee.addListener('foo', [function() { count++; }]);
-			ee.addListener(/ba[rz]/, [function() { count++; }, function() { count++; }]);
-			ee.emitEvent('bar');
-			ee.emitEvent('baz');
+			ee.defineEvents(['bar', 'baz']);
+			ee.addListeners('foo', [function() { count++; }]);
+			ee.addListeners(/ba[rz]/, [function() { count++; }, function() { count++; }]);
+			ee.emitEvent(/ba[rz]/);
 
 			expect(count).toEqual(4);
 		});
@@ -493,9 +556,9 @@ define(['../EventEmitter'], function(EventEmitter) {
 			});
 
 			ee.removeListeners(/ba[rz]/, [fn3, fn4]);
-			expect(ee.getListeners('foo')).toEqual([fn1, fn2, fn3, fn4, fn5]);
-			expect(ee.getListeners('bar')).toEqual([fn1, fn2, fn5]);
-			expect(ee.getListeners('baz')).toEqual([fn1, fn2, fn5]);
+			expect(ee.getListeners('foo')).toEqual([fn5, fn4, fn3, fn2, fn1]);
+			expect(ee.getListeners('bar')).toEqual([fn5, fn2, fn1]);
+			expect(ee.getListeners('baz')).toEqual([fn5, fn2, fn1]);
 		});
 	});
 });

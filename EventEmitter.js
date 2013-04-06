@@ -63,34 +63,56 @@
 	 * Returns the listener array for the specified event.
 	 * Will initialise the event object and listener arrays if required.
 	 *
+	 * Will return an object if you use a regex search.
+	 *
 	 * @param {String} evt Name of the event to return the listeners from.
-	 * @return {Function[]} All listener functions for the event.
+	 * @return {Function[]|Object} All listener functions for the event.
 	 * @doc
 	 */
 	proto.getListeners = function (evt) {
 		// Create a shortcut to the storage object
 		// Initialise it if it does not exists yet
 		var events = this._getEvents(),
+			response,
 			matchedEvents,
 			key;
 
 		// Return a concatenated array of all matching events if
 		// the selector is a regular expression.
 		if (typeof evt === 'object') {
-			matchedEvents = [];
-
+			response = {};
 			for (key in events) {
 				if (events.hasOwnProperty(key) && evt.test(key)) {
-					matchedEvents = matchedEvents.concat(events[key]);
+					response[key] = events[key];
 				}
 			}
-
-			return matchedEvents;
+		}
+		else {
+			response = events[evt] || (events[evt] = []);
 		}
 
-		// Return the listener array
-		// Initialise it if it does not exist
-		return events[evt] || (events[evt] = []);
+		return response;
+	};
+
+	/**
+	 * Fetches the requested listeners via getListeners but will ALWAYS return
+	 * the results inside an object. This is mainly for internal use but
+	 * I could imagine others wanting to use this.
+	 *
+	 * @param {String} evt Name of the event to return the listeners from.
+	 * @return {Object} All listener functions for an event in an object.
+	 * @doc
+	 */
+	proto.getListenersAsObject = function (evt) {
+		var listeners = this.getListeners(evt),
+			response;
+
+		if (listeners instanceof Array) {
+			response = {};
+			response[evt] = listeners;
+		}
+
+		return response || listeners;
 	};
 
 	/**
@@ -104,12 +126,14 @@
 	 * @doc
 	 */
 	proto.addListener = function (evt, listener) {
-		// Fetch the listeners
-		var listeners = this.getListeners(evt);
+		var listeners = this.getListenersAsObject(evt),
+			key;
 
-		// Push the listener into the array if it is not already there
-		if (indexOfListener(listener, listeners) === -1) {
-			listeners.push(listener);
+		for (key in listeners) {
+			if (listeners.hasOwnProperty(key) &&
+				indexOfListener(listener, listeners[key]) === -1) {
+				listeners[key].push(listener);
+			}
 		}
 
 		// Return the instance of EventEmitter to allow chaining
@@ -123,6 +147,38 @@
 	proto.on = proto.addListener;
 
 	/**
+	 * Defines an event name. This is required if you want to use a regex
+	 * to add a listener to multiple events at once. If you don't do this then
+	 * how do you expect it to know what event to add to? Should it just add
+	 * to every possible match for a regex? No. That is scary and bad.
+	 *
+	 * You need to tell it what event names should be matched by a regex.
+	 *
+	 * @param {String} evt Name of the event to create.
+	 * @return {Object} Current instance of EventEmitter for chaining.
+	 * @doc
+	 */
+	proto.defineEvent = function (evt) {
+		this.getListeners(evt);
+		return this;
+	};
+
+	/**
+	 * Uses defineEvent to define multiple events.
+	 *
+	 * @param {String[]} evts An array of event names to define.
+	 * @return {Object} Current instance of EventEmitter for chaining.
+	 * @doc
+	 */
+	proto.defineEvents = function (evts)
+	{
+		for (var i = 0; i < evts.length; i += 1) {
+			this.defineEvent(evts[i]);
+		}
+		return this;
+	};
+
+	/**
 	 * Removes a listener function from the specified event.
 	 *
 	 * @param {String} evt Name of the event to remove the listener from.
@@ -131,18 +187,22 @@
 	 * @doc
 	 */
 	proto.removeListener = function (evt, listener) {
-		// Fetch the listeners
-		// And get the index of the listener in the array
-		var listeners = this.getListeners(evt),
-			index = indexOfListener(listener, listeners);
+		var listeners = this.getListenersAsObject(evt),
+			index,
+			key;
 
-		// If the listener was found then remove it
-		if (index !== -1) {
-			listeners.splice(index, 1);
+		for (key in listeners) {
+			if (listeners.hasOwnProperty(key)) {
+				index = indexOfListener(listener, listeners[key]);
 
-			// If there are no more listeners in this array then remove it
-			if (listeners.length === 0) {
-				this.removeEvent(evt);
+				if (index !== -1) {
+					listeners[key].splice(index, 1);
+
+					// If there are no more listeners in this array then remove it
+					if (listeners[key].length === 0) {
+						this.removeEvent(key);
+					}
+				}
 			}
 		}
 
@@ -206,7 +266,7 @@
 			multiple = remove ? this.removeListeners : this.addListeners;
 
 		// If evt is an object then pass each of it's properties to this method
-		if (typeof evt === 'object') {
+		if (typeof evt === 'object' && !(evt instanceof RegExp)) {
 			for (i in evt) {
 				if (evt.hasOwnProperty(i) && (value = evt[i])) {
 					// Pass the single listener straight through to the singular method
@@ -283,20 +343,23 @@
 	 * @doc
 	 */
 	proto.emitEvent = function (evt, args) {
-		// Get the listeners for the event
-		// Also initialise any other required variables
-		var listeners = this.getListeners(evt),
-			i = listeners.length,
+		var listeners = this.getListenersAsObject(evt),
+			i,
+			key,
 			response;
 
-		// Loop over all listeners assigned to the event
-		// Apply the arguments array to each listener function
-		while (i--) {
-			// If the listener returns true then it shall be removed from the event
-			// The function is executed either with a basic call or an apply if there is an args array
-			response = args ? listeners[i].apply(null, args) : listeners[i]();
-			if (response === true) {
-				this.removeListener(evt, listeners[i]);
+		for (key in listeners) {
+			if (listeners.hasOwnProperty(key)) {
+				i = listeners[key].length;
+
+				while (i--) {
+					// If the listener returns true then it shall be removed from the event
+					// The function is executed either with a basic call or an apply if there is an args array
+					response = args ? listeners[key][i].apply(null, args) : listeners[key][i]();
+					if (response === true) {
+						this.removeListener(evt, listeners[key][i]);
+					}
+				}
 			}
 		}
 
