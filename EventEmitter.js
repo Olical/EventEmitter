@@ -29,6 +29,7 @@
 	 * @param {Function} listener Method to look for.
 	 * @param {Function[]} listeners Array of listeners to search through.
 	 * @return {Number} Index of the specified listener, -1 if not found
+	 * @private
 	 */
 	function indexOfListener(listener, listeners) {
 		// Return the index via the native method if possible
@@ -54,6 +55,7 @@
 	 * Fetches the events object and creates one if required.
 	 *
 	 * @return {Object} The events storage object.
+	 * @private
 	 */
 	proto._getEvents = function () {
 		return this._events || (this._events = {});
@@ -72,7 +74,6 @@
 	 *
 	 * @param {String|RegExp} evt Name of the event to return the listeners from.
 	 * @return {Function[]|Object} All listener functions for the event.
-	 * @doc
 	 */
 	proto.getListeners = function (evt) {
 		// Create a shortcut to the storage object
@@ -105,7 +106,6 @@
 	 *
 	 * @param {String|RegExp} evt Name of the event to return the listeners from.
 	 * @return {Object} All listener functions for an event in an object.
-	 * @doc
 	 */
 	proto.getListenersAsObject = function (evt) {
 		var listeners = this.getListeners(evt),
@@ -130,7 +130,6 @@
 	 * @param {String|RegExp} evt Name of the event to attach the listener to.
 	 * @param {Function} listener Method to be called when the event is emitted. If the function returns true then it will be removed after calling.
 	 * @return {Object} Current instance of EventEmitter for chaining.
-	 * @doc
 	 */
 	proto.addListener = function (evt, listener) {
 		var listeners = this.getListenersAsObject(evt),
@@ -149,7 +148,6 @@
 
 	/**
 	 * Alias of addListener
-	 * @doc
 	 */
 	proto.on = proto.addListener;
 
@@ -163,7 +161,6 @@
 	 *
 	 * @param {String} evt Name of the event to create.
 	 * @return {Object} Current instance of EventEmitter for chaining.
-	 * @doc
 	 */
 	proto.defineEvent = function (evt) {
 		this.getListeners(evt);
@@ -175,7 +172,6 @@
 	 *
 	 * @param {String[]} evts An array of event names to define.
 	 * @return {Object} Current instance of EventEmitter for chaining.
-	 * @doc
 	 */
 	proto.defineEvents = function (evts)
 	{
@@ -194,7 +190,6 @@
 	 * @param {String|RegExp} evt Name of the event to remove the listener from.
 	 * @param {Function} listener Method to remove from the event.
 	 * @return {Object} Current instance of EventEmitter for chaining.
-	 * @doc
 	 */
 	proto.removeListener = function (evt, listener) {
 		var listeners = this.getListenersAsObject(evt),
@@ -222,7 +217,6 @@
 
 	/**
 	 * Alias of removeListener
-	 * @doc
 	 */
 	proto.off = proto.removeListener;
 
@@ -255,7 +249,6 @@
 	 * @param {String|Object|RegExp} evt An event name if you will pass an array of listeners next. An object if you wish to remove from multiple events at once.
 	 * @param {Function[]} [listeners] An optional array of listener functions to remove.
 	 * @return {Object} Current instance of EventEmitter for chaining.
-	 * @doc
 	 */
 	proto.removeListeners = function (evt, listeners) {
 		// Pass through to manipulateListeners
@@ -274,7 +267,6 @@
 	 * @param {String|Object|RegExp} evt An event name if you will pass an array of listeners next. An object if you wish to add/remove from multiple events at once.
 	 * @param {Function[]} [listeners] An optional array of listener functions to add/remove.
 	 * @return {Object} Current instance of EventEmitter for chaining.
-	 * @doc
 	 */
 	proto.manipulateListeners = function (remove, evt, listeners) {
 		// Initialise any required variables
@@ -321,7 +313,6 @@
 	 *
 	 * @param {String|RegExp} [evt] Optional name of the event to remove all listeners for. Will remove from every event if not passed.
 	 * @return {Object} Current instance of EventEmitter for chaining.
-	 * @doc
 	 */
 	proto.removeEvent = function (evt) {
 		var type = typeof evt,
@@ -362,7 +353,6 @@
 	 * @param {String|RegExp} evt Name of the event to emit and execute listeners for.
 	 * @param {Array} [args] Optional array of arguments to be passed to each listener.
 	 * @return {Object} Current instance of EventEmitter for chaining.
-	 * @doc
 	 */
 	proto.emitEvent = function (evt, args) {
 		var listeners = this.getListenersAsObject(evt),
@@ -391,7 +381,6 @@
 
 	/**
 	 * Alias of emitEvent
-	 * @doc
 	 */
 	proto.trigger = proto.emitEvent;
 
@@ -404,7 +393,6 @@
 	 * @param {String|RegExp} evt Name of the event to emit and execute listeners for.
 	 * @param {...*} Optional additional arguments to be passed to each listener.
 	 * @return {Object} Current instance of EventEmitter for chaining.
-	 * @doc
 	 */
 	proto.emit = function (evt) {
 		var args = Array.prototype.slice.call(arguments, 1);

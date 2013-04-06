@@ -27,18 +27,8 @@ fs.readFile('docs/api.dust.js', function(err, data) {
 
 		// Loop over all JSDoc block
 		for(var i = 0; i < raw.length; i += 1) {
-			// Loop over any tags found in the block
-			if(raw[i].tags) {
-				for(var t = 0; t < raw[i].tags.length; t += 1) {
-					// If it is a doc tag then add method to the data array
-					if(raw[i].tags[t].type === 'doc') {
-						// Add the method to the data object
-						data.push(raw[i]);
-
-						// And remove the doc tag
-						raw[i].tags.splice(t, 1);
-					}
-				}
+			if (raw[i].isPrivate !== false) {
+				data.push(raw[i]);
 			}
 		}
 
