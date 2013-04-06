@@ -17,7 +17,9 @@ I have been working on it for over a year so far and in that time my skills in J
 
 First you will need to install [dox](https://github.com/visionmedia/dox) and [LinkedIn's fork of dust](http://linkedin.github.com/dustjs/) using [npm](https://npmjs.org/). You can do that with the following command.
 
-    npm install dox dustjs-linkedin
+```bash
+npm install dox dustjs-linkedin
+```
 
 Or by running `tools/deps.sh` to fetch all dependencies required by the repository.
 
@@ -33,15 +35,19 @@ So with a version passed you will get a file name like `dist/EventEmitter-4.0.0.
 
 You can clone the repository with your generic clone commands as a standalone repository or submodule.
 
-    # Full repository
-    git clone git://github.com/Wolfy87/EventEmitter.git
-    
-    # Or submodule
-    git submodule add git://github.com/Wolfy87/EventEmitter.git assets/js/EventEmitter
+```bash
+# Full repository
+git clone git://github.com/Wolfy87/EventEmitter.git
+
+# Or submodule
+git submodule add git://github.com/Wolfy87/EventEmitter.git assets/js/EventEmitter
+```
 
 If you wish to run the tests you will also need to fetch the required submodules. You can do that with the following command.
 
-    git submodule update --init
+```bash
+git submodule update --init
+```
 
 Alternatively you can execute `tools/deps.sh` to fetch all required dependencies for the repository.
 
