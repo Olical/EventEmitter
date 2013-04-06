@@ -170,13 +170,14 @@ define(['../EventEmitter'], function(EventEmitter) {
 		it('removes listeners when passed a regex', function ()
 		{
 			var count = 0;
+			ee.removeEvent();
 
 			ee.addListener('foo', function() { count++; return 'foo'; });
 			ee.addListener('bar', function() { count++; return 'bar'; });
 			ee.addListener('baz', function() { count++; return 'baz'; });
 
-			ee.removeListeners(/ba[rz]/);
-			var listeners = ee.getListeners();
+			ee.removeEvent(/ba[rz]/);
+			var listeners = ee.getListeners('foo');
 
 			expect(listeners.length).toEqual(1);
 			expect(listeners[0]()).toEqual('foo');
