@@ -1,16 +1,4 @@
 define(['../EventEmitter'], function(EventEmitter) {
-	// Set up the Jasmine environment
-	var jasmineEnv = jasmine.getEnv();
-	jasmineEnv.updateInterval = 1000;
-
-	var htmlReporter = new jasmine.HtmlReporter();
-
-	jasmineEnv.addReporter(htmlReporter);
-
-	jasmineEnv.specFilter = function(spec) {
-		return htmlReporter.specFilter(spec);
-	};
-
 	// Configure the tests
 	describe('getListeners', function() {
 		var ee;
@@ -415,7 +403,4 @@ define(['../EventEmitter'], function(EventEmitter) {
 			expect(ee.getListeners('bar')).toEqual([]);
 		});
 	});
-
-	// Run Jasmine
-	jasmineEnv.execute();
 });
