@@ -70,7 +70,23 @@
 	proto.getListeners = function (evt) {
 		// Create a shortcut to the storage object
 		// Initialise it if it does not exists yet
-		var events = this._getEvents();
+		var events = this._getEvents(),
+			matchedEvents,
+			key;
+
+		// Return a concatenated array of all matching events if
+		// the selector is a regular expression.
+		if (typeof evt === 'object') {
+			matchedEvents = [];
+
+			for (key in events) {
+				if (events.hasOwnProperty(key) && evt.test(key)) {
+					matchedEvents = matchedEvents.concat(events[key]);
+				}
+			}
+
+			return matchedEvents;
+		}
 
 		// Return the listener array
 		// Initialise it if it does not exist
@@ -228,10 +244,22 @@
 	 * @doc
 	 */
 	proto.removeEvent = function (evt) {
+		var type = typeof evt,
+			events = this._getEvents(),
+			key;
+
 		// Remove different things depending on the state of evt
-		if (evt) {
+		if (type === 'string') {
 			// Remove all listeners for the specified event
-			delete this._getEvents()[evt];
+			delete events[evt];
+		}
+		else if (type === 'object') {
+			// Remove all events matching the regex.
+			for (key in events) {
+				if (events.hasOwnProperty(key) && evt.test(key)) {
+					delete events[key];
+				}
+			}
 		}
 		else {
 			// Remove all listeners in all events
