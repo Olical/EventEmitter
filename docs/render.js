@@ -27,7 +27,7 @@ fs.readFile('docs/api.dust.js', function(err, data) {
 
 		// Loop over all JSDoc block
 		for(var i = 0; i < raw.length; i += 1) {
-			if (raw[i].isPrivate !== false) {
+			if (!raw[i].isPrivate && !raw[i].ignore) {
 				data.push(raw[i]);
 			}
 		}
