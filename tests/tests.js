@@ -1,4 +1,4 @@
-define(['../EventEmitter'], function(EventEmitter) {
+(function() {
 	// Configure the tests
 	describe('getListeners', function() {
 		var ee;
@@ -561,4 +561,4 @@ define(['../EventEmitter'], function(EventEmitter) {
 			expect(ee.getListeners('baz')).toEqual([fn5, fn2, fn1]);
 		});
 	});
-});
+}());
