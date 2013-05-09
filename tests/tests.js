@@ -1,35 +1,39 @@
 (function() {
+	// Setup Mocha and Chai.
+	mocha.setup('tdd');
+	assert = chai.assert;
+
 	// Configure the tests
-	describe('getListeners', function() {
+	suite('getListeners', function() {
 		var ee;
 
-		beforeEach(function() {
+		setup(function() {
 			ee = new EventEmitter();
 		});
 
-		it('initialises the event object and a listener array', function() {
+		test('initialises the event object and a listener array', function() {
 			ee.getListeners('foo');
-			expect(ee._events).toEqual({
+			assert.deepEqual(ee._events, {
 				foo: []
 			});
 		});
 
-		it('does not overwrite listener arrays', function() {
+		test('does not overwrite listener arrays', function() {
 			var listeners = ee.getListeners('foo');
 			listeners.push('bar');
 
-			expect(ee._events).toEqual({
+			assert.deepEqual(ee._events, {
 				foo: ['bar']
 			});
 
 			ee.getListeners('foo');
 
-			expect(ee._events).toEqual({
+			assert.deepEqual(ee._events, {
 				foo: ['bar']
 			});
 		});
 
-		it('allows you to fetch listeners by regex', function ()
+		test('allows you to fetch listeners by regex', function ()
 		{
 			var count = 0;
 
@@ -39,38 +43,38 @@
 
 			var listeners = ee.getListeners(/ba[rz]/);
 
-			expect(listeners.bar.length + listeners.baz.length).toEqual(2);
-			expect(listeners.bar[0]()).toEqual('bar');
-			expect(listeners.baz[0]()).toEqual('baz');
+			assert.strictEqual(listeners.bar.length + listeners.baz.length, 2);
+			assert.strictEqual(listeners.bar[0](), 'bar');
+			assert.strictEqual(listeners.baz[0](), 'baz');
 		});
 	});
 
-	describe('addListener', function() {
+	suite('addListener', function() {
 		var ee,
 			fn1 = function(){},
 			fn2 = function(){};
 
-		beforeEach(function() {
+		setup(function() {
 			ee = new EventEmitter();
 		});
 
-		it('adds a listener to the specified event', function() {
+		test('adds a listener to the specified event', function() {
 			ee.addListener('foo', fn1);
-			expect(ee.getListeners('foo')).toEqual([fn1]);
+			assert.deepEqual(ee.getListeners('foo'), [fn1]);
 		});
 
-		it('does not allow duplicate listeners', function() {
+		test('does not allow duplicate listeners', function() {
 			ee.addListener('bar', fn1);
-			expect(ee.getListeners('bar')).toEqual([fn1]);
+			assert.deepEqual(ee.getListeners('bar'), [fn1]);
 
 			ee.addListener('bar', fn2);
-			expect(ee.getListeners('bar')).toEqual([fn1, fn2]);
+			assert.deepEqual(ee.getListeners('bar'), [fn1, fn2]);
 
 			ee.addListener('bar', fn1);
-			expect(ee.getListeners('bar')).toEqual([fn1, fn2]);
+			assert.deepEqual(ee.getListeners('bar'), [fn1, fn2]);
 		});
 
-		it('allows you to add listeners by regex', function ()
+		test('allows you to add listeners by regex', function ()
 		{
 			ee.removeEvent();
 			var count = 0;
@@ -80,11 +84,11 @@
 			ee.addListener(/ba[rz]/, function() { count++; });
 			ee.emitEvent(/ba[rz]/);
 
-			expect(count).toEqual(2);
+			assert.strictEqual(count, 2);
 		});
 	});
 
-	describe('removeListener', function() {
+	suite('removeListener', function() {
 		var ee,
 			fn1 = function(){},
 			fn2 = function(){},
@@ -93,28 +97,29 @@
 			fn5 = function(){},
 			fnX = function(){};
 
-		beforeEach(function() {
+		setup(function() {
 			ee = new EventEmitter();
 		});
 
-		it('does nothing when the listener is not found', function() {
+		test('does nothing when the listener is not found', function() {
 			var orig = ee.getListeners('foo').length;
 			ee.removeListener('foo', fn1);
-			expect(ee.getListeners('foo').length).toEqual(orig);
+			assert.lengthOf(ee.getListeners('foo'), orig);
 		});
 
-		it('can handle removing events that have not been added', function() {
-			expect(ee._events).toBeUndefined();
+		test('can handle removing events that have not been added', function() {
+			assert.notProperty(ee, '_events');
 			ee.removeEvent('foo');
-			expect(ee._events).not.toBeUndefined();
+			assert.property(ee, '_events');
+			assert.isObject(ee._events);
 		});
 
-		it('actually removes events', function() {
+		test('actually removes events', function() {
 			ee.removeEvent('foo');
-			expect(ee._events.foo).toBeUndefined();
+			assert.notDeepProperty(ee, '_events.foo');
 		});
 
-		it('removes listeners', function() {
+		test('removes listeners', function() {
 			var listeners = ee.getListeners('bar');
 
 			ee.addListener('bar', fn1);
@@ -122,25 +127,25 @@
 			ee.addListener('bar', fn3);
 			ee.addListener('bar', fn3); // Make sure doubling up does nothing
 			ee.addListener('bar', fn4);
-			expect(listeners).toEqual([fn1, fn2, fn3, fn4]);
+			assert.deepEqual(listeners, [fn1, fn2, fn3, fn4]);
 
 			ee.removeListener('bar', fn3);
-			expect(listeners).toEqual([fn1, fn2, fn4]);
+			assert.deepEqual(listeners, [fn1, fn2, fn4]);
 
 			ee.removeListener('bar', fnX);
-			expect(listeners).toEqual([fn1, fn2, fn4]);
+			assert.deepEqual(listeners, [fn1, fn2, fn4]);
 
 			ee.removeListener('bar', fn1);
-			expect(listeners).toEqual([fn2, fn4]);
+			assert.deepEqual(listeners, [fn2, fn4]);
 
 			ee.removeListener('bar', fn4);
-			expect(listeners).toEqual([fn2]);
+			assert.deepEqual(listeners, [fn2]);
 
 			ee.removeListener('bar', fn2);
-			expect(ee._events.bar).toEqual(undefined);
+			assert.notDeepProperty(ee, '_events.bar');
 		});
 
-		it('removes with a regex', function() {
+		test('removes with a regex', function() {
 			ee.addListeners({
 				foo: [fn1, fn2, fn3, fn4, fn5],
 				bar: [fn1, fn2, fn3, fn4, fn5],
@@ -148,75 +153,79 @@
 			});
 
 			ee.removeListener(/ba[rz]/, fn3);
-			expect(ee.getListeners('foo')).toEqual([fn5, fn4, fn3, fn2, fn1]);
-			expect(ee.getListeners('bar')).toEqual([fn5, fn4, fn2, fn1]);
-			expect(ee.getListeners('baz')).toEqual([fn5, fn4, fn2, fn1]);
+			assert.deepEqual(ee.getListeners('foo'), [fn5, fn4, fn3, fn2, fn1]);
+			assert.deepEqual(ee.getListeners('bar'), [fn5, fn4, fn2, fn1]);
+			assert.deepEqual(ee.getListeners('baz'), [fn5, fn4, fn2, fn1]);
 		});
 	});
 
-	describe('getListenersAsObject', function () {
-		beforeEach(function() {
+	suite('getListenersAsObject', function () {
+		var ee;
+
+		setup(function() {
 			ee = new EventEmitter();
 			ee.addListener('bar', function(){});
 			ee.addListener('baz', function(){});
 		});
 
-		it('returns an object for strings', function () {
+		test('returns an object for strings', function () {
 			var listeners = ee.getListenersAsObject('bar');
-			expect(typeof listeners).toEqual('object');
-			expect(listeners instanceof Array).toEqual(false);
-			expect(listeners.bar.length).toEqual(1);
+			assert.isObject(listeners);
+			assert.lengthOf(listeners.bar, 1);
 		});
 
-		it('returns an object for regexs', function () {
+		test('returns an object for regexs', function () {
 			var listeners = ee.getListenersAsObject(/ba[rz]/);
-			expect(typeof listeners).toEqual('object');
-			expect(listeners instanceof Array).toEqual(false);
-			expect(listeners.bar.length).toEqual(1);
-			expect(listeners.baz.length).toEqual(1);
+			assert.isObject(listeners);
+			assert.lengthOf(listeners.bar, 1);
+			assert.lengthOf(listeners.baz, 1);
 		});
 	});
 
-	describe('defineEvent', function () {
-		beforeEach(function() {
+	suite('defineEvent', function () {
+		var ee;
+
+		setup(function() {
 			ee = new EventEmitter();
 		});
 
-		it('defines an event when there is nothing else inside', function () {
+		test('defines an event when there is nothing else inside', function () {
 			ee.defineEvent('foo');
-			expect(ee._events.foo).toEqual([]);
+			assert.isArray(ee._events.foo);
 		});
 
-		it('defines an event when there are other events already', function () {
+		test('defines an event when there are other events already', function () {
 			var f = function(){};
 			ee.addListener('foo', f);
 			ee.defineEvent('bar');
 
-			expect(ee._events.foo).toEqual([f]);
-			expect(ee._events.bar).toEqual([]);
+			assert.deepEqual(ee._events.foo, [f]);
+			assert.isArray(ee._events.bar);
 		});
 
-		it('does not overwrite existing events', function () {
+		test('does not overwrite existing events', function () {
 			var f = function(){};
 			ee.addListener('foo', f);
 			ee.defineEvent('foo');
-			expect(ee._events.foo).toEqual([f]);
+			assert.deepEqual(ee._events.foo, [f]);
 		});
 	});
 
-	describe('defineEvents', function () {
-		beforeEach(function() {
+	suite('defineEvents', function () {
+		var ee;
+
+		setup(function() {
 			ee = new EventEmitter();
 		});
 
-		it('defines multiple events', function () {
+		test('defines multiple events', function () {
 			ee.defineEvents(['foo', 'bar']);
-			expect(ee._events.foo).toEqual([]);
-			expect(ee._events.bar).toEqual([]);
+			assert.isArray(ee._events.foo, []);
+			assert.isArray(ee._events.bar, []);
 		});
 	});
 
-	describe('removeEvent', function() {
+	suite('removeEvent', function() {
 		var ee,
 			fn1 = function(){},
 			fn2 = function(){},
@@ -224,7 +233,7 @@
 			fn4 = function(){},
 			fn5 = function(){};
 
-		beforeEach(function() {
+		setup(function() {
 			ee = new EventEmitter();
 
 			ee.addListener('foo', fn1);
@@ -232,31 +241,31 @@
 			ee.addListener('bar', fn3);
 			ee.addListener('bar', fn4);
 			ee.addListener('baz', fn5);
-			expect(ee.getListeners('foo')).toEqual([fn1, fn2]);
-			expect(ee.getListeners('bar')).toEqual([fn3, fn4]);
-			expect(ee.getListeners('baz')).toEqual([fn5]);
+			assert.deepEqual(ee.getListeners('foo'), [fn1, fn2]);
+			assert.deepEqual(ee.getListeners('bar'), [fn3, fn4]);
+			assert.deepEqual(ee.getListeners('baz'), [fn5]);
 		});
 
-		it('removes all listeners for the specified event', function() {
+		test('removes all listeners for the specified event', function() {
 			ee.removeEvent('bar');
-			expect(ee.getListeners('foo')).toEqual([fn1, fn2]);
-			expect(ee.getListeners('bar')).toEqual([]);
-			expect(ee.getListeners('baz')).toEqual([fn5]);
+			assert.deepEqual(ee.getListeners('foo'), [fn1, fn2]);
+			assert.deepEqual(ee.getListeners('bar'), []);
+			assert.deepEqual(ee.getListeners('baz'), [fn5]);
 
 			ee.removeEvent('baz');
-			expect(ee.getListeners('foo')).toEqual([fn1, fn2]);
-			expect(ee.getListeners('bar')).toEqual([]);
-			expect(ee.getListeners('baz')).toEqual([]);
+			assert.deepEqual(ee.getListeners('foo'), [fn1, fn2]);
+			assert.deepEqual(ee.getListeners('bar'), []);
+			assert.deepEqual(ee.getListeners('baz'), []);
 		});
 
-		it('removes all events when no event is specified', function() {
+		test('removes all events when no event is specified', function() {
 			ee.removeEvent();
-			expect(ee.getListeners('foo')).toEqual([]);
-			expect(ee.getListeners('bar')).toEqual([]);
-			expect(ee.getListeners('baz')).toEqual([]);
+			assert.deepEqual(ee.getListeners('foo'), []);
+			assert.deepEqual(ee.getListeners('bar'), []);
+			assert.deepEqual(ee.getListeners('baz'), []);
 		});
 
-		it('removes listeners when passed a regex', function ()
+		test('removes listeners when passed a regex', function ()
 		{
 			var count = 0;
 			ee.removeEvent();
@@ -268,19 +277,19 @@
 			ee.removeEvent(/ba[rz]/);
 			var listeners = ee.getListeners('foo');
 
-			expect(listeners.length).toEqual(1);
-			expect(listeners[0]()).toEqual('foo');
+			assert.lengthOf(listeners, 1);
+			assert.strictEqual(listeners[0](), 'foo');
 		});
 	});
 
-	describe('emitEvent', function() {
+	suite('emitEvent', function() {
 		var ee;
 
-		beforeEach(function() {
+		setup(function() {
 			ee = new EventEmitter();
 		});
 
-		it('executes attached listeners', function() {
+		test('executes attached listeners', function() {
 			var run = false;
 
 			ee.addListener('foo', function() {
@@ -288,10 +297,10 @@
 			});
 			ee.emitEvent('foo');
 
-			expect(run).toEqual(true);
+			assert.isTrue(run);
 		});
 
-		it('executes attached with a single argument', function() {
+		test('executes attached with a single argument', function() {
 			var key = null;
 
 			ee.addListener('bar', function(a) {
@@ -299,13 +308,13 @@
 			});
 			ee.emitEvent('bar', [50]);
 
-			expect(key).toEqual(50);
+			assert.strictEqual(key, 50);
 
 			ee.emit('bar', 60);
-			expect(key).toEqual(60);
+			assert.strictEqual(key, 60);
 		});
 
-		it('executes attached with arguments', function() {
+		test('executes attached with arguments', function() {
 			var key = null;
 
 			ee.addListener('bar2', function(a, b) {
@@ -313,10 +322,10 @@
 			});
 			ee.emitEvent('bar2', [40, 2]);
 
-			expect(key).toEqual(42);
+			assert.strictEqual(key, 42);
 		});
 
-		it('executes multiple listeners', function() {
+		test('executes multiple listeners', function() {
 			var count = 0;
 
 			ee.addListener('baz', function() { count++; });
@@ -327,10 +336,10 @@
 
 			ee.emitEvent('baz');
 
-			expect(count).toEqual(5);
+			assert.strictEqual(count, 5);
 		});
 
-		it('executes multiple listeners after one has been removed', function() {
+		test('executes multiple listeners after one has been removed', function() {
 			var count = 0,
 				toRemove = function() { count++; };
 
@@ -344,10 +353,10 @@
 
 			ee.emitEvent('baz');
 
-			expect(count).toEqual(4);
+			assert.strictEqual(count, 4);
 		});
 
-		it('executes multiple listeners and removes those that return true', function() {
+		test('executes multiple listeners and removes those that return true', function() {
 			var count = 0;
 
 			ee.addListener('baz', function() { count++; });
@@ -359,10 +368,10 @@
 			ee.emitEvent('baz');
 			ee.emitEvent('baz');
 
-			expect(count).toEqual(8);
+			assert.strictEqual(count, 8);
 		});
 
-		it('executes all listeners that match a regular expression', function ()
+		test('executes all listeners that match a regular expression', function ()
 		{
 			var count = 0;
 
@@ -371,11 +380,11 @@
 			ee.addListener('baz', function() { count++; });
 
 			ee.emitEvent(/ba[rz]/);
-			expect(count).toEqual(2);
+			assert.strictEqual(count, 2);
 		});
 	});
 
-	describe('manipulateListeners', function() {
+	suite('manipulateListeners', function() {
 		var ee,
 			fn1 = function(){},
 			fn2 = function(){},
@@ -383,26 +392,26 @@
 			fn4 = function(){},
 			fn5 = function(){};
 
-		beforeEach(function() {
+		setup(function() {
 			ee = new EventEmitter();
 		});
 
-		it('manipulates multiple with an array', function() {
+		test('manipulates multiple with an array', function() {
 			ee.manipulateListeners(false, 'foo', [fn1, fn2, fn3, fn4, fn5]);
-			expect(ee.getListeners('foo')).toEqual([fn5, fn4, fn3, fn2, fn1]);
+			assert.deepEqual(ee.getListeners('foo'), [fn5, fn4, fn3, fn2, fn1]);
 
 			ee.manipulateListeners(true, 'foo', [fn1, fn2]);
-			expect(ee.getListeners('foo')).toEqual([fn5, fn4, fn3]);
+			assert.deepEqual(ee.getListeners('foo'), [fn5, fn4, fn3]);
 
 			ee.manipulateListeners(true, 'foo', [fn3, fn5]);
 			ee.manipulateListeners(false, 'foo', [fn4, fn1]);
-			expect(ee.getListeners('foo')).toEqual([fn4, fn1]);
+			assert.deepEqual(ee.getListeners('foo'), [fn4, fn1]);
 
 			ee.manipulateListeners(true, 'foo', [fn4, fn1]);
-			expect(ee.getListeners('foo')).toEqual([]);
+			assert.deepEqual(ee.getListeners('foo'), []);
 		});
 
-		it('manipulates with an object', function() {
+		test('manipulates with an object', function() {
 			ee.manipulateListeners(false, {
 				foo: [fn1, fn2, fn3],
 				bar: fn4
@@ -412,27 +421,27 @@
 				bar: [fn5, fn1]
 			});
 
-			expect(ee.getListeners('foo')).toEqual([fn3, fn2, fn1]);
-			expect(ee.getListeners('bar')).toEqual([fn4, fn1, fn5]);
+			assert.deepEqual(ee.getListeners('foo'), [fn3, fn2, fn1]);
+			assert.deepEqual(ee.getListeners('bar'), [fn4, fn1, fn5]);
 
 			ee.manipulateListeners(true, {
 				foo: fn1,
 				bar: [fn5, fn4]
 			});
 
-			expect(ee.getListeners('foo')).toEqual([fn3, fn2]);
-			expect(ee.getListeners('bar')).toEqual([fn1]);
+			assert.deepEqual(ee.getListeners('foo'), [fn3, fn2]);
+			assert.deepEqual(ee.getListeners('bar'), [fn1]);
 
 			ee.manipulateListeners(true, {
 				foo: [fn3, fn2],
 				bar: fn1
 			});
 
-			expect(ee.getListeners('foo')).toEqual([]);
-			expect(ee.getListeners('bar')).toEqual([]);
+			assert.deepEqual(ee.getListeners('foo'), []);
+			assert.deepEqual(ee.getListeners('bar'), []);
 		});
 
-		it('does not execute listeners just after they are added in another listeners', function() {
+		test('does not execute listeners just after they are added in another listeners', function() {
 			var count = 0;
 
 			ee.addListener('baz', function() { count++; });
@@ -449,11 +458,11 @@
 
 			ee.emitEvent('baz');
 
-			expect(count).toEqual(5);
+			assert.strictEqual(count, 5);
 		});
 	});
 
-	describe('addListeners', function() {
+	suite('addListeners', function() {
 		var ee,
 			fn1 = function(){},
 			fn2 = function(){},
@@ -461,35 +470,35 @@
 			fn4 = function(){},
 			fn5 = function(){};
 
-		beforeEach(function() {
+		setup(function() {
 			ee = new EventEmitter();
 		});
 
-		it('adds with an array', function() {
+		test('adds with an array', function() {
 			ee.addListeners('foo', [fn1, fn2, fn3]);
-			expect(ee.getListeners('foo')).toEqual([fn3, fn2, fn1]);
+			assert.deepEqual(ee.getListeners('foo'), [fn3, fn2, fn1]);
 
 			ee.addListeners('foo', [fn4, fn5]);
-			expect(ee.getListeners('foo')).toEqual([fn3, fn2, fn1, fn5, fn4]);
+			assert.deepEqual(ee.getListeners('foo'), [fn3, fn2, fn1, fn5, fn4]);
 		});
 
-		it('adds with an object', function() {
+		test('adds with an object', function() {
 			ee.addListeners({
 				foo: fn1,
 				bar: [fn2, fn3]
 			});
-			expect(ee.getListeners('foo')).toEqual([fn1]);
-			expect(ee.getListeners('bar')).toEqual([fn3, fn2]);
+			assert.deepEqual(ee.getListeners('foo'), [fn1]);
+			assert.deepEqual(ee.getListeners('bar'), [fn3, fn2]);
 
 			ee.addListeners({
 				foo: [fn4],
 				bar: fn5
 			});
-			expect(ee.getListeners('foo')).toEqual([fn1, fn4]);
-			expect(ee.getListeners('bar')).toEqual([fn3, fn2, fn5]);
+			assert.deepEqual(ee.getListeners('foo'), [fn1, fn4]);
+			assert.deepEqual(ee.getListeners('bar'), [fn3, fn2, fn5]);
 		});
 
-		it('allows you to add listeners by regex', function ()
+		test('allows you to add listeners by regex', function ()
 		{
 			ee.removeEvent();
 			var count = 0;
@@ -499,11 +508,11 @@
 			ee.addListeners(/ba[rz]/, [function() { count++; }, function() { count++; }]);
 			ee.emitEvent(/ba[rz]/);
 
-			expect(count).toEqual(4);
+			assert.strictEqual(count, 4);
 		});
 	});
 
-	describe('removeListeners', function() {
+	suite('removeListeners', function() {
 		var ee,
 			fn1 = function(){},
 			fn2 = function(){},
@@ -511,23 +520,23 @@
 			fn4 = function(){},
 			fn5 = function(){};
 
-		beforeEach(function() {
+		setup(function() {
 			ee = new EventEmitter();
 		});
 
-		it('removes with an array', function() {
+		test('removes with an array', function() {
 			ee.addListeners('foo', [fn1, fn2, fn3, fn4, fn5]);
 			ee.removeListeners('foo', [fn2, fn3]);
-			expect(ee.getListeners('foo')).toEqual([fn5, fn4, fn1]);
+			assert.deepEqual(ee.getListeners('foo'), [fn5, fn4, fn1]);
 
 			ee.removeListeners('foo', [fn5, fn4]);
-			expect(ee.getListeners('foo')).toEqual([fn1]);
+			assert.deepEqual(ee.getListeners('foo'), [fn1]);
 
 			ee.removeListeners('foo', [fn1]);
-			expect(ee.getListeners('foo')).toEqual([]);
+			assert.deepEqual(ee.getListeners('foo'), []);
 		});
 
-		it('removes with an object', function() {
+		test('removes with an object', function() {
 			ee.addListeners({
 				foo: [fn1, fn2, fn3, fn4, fn5],
 				bar: [fn1, fn2, fn3, fn4, fn5]
@@ -537,18 +546,18 @@
 				foo: fn2,
 				bar: [fn3, fn4, fn5]
 			});
-			expect(ee.getListeners('foo')).toEqual([fn5, fn4, fn3, fn1]);
-			expect(ee.getListeners('bar')).toEqual([fn2, fn1]);
+			assert.deepEqual(ee.getListeners('foo'), [fn5, fn4, fn3, fn1]);
+			assert.deepEqual(ee.getListeners('bar'), [fn2, fn1]);
 
 			ee.removeListeners({
 				foo: [fn3],
 				bar: [fn2, fn1]
 			});
-			expect(ee.getListeners('foo')).toEqual([fn5, fn4, fn1]);
-			expect(ee.getListeners('bar')).toEqual([]);
+			assert.deepEqual(ee.getListeners('foo'), [fn5, fn4, fn1]);
+			assert.deepEqual(ee.getListeners('bar'), []);
 		});
 
-		it('removes with a regex', function() {
+		test('removes with a regex', function() {
 			ee.addListeners({
 				foo: [fn1, fn2, fn3, fn4, fn5],
 				bar: [fn1, fn2, fn3, fn4, fn5],
@@ -556,9 +565,12 @@
 			});
 
 			ee.removeListeners(/ba[rz]/, [fn3, fn4]);
-			expect(ee.getListeners('foo')).toEqual([fn5, fn4, fn3, fn2, fn1]);
-			expect(ee.getListeners('bar')).toEqual([fn5, fn2, fn1]);
-			expect(ee.getListeners('baz')).toEqual([fn5, fn2, fn1]);
+			assert.deepEqual(ee.getListeners('foo'), [fn5, fn4, fn3, fn2, fn1]);
+			assert.deepEqual(ee.getListeners('bar'), [fn5, fn2, fn1]);
+			assert.deepEqual(ee.getListeners('baz'), [fn5, fn2, fn1]);
 		});
 	});
+
+	// Execute the tests.
+	mocha.run();
 }());

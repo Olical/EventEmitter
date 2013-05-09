@@ -32,7 +32,6 @@
 		"mocha": "*",
 		"chai": "*",
 		"dox": "*",
-		"dustjs-linkedin": "*",
-		"requirejs": "*"
+		"dustjs-linkedin": "*"
 	}
 }
