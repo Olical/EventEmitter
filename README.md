@@ -43,7 +43,7 @@ You can also get a copy of EventEmitter through [NPM](https://npmjs.org/) or [Bo
 
 ## Testing
 
-Tests are performed using Jasmine in the following browsers via [BrowserStack](http://www.browserstack.com/).
+Tests are performed using [Mocha](http://visionmedia.github.io/mocha/) and [Chai](http://chaijs.com/) in the following browsers.
 
  * Firefox
  * Chrome
