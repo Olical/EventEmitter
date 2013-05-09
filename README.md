@@ -27,9 +27,7 @@ Then you can run `tools/doc.sh` to build from the JSDoc comments found within th
 
 ## Minifying
 
-You can grab minified versions of EventEmitter from [the downloads page](https://github.com/Wolfy87/EventEmitter/downloads). If you need to build a custom version then you will first need to install the uglifyjs node module (`npm install uglify-js@2.2.0`) and then you can run `tools/dist.sh`. You can also fetch the dependencies by running `tools/deps.sh`. The script takes one optional argument which specifies the version that should be placed in the minified files name, `4.0.0` for example. If not passed then it defaults to `dev`.
-
-So with a version passed you will get a file name like `dist/EventEmitter-4.0.0.min.js`, without one you will be left with this `dist/EventEmitter-dev.min.js`.
+You can grab minified versions of EventEmitter from inside this repository, every version is tagged. If you need to build a custom version then you will first need to install the uglifyjs node module (`npm install uglify-js@2.2.0`) and then you can run `tools/dist.sh`. You can also fetch the dependencies by running `tools/deps.sh`.
 
 ## Cloning
 
