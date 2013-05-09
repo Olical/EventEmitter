@@ -6,7 +6,11 @@ As the subtitle suggests, this script brings the power of events from platforms 
 
 This is actually the fourth full rewrite of EventEmitter, my aim is for it to be faster and lighter than ever before. It also has a remapped API which just makes a lot more sense. Because the methods now have more descriptive names it is friendlier to extension into other classes. You will be able to distinguish event method from your own methods.
 
-I have been working on it for over a year so far and in that time my skills in JavaScript have come a long way. This script is a culmination of my learnings which you can hopefully find very useful.
+I have been working on it for over ~~a year~~ two years so far and in that time my skills in JavaScript have come a long way. This script is a culmination of my learnings which you can hopefully find very useful.
+
+## Dependencies
+
+There are no hard dependencies. The only reason you will want to run `npm install` to grab the development dependencies is to build the documentation or minify the source code. No other scripts are required to actually use EventEmitter.
 
 ## Documentation
 
@@ -15,19 +19,11 @@ I have been working on it for over a year so far and in that time my skills in J
 
 ### Building the documentation
 
-First you will need to install [dox](https://github.com/visionmedia/dox) and [LinkedIn's fork of dust](http://linkedin.github.com/dustjs/) using [npm](https://npmjs.org/). You can do that with the following command.
-
-```bash
-npm install dox dustjs-linkedin
-```
-
-Or by running `tools/deps.sh` to fetch all dependencies required by the repository.
-
-Then you can run `tools/doc.sh` to build from the JSDoc comments found within the source code. The built documentation will be placed in `docs/api.md`. I actually keep this inside the repository so each version will have it's documentation stored with it.
+You can run `tools/doc.sh` to build from the JSDoc comments found within the source code. The built documentation will be placed in `docs/api.md`. I actually keep this inside the repository so each version will have it's documentation stored with it.
 
 ## Minifying
 
-You can grab minified versions of EventEmitter from inside this repository, every version is tagged. If you need to build a custom version then you will first need to install the uglifyjs node module (`npm install uglify-js@2.2.0`) and then you can run `tools/dist.sh`. You can also fetch the dependencies by running `tools/deps.sh`.
+You can grab minified versions of EventEmitter from inside this repository, every version is tagged. If you need to build a custom version then you can run `tools/dist.sh`.
 
 ## Cloning
 
@@ -41,19 +37,9 @@ git clone git://github.com/Wolfy87/EventEmitter.git
 git submodule add git://github.com/Wolfy87/EventEmitter.git assets/js/EventEmitter
 ```
 
-If you wish to run the tests you will also need to fetch the required submodules. You can do that with the following command.
+### Package managers
 
-```bash
-git submodule update --init
-```
-
-Alternatively you can execute `tools/deps.sh` to fetch all required dependencies for the repository.
-
-If you only need the script itself you may want to look at [the downloads page](https://github.com/Wolfy87/EventEmitter/downloads).
-
-### Bower
-
-You can also get a copy of EventEmitter through the [Bower package manager](https://github.com/twitter/bower). Simply run `bower install eventEmitter`.
+You can also get a copy of EventEmitter through [NPM](https://npmjs.org/) or [Bower](http://bower.io/). Just use the appropriate install command with the package name, `eventEmitter`.
 
 ## Testing
 
