@@ -142,7 +142,7 @@
 			assert.deepEqual(listeners, [fn2]);
 
 			ee.removeListener('bar', fn2);
-			assert.notDeepProperty(ee, '_events.bar');
+			assert.deepEqual(ee._events.bar, []);
 		});
 
 		test('removes with a regex', function() {
