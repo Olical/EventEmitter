@@ -1,6 +1,8 @@
 // Load the require modules
-var dust = require('../node_modules/dustjs-linkedin'),
-	fs = require('fs');
+var dust = require('../node_modules/dustjs-linkedin');
+var fs = require('fs');
+
+dust.helper = require('../node_modules/dustjs-helpers');
 
 // Load the rendered template
 fs.readFile('docs/api.dust.js', function(err, data) {
