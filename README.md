@@ -49,11 +49,13 @@ Tests are performed using [Mocha](http://visionmedia.github.io/mocha/) and [Chai
  * Chrome
  * Opera
  * Safari
- * IE6+
+ * IE9+
 
-When testing in the more modern browsers, not Internet Explorer basically, I run it through the very early versions, some midrange versions and the very latest ones too. I don't just do the latest version.
+When testing in the more modern browsers, I run it through the very early versions, some midrange versions and the very latest ones too. I don't just do the latest version.
 
 EventEmitter will always be tested and working perfectly in all of them before a release. I will not release anything I think is riddled with bugs. However, if you do spot one, please [submit it as an issue](https://github.com/Wolfy87/EventEmitter/issues) and I will get right on it.
+
+I had to stop testing in IE<9. This is because Jasmine no longer seems to work in old IE. I converted all of my tests to Mocha/Chai and then realised Chai doesn't work in IE<9 either. I know it works, I just can't run the tests anymore, I still recommend using it in older IE versions. However, if you do encounter problems, all you have to do is roll back before v4.1.0, the first IE9+ only tested version.
 
 ## License (MIT)
 
