@@ -187,11 +187,6 @@
 
 				if (index !== -1) {
 					listeners[key].splice(index, 1);
-
-					// If there are no more listeners in this array then remove it
-					if (listeners[key].length === 0) {
-						this.removeEvent(key);
-					}
 				}
 			}
 		}
