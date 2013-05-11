@@ -17,6 +17,10 @@ There are no hard dependencies. The only reason you will want to run `npm instal
  * [Guide](https://github.com/Wolfy87/EventEmitter/blob/master/docs/guide.md)
  * [API](https://github.com/Wolfy87/EventEmitter/blob/master/docs/api.md)
 
+### Examples
+
+ * [Simple](http://jsfiddle.net/Wolfy87/qXQu9/)
+
 ### Building the documentation
 
 You can run `tools/doc.sh` to build from the JSDoc comments found within the source code. The built documentation will be placed in `docs/api.md`. I actually keep this inside the repository so each version will have it's documentation stored with it.
