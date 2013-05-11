@@ -44,7 +44,7 @@ git submodule add git://github.com/Wolfy87/EventEmitter.git assets/js/EventEmitt
 
 ### Package managers
 
-You can also get a copy of EventEmitter through [NPM](https://npmjs.org/) or [Bower](http://bower.io/). Just use the appropriate install command with the package name, `eventEmitter`.
+You can also get a copy of EventEmitter through [NPM](https://npmjs.org/) (wolfy87-eventemitter) or [Bower](http://bower.io/) (eventEmitter).
 
 ## Testing
 
