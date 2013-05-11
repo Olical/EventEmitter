@@ -20,6 +20,7 @@ There are no hard dependencies. The only reason you will want to run `npm instal
 ### Examples
 
  * [Simple](http://jsfiddle.net/Wolfy87/qXQu9/)
+ * [RegExp DOM caster](http://jsfiddle.net/Wolfy87/JqRvS/)
 
 ### Building the documentation
 
