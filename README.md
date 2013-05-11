@@ -62,6 +62,8 @@ EventEmitter will always be tested and working perfectly in all of them before a
 
 I had to stop testing in IE<9. This is because Jasmine no longer seems to work in old IE. I converted all of my tests to Mocha/Chai and then realised Chai doesn't work in IE<9 either. I know it works, I just can't run the tests anymore, I still recommend using it in older IE versions. However, if you do encounter problems, all you have to do is roll back before v4.1.0, the first IE9+ only tested version.
 
+As consolation for the lack of legacy browser testing, I have made sure the examples listed above run perfectly in IE6+. So the unit tests might not be able to run, but I am **very** confident that it works absolutely perfectly.
+
 ## License (MIT)
 
 Copyright (c) 2011-2013 Oliver Caldwell
