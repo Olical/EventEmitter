@@ -1,23 +1,23 @@
 {
-    "name": "eventEmitter",
-    "description": "Event based JavaScript for the browser",
-    "version": "4.0.5",
-    "main": [
-        "./EventEmitter.js",
-        "./EventEmitter.min.js"
-    ],
-    "author": {
-        "name": "Oliver Caldwell",
-        "web": "http://oli.me.uk/"
-    },
-    "licenses": [
-        {
-            "type": "MIT",
-            "url": "https://github.com/Wolfy87/EventEmitter#license-mit"
-        }
-    ],
-    "keywords": [
-        "events",
-        "structure"
-    ]
+	"name": "eventEmitter",
+	"description": "Event based JavaScript for the browser",
+	"version": "4.1.0",
+	"main": [
+		"./EventEmitter.js",
+		"./EventEmitter.min.js"
+	],
+	"author": {
+		"name": "Oliver Caldwell",
+		"web": "http://oli.me.uk/"
+	},
+	"licenses": [
+		{
+			"type": "MIT",
+			"url": "https://github.com/Wolfy87/EventEmitter#license-mit"
+		}
+	],
+	"keywords": [
+		"events",
+		"structure"
+	]
 }
