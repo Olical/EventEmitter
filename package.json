@@ -12,10 +12,10 @@
 		"url": "git://github.com/Wolfy87/EventEmitter.git"
 	},
 	"keywords": [
-		"EventEmitter",
+		"eventemitter",
 		"events",
 		"browser",
-		"javascript"
+		"amd"
 	],
 	"author": {
 		"name": "Oliver Caldwell",
