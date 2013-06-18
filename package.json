@@ -1,6 +1,6 @@
 {
 	"name": "wolfy87-eventemitter",
-	"version": "4.1.0",
+	"version": "4.1.1",
 	"description": "Event based JavaScript for the browser",
 	"main": "EventEmitter.js",
 	"directories": {
@@ -12,10 +12,10 @@
 		"url": "git://github.com/Wolfy87/EventEmitter.git"
 	},
 	"keywords": [
-		"EventEmitter",
+		"eventemitter",
 		"events",
 		"browser",
-		"javascript"
+		"amd"
 	],
 	"author": {
 		"name": "Oliver Caldwell",
