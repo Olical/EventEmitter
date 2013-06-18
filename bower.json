@@ -3,8 +3,7 @@
 	"description": "Event based JavaScript for the browser",
 	"version": "4.1.0",
 	"main": [
-		"./EventEmitter.js",
-		"./EventEmitter.min.js"
+		"./EventEmitter.js"
 	],
 	"author": {
 		"name": "Oliver Caldwell",
