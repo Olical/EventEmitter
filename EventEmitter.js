@@ -339,7 +339,7 @@
 				while (i--) {
 					// If the listener returns true then it shall be removed from the event
 					// The function is executed either with a basic call or an apply if there is an args array
-					response = args ? listeners[key][i].apply(null, args) : listeners[key][i]();
+					response = listeners[key][i].apply(this, args || []);
 					if (response === true) {
 						this.removeListener(evt, listeners[key][i]);
 					}
