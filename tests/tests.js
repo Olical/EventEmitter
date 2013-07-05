@@ -571,6 +571,23 @@
 		});
 	});
 
+	suite('once', function() {
+
+		test('removes after trigger', function() {
+			var ee = new EventEmitter;
+			var i = 0;
+
+			ee.once('foo', function() {
+				i++;
+			});
+
+			ee.trigger('foo');
+			ee.trigger('foo');
+
+			assert.equal(i, 1);
+		});
+	});
+
 	// Execute the tests.
 	mocha.run();
 }());
