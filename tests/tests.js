@@ -600,7 +600,23 @@
 			ee.trigger('foo');
 
 			assert.equal(i, 0);
-		})
+		});
+
+		test('cannot add once events twice', function() {
+			var ee = new EventEmitter;
+			var i = 0;
+
+			var cb = function() {
+				i++;
+			};
+
+			ee.once('foo', cb);
+			ee.once('foo', cb);
+			
+			ee.trigger('foo');
+
+			assert.equal(i, 1);	
+		});
 	});
 
 	// Execute the tests.
