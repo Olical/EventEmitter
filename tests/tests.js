@@ -572,7 +572,6 @@
 	});
 
 	suite('once', function() {
-
 		test('removes after trigger', function() {
 			var ee = new EventEmitter;
 			var i = 0;
@@ -586,6 +585,22 @@
 
 			assert.equal(i, 1);
 		});
+
+		test('can remove once events', function() {
+			var ee = new EventEmitter;
+			var i = 0;
+
+			var cb = function() {
+				i++;
+			};
+
+			ee.once('foo', cb);
+
+			ee.removeListener('foo', cb);
+			ee.trigger('foo');
+
+			assert.equal(i, 0);
+		})
 	});
 
 	// Execute the tests.
