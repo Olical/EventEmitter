@@ -62,6 +62,17 @@
 	};
 
 	/**
+	 * Fetches all once events, and their original callbacks.
+	 * Creates the object if required
+	 *
+	 * @return {Object} The once events storage object
+	 * @api private
+	 */
+	proto._getOnceEvents = function () {
+		return this._onceEvents || (this._onceEvents = {});
+	};
+
+	/**
 	 * Returns the listener array for the specified event.
 	 * Will initialise the event object and listener arrays if required.
 	 * Will return an object if you use a regex search. The object contains keys for each matched event. So /ba[rz]/ might return an object containing bar and baz. But only if you have either defined them with defineEvent or added some listeners to them.
@@ -141,6 +152,25 @@
 	 * Alias of addListener
 	 */
 	proto.on = proto.addListener;
+
+	/**
+	 * Assigns an event that will only trigger once
+	 *
+	 * @uses addListener Simply a wrapper around the addListener
+	 */
+	 proto.once = function() {
+	 	var listener = arguments[1];
+
+	 	var realListener = function() {
+	 		listener.apply(this, arguments);
+
+	 		return true;
+	 	}
+
+	 	arguments[1] = realListener;
+
+	 	return this.addListener.apply(this, arguments);
+	 }
 
 	/**
 	 * Defines an event name. This is required if you want to use a regex to add a listener to multiple events at once. If you don't do this then how do you expect it to know what event to add to? Should it just add to every possible match for a regex? No. That is scary and bad.

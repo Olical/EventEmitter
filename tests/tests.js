@@ -571,6 +571,54 @@
 		});
 	});
 
+	suite('once', function() {
+		test('removes after trigger', function() {
+			var ee = new EventEmitter;
+			var i = 0;
+
+			ee.once('foo', function() {
+				i++;
+			});
+
+			ee.trigger('foo');
+			ee.trigger('foo');
+
+			assert.equal(i, 1);
+		});
+
+		test('can remove once events', function() {
+			var ee = new EventEmitter;
+			var i = 0;
+
+			var cb = function() {
+				i++;
+			};
+
+			ee.once('foo', cb);
+
+			ee.removeListener('foo', cb);
+			ee.trigger('foo');
+
+			assert.equal(i, 0);
+		});
+
+		test('cannot add once events twice', function() {
+			var ee = new EventEmitter;
+			var i = 0;
+
+			var cb = function() {
+				i++;
+			};
+
+			ee.once('foo', cb);
+			ee.once('foo', cb);
+			
+			ee.trigger('foo');
+
+			assert.equal(i, 1);	
+		});
+	});
+
 	// Execute the tests.
 	mocha.run();
 }());
