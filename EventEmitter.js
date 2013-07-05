@@ -143,6 +143,25 @@
 	proto.on = proto.addListener;
 
 	/**
+	 * Assigns an event that will only trigger once
+	 *
+	 * @uses addListener Simply a wrapper around the addListener
+	 */
+	 proto.once = function() {
+	 	var listener = arguments[1];
+
+	 	var realListener = function() {
+	 		listener.apply(this, arguments);
+
+	 		return true;
+	 	}
+
+	 	arguments[1] = realListener;
+
+	 	return this.addListener.apply(this, arguments);
+	 }
+
+	/**
 	 * Defines an event name. This is required if you want to use a regex to add a listener to multiple events at once. If you don't do this then how do you expect it to know what event to add to? Should it just add to every possible match for a regex? No. That is scary and bad.
 	 * You need to tell it what event names should be matched by a regex.
 	 *
