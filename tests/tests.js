@@ -382,6 +382,15 @@
 			ee.emitEvent(/ba[rz]/);
 			assert.strictEqual(count, 2);
 		});
+
+		test('global object is defined', function()
+		{
+			ee.addListener('foo', function() {
+				assert.equal(this, ee);
+			});
+
+			ee.emitEvent('foo');
+		});
 	});
 
 	suite('manipulateListeners', function() {
