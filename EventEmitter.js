@@ -25,8 +25,8 @@
 	/**
 	 * Finds the index of the listener for the event in it's storage array.
 	 *
-	 * @param {Function} listener Method to look for.
 	 * @param {Function[]} listeners Array of listeners to search through.
+	 * @param {Function} listener Method to look for.
 	 * @return {Number} Index of the specified listener, -1 if not found
 	 * @api private
 	 */
