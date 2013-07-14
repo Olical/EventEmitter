@@ -86,18 +86,18 @@
 
 		test('adds a listener to the specified event', function() {
 			ee.addListener('foo', fn1);
-			assert.deepEqual(ee.getListeners('foo'), [{listener: fn1}]);
+			assert.deepEqual(ee.flattenListeners(ee.getListeners('foo')), [fn1]);
 		});
 
 		test('does not allow duplicate listeners', function() {
 			ee.addListener('bar', fn1);
-			assert.deepEqual(ee.getListeners('bar'), [{listener: fn1}]);
+			assert.deepEqual(ee.flattenListeners(ee.getListeners('bar')), [fn1]);
 
 			ee.addListener('bar', fn2);
-			assert.deepEqual(ee.getListeners('bar'), [{listener: fn1}, {listener: fn2}]);
+			assert.deepEqual(ee.flattenListeners(ee.getListeners('bar')), [fn1, fn2]);
 
 			ee.addListener('bar', fn1);
-			assert.deepEqual(ee.getListeners('bar'), [{listener: fn1}, {listener: fn2}]);
+			assert.deepEqual(ee.flattenListeners(ee.getListeners('bar')), [fn1, fn2]);
 		});
 
 		test('allows you to add listeners by regex', function ()
@@ -153,22 +153,22 @@
 			ee.addListener('bar', fn3);
 			ee.addListener('bar', fn3); // Make sure doubling up does nothing
 			ee.addListener('bar', fn4);
-			assert.deepEqual(listeners, [{listener: fn1}, {listener: fn2}, {listener: fn3}, {listener: fn4}]);
+			assert.deepEqual(ee.flattenListeners(listeners), [fn1, fn2, fn3, fn4]);
 
 			ee.removeListener('bar', fn3);
-			assert.deepEqual(listeners, [{listener: fn1}, {listener: fn2}, {listener: fn4}]);
+			assert.deepEqual(ee.flattenListeners(listeners), [fn1, fn2, fn4]);
 
 			ee.removeListener('bar', fnX);
-			assert.deepEqual(listeners, [{listener: fn1}, {listener: fn2}, {listener: fn4}]);
+			assert.deepEqual(ee.flattenListeners(listeners), [fn1, fn2, fn4]);
 
 			ee.removeListener('bar', fn1);
-			assert.deepEqual(listeners, [{listener: fn2}, {listener: fn4}]);
+			assert.deepEqual(ee.flattenListeners(listeners), [fn2, fn4]);
 
 			ee.removeListener('bar', fn4);
-			assert.deepEqual(listeners, [{listener: fn2}]);
+			assert.deepEqual(ee.flattenListeners(listeners), [fn2]);
 
 			ee.removeListener('bar', fn2);
-			assert.deepEqual(ee._events.bar, []);
+			assert.deepEqual(ee.flattenListeners(ee._events.bar), []);
 		});
 
 		test('removes with a regex', function() {
@@ -179,9 +179,9 @@
 			});
 
 			ee.removeListener(/ba[rz]/, fn3);
-			assert.deepEqual(ee.getListeners('foo'), [{listener: fn5}, {listener: fn4}, {listener: fn3}, {listener: fn2}, {listener: fn1}]);
-			assert.deepEqual(ee.getListeners('bar'), [{listener: fn5}, {listener: fn4}, {listener: fn2}, {listener: fn1}]);
-			assert.deepEqual(ee.getListeners('baz'), [{listener: fn5}, {listener: fn4}, {listener: fn2}, {listener: fn1}]);
+			assert.deepEqual(ee.flattenListeners(ee.getListeners('foo')), [fn5, fn4, fn3, fn2, fn1]);
+			assert.deepEqual(ee.flattenListeners(ee.getListeners('bar')), [fn5, fn4, fn2, fn1]);
+			assert.deepEqual(ee.flattenListeners(ee.getListeners('baz')), [fn5, fn4, fn2, fn1]);
 		});
 	});
 
@@ -225,7 +225,7 @@
 			ee.addListener('foo', f);
 			ee.defineEvent('bar');
 
-			assert.deepEqual(ee._events.foo, [{listener: f}]);
+			assert.deepEqual(ee.flattenListeners(ee._events.foo), [f]);
 			assert.isArray(ee._events.bar);
 		});
 
@@ -233,7 +233,7 @@
 			var f = function(){};
 			ee.addListener('foo', f);
 			ee.defineEvent('foo');
-			assert.deepEqual(ee._events.foo, [{listener: f}]);
+			assert.deepEqual(ee.flattenListeners(ee._events.foo), [f]);
 		});
 	});
 
@@ -267,28 +267,28 @@
 			ee.addListener('bar', fn3);
 			ee.addListener('bar', fn4);
 			ee.addListener('baz', fn5);
-			assert.deepEqual(ee.getListeners('foo'), [{listener: fn1}, {listener: fn2}]);
-			assert.deepEqual(ee.getListeners('bar'), [{listener: fn3}, {listener: fn4}]);
-			assert.deepEqual(ee.getListeners('baz'), [{listener: fn5}]);
+			assert.deepEqual(ee.flattenListeners(ee.getListeners('foo')), [fn1, fn2]);
+			assert.deepEqual(ee.flattenListeners(ee.getListeners('bar')), [fn3, fn4]);
+			assert.deepEqual(ee.flattenListeners(ee.getListeners('baz')), [fn5]);
 		});
 
 		test('removes all listeners for the specified event', function() {
 			ee.removeEvent('bar');
-			assert.deepEqual(ee.getListeners('foo'), [{listener: fn1}, {listener: fn2}]);
-			assert.deepEqual(ee.getListeners('bar'), []);
-			assert.deepEqual(ee.getListeners('baz'), [{listener: fn5}]);
+			assert.deepEqual(ee.flattenListeners(ee.getListeners('foo')), [fn1, fn2]);
+			assert.deepEqual(ee.flattenListeners(ee.getListeners('bar')), []);
+			assert.deepEqual(ee.flattenListeners(ee.getListeners('baz')), [fn5]);
 
 			ee.removeEvent('baz');
-			assert.deepEqual(ee.getListeners('foo'), [{listener: fn1}, {listener: fn2}]);
-			assert.deepEqual(ee.getListeners('bar'), []);
-			assert.deepEqual(ee.getListeners('baz'), []);
+			assert.deepEqual(ee.flattenListeners(ee.getListeners('foo')), [fn1, fn2]);
+			assert.deepEqual(ee.flattenListeners(ee.getListeners('bar')), []);
+			assert.deepEqual(ee.flattenListeners(ee.getListeners('baz')), []);
 		});
 
 		test('removes all events when no event is specified', function() {
 			ee.removeEvent();
-			assert.deepEqual(ee.getListeners('foo'), []);
-			assert.deepEqual(ee.getListeners('bar'), []);
-			assert.deepEqual(ee.getListeners('baz'), []);
+			assert.deepEqual(ee.flattenListeners(ee.getListeners('foo')), []);
+			assert.deepEqual(ee.flattenListeners(ee.getListeners('bar')), []);
+			assert.deepEqual(ee.flattenListeners(ee.getListeners('baz')), []);
 		});
 
 		test('removes listeners when passed a regex', function ()
@@ -433,17 +433,17 @@
 
 		test('manipulates multiple with an array', function() {
 			ee.manipulateListeners(false, 'foo', [fn1, fn2, fn3, fn4, fn5]);
-			assert.deepEqual(ee.getListeners('foo'), [{listener: fn5}, {listener: fn4}, {listener: fn3}, {listener: fn2}, {listener: fn1}]);
+			assert.deepEqual(ee.flattenListeners(ee.getListeners('foo')), [fn5, fn4, fn3, fn2, fn1]);
 
 			ee.manipulateListeners(true, 'foo', [fn1, fn2]);
-			assert.deepEqual(ee.getListeners('foo'), [{listener: fn5}, {listener: fn4}, {listener: fn3}]);
+			assert.deepEqual(ee.flattenListeners(ee.getListeners('foo')), [fn5, fn4, fn3]);
 
 			ee.manipulateListeners(true, 'foo', [fn3, fn5]);
 			ee.manipulateListeners(false, 'foo', [fn4, fn1]);
-			assert.deepEqual(ee.getListeners('foo'), [{listener: fn4}, {listener: fn1}]);
+			assert.deepEqual(ee.flattenListeners(ee.getListeners('foo')), [fn4, fn1]);
 
 			ee.manipulateListeners(true, 'foo', [fn4, fn1]);
-			assert.deepEqual(ee.getListeners('foo'), []);
+			assert.deepEqual(ee.flattenListeners(ee.getListeners('foo')), []);
 		});
 
 		test('manipulates with an object', function() {
@@ -456,24 +456,24 @@
 				bar: [fn5, fn1]
 			});
 
-			assert.deepEqual(ee.getListeners('foo'), [{listener: fn3}, {listener: fn2}, {listener: fn1}]);
-			assert.deepEqual(ee.getListeners('bar'), [{listener: fn4}, {listener: fn1}, {listener: fn5}]);
+			assert.deepEqual(ee.flattenListeners(ee.getListeners('foo')), [fn3, fn2, fn1]);
+			assert.deepEqual(ee.flattenListeners(ee.getListeners('bar')), [fn4, fn1, fn5]);
 
 			ee.manipulateListeners(true, {
 				foo: fn1,
 				bar: [fn5, fn4]
 			});
 
-			assert.deepEqual(ee.getListeners('foo'), [{listener: fn3}, {listener: fn2}]);
-			assert.deepEqual(ee.getListeners('bar'), [{listener: fn1}]);
+			assert.deepEqual(ee.flattenListeners(ee.getListeners('foo')), [fn3, fn2]);
+			assert.deepEqual(ee.flattenListeners(ee.getListeners('bar')), [fn1]);
 
 			ee.manipulateListeners(true, {
 				foo: [fn3, fn2],
 				bar: fn1
 			});
 
-			assert.deepEqual(ee.getListeners('foo'), []);
-			assert.deepEqual(ee.getListeners('bar'), []);
+			assert.deepEqual(ee.flattenListeners(ee.getListeners('foo')), []);
+			assert.deepEqual(ee.flattenListeners(ee.getListeners('bar')), []);
 		});
 
 		test('does not execute listeners just after they are added in another listeners', function() {
@@ -511,10 +511,10 @@
 
 		test('adds with an array', function() {
 			ee.addListeners('foo', [fn1, fn2, fn3]);
-			assert.deepEqual(ee.getListeners('foo'), [{listener: fn3}, {listener: fn2}, {listener: fn1}]);
+			assert.deepEqual(ee.flattenListeners(ee.getListeners('foo')), [fn3, fn2, fn1]);
 
 			ee.addListeners('foo', [fn4, fn5]);
-			assert.deepEqual(ee.getListeners('foo'), [{listener: fn3}, {listener: fn2}, {listener: fn1}, {listener: fn5}, {listener: fn4}]);
+			assert.deepEqual(ee.flattenListeners(ee.getListeners('foo')), [fn3, fn2, fn1, fn5, fn4]);
 		});
 
 		test('adds with an object', function() {
@@ -522,15 +522,15 @@
 				foo: fn1,
 				bar: [fn2, fn3]
 			});
-			assert.deepEqual(ee.getListeners('foo'), [{listener: fn1}]);
-			assert.deepEqual(ee.getListeners('bar'), [{listener: fn3}, {listener: fn2}]);
+			assert.deepEqual(ee.flattenListeners(ee.getListeners('foo')), [fn1]);
+			assert.deepEqual(ee.flattenListeners(ee.getListeners('bar')), [fn3, fn2]);
 
 			ee.addListeners({
 				foo: [fn4],
 				bar: fn5
 			});
-			assert.deepEqual(ee.getListeners('foo'), [{listener: fn1}, {listener: fn4}]);
-			assert.deepEqual(ee.getListeners('bar'), [{listener: fn3}, {listener: fn2}, {listener: fn5}]);
+			assert.deepEqual(ee.flattenListeners(ee.getListeners('foo')), [fn1, fn4]);
+			assert.deepEqual(ee.flattenListeners(ee.getListeners('bar')), [fn3, fn2, fn5]);
 		});
 
 		test('allows you to add listeners by regex', function ()
@@ -562,13 +562,13 @@
 		test('removes with an array', function() {
 			ee.addListeners('foo', [fn1, fn2, fn3, fn4, fn5]);
 			ee.removeListeners('foo', [fn2, fn3]);
-			assert.deepEqual(ee.getListeners('foo'), [{listener: fn5}, {listener: fn4}, {listener: fn1}]);
+			assert.deepEqual(ee.flattenListeners(ee.getListeners('foo')), [fn5, fn4, fn1]);
 
 			ee.removeListeners('foo', [fn5, fn4]);
-			assert.deepEqual(ee.getListeners('foo'), [{listener: fn1}]);
+			assert.deepEqual(ee.flattenListeners(ee.getListeners('foo')), [fn1]);
 
 			ee.removeListeners('foo', [fn1]);
-			assert.deepEqual(ee.getListeners('foo'), []);
+			assert.deepEqual(ee.flattenListeners(ee.getListeners('foo')), []);
 		});
 
 		test('removes with an object', function() {
@@ -581,15 +581,15 @@
 				foo: fn2,
 				bar: [fn3, fn4, fn5]
 			});
-			assert.deepEqual(ee.getListeners('foo'), [{listener: fn5}, {listener: fn4}, {listener: fn3}, {listener: fn1}]);
-			assert.deepEqual(ee.getListeners('bar'), [{listener: fn2}, {listener: fn1}]);
+			assert.deepEqual(ee.flattenListeners(ee.getListeners('foo')), [fn5, fn4, fn3, fn1]);
+			assert.deepEqual(ee.flattenListeners(ee.getListeners('bar')), [fn2, fn1]);
 
 			ee.removeListeners({
 				foo: [fn3],
 				bar: [fn2, fn1]
 			});
-			assert.deepEqual(ee.getListeners('foo'), [{listener: fn5}, {listener: fn4}, {listener: fn1}]);
-			assert.deepEqual(ee.getListeners('bar'), []);
+			assert.deepEqual(ee.flattenListeners(ee.getListeners('foo')), [fn5, fn4, fn1]);
+			assert.deepEqual(ee.flattenListeners(ee.getListeners('bar')), []);
 		});
 
 		test('removes with a regex', function() {
@@ -600,9 +600,9 @@
 			});
 
 			ee.removeListeners(/ba[rz]/, [fn3, fn4]);
-			assert.deepEqual(ee.getListeners('foo'), [{listener: fn5}, {listener: fn4}, {listener: fn3}, {listener: fn2}, {listener: fn1}]);
-			assert.deepEqual(ee.getListeners('bar'), [{listener: fn5}, {listener: fn2}, {listener: fn1}]);
-			assert.deepEqual(ee.getListeners('baz'), [{listener: fn5}, {listener: fn2}, {listener: fn1}]);
+			assert.deepEqual(ee.flattenListeners(ee.getListeners('foo')), [fn5, fn4, fn3, fn2, fn1]);
+			assert.deepEqual(ee.flattenListeners(ee.getListeners('bar')), [fn5, fn2, fn1]);
+			assert.deepEqual(ee.flattenListeners(ee.getListeners('baz')), [fn5, fn2, fn1]);
 		});
 	});
 
