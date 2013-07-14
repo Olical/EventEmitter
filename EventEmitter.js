@@ -368,7 +368,11 @@
 			return EventEmitter;
 		});
 	}
-	else {
-		exports.EventEmitter = EventEmitter;
+	else if (typeof module !== 'undefined' && module.exports){
+		// CommonJS module is defined
+		module.exports = EventEmitter;
 	}
-}(this));
+	else {
+		this.EventEmitter = EventEmitter;
+	}
+}.call(this));
