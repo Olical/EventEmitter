@@ -26,14 +26,14 @@
 	 * Finds the index of the listener for the event in it's storage array.
 	 *
 	 * @param {Function} listener Method to look for.
-	 * @param {Function[]} listeners Array of listeners to search through.
+	 * @param {Object[]} listeners Array of listeners to search through.
 	 * @return {Number} Index of the specified listener, -1 if not found
 	 * @api private
 	 */
 	function indexOfListener(listener, listeners) {
 		var i = listeners.length;
 		while (i--) {
-			if (listeners[i] === listener) {
+			if (listeners[i].listener === listener) {
 				return i;
 			}
 		}
@@ -61,8 +61,6 @@
 	 * @return {Function[]|Object} All listener functions for the event.
 	 */
 	proto.getListeners = function (evt) {
-		// Create a shortcut to the storage object
-		// Initialise it if it does not exists yet
 		var events = this._getEvents();
 		var response;
 		var key;
@@ -83,6 +81,24 @@
 
 		return response;
 	};
+
+	// /**
+	//  * Takes a list of listener objects and flattens it into a list of listener functions.
+	//  *
+	//  * @param {Object[]} listeners Raw listener objects.
+	//  * @return {Function[]} Just the listener functions.
+	//  * @api private
+	//  */
+	// proto._flattenListeners = function (listeners) {
+	// 	var flatListeners = [];
+	// 	var i;
+
+	// 	for (i = 0; i < listeners.length; i += 1) {
+	// 		flatListeners.push(listeners[i].listener);
+	// 	}
+
+	// 	return flatListeners;
+	// };
 
 	/**
 	 * Fetches the requested listeners via getListeners but will always return the results inside an object. This is mainly for internal use but others may find it useful.
@@ -117,9 +133,10 @@
 		var key;
 
 		for (key in listeners) {
-			if (listeners.hasOwnProperty(key) &&
-				indexOfListener(listener, listeners[key]) === -1) {
-				listeners[key].push(listener);
+			if (listeners.hasOwnProperty(key) && indexOfListener(listener, listeners[key]) === -1) {
+				listeners[key].push({
+					listener: listener
+				});
 			}
 		}
 
@@ -233,7 +250,6 @@
 	 * @return {Object} Current instance of EventEmitter for chaining.
 	 */
 	proto.manipulateListeners = function (remove, evt, listeners) {
-		// Initialise any required variables
 		var i;
 		var value;
 		var single = remove ? this.removeListener : this.addListener;
@@ -329,9 +345,9 @@
 				while (i--) {
 					// If the listener returns true then it shall be removed from the event
 					// The function is executed either with a basic call or an apply if there is an args array
-					response = listeners[key][i].apply(this, args || []);
+					response = listeners[key][i].listener.apply(this, args || []);
 					if (response === true) {
-						this.removeListener(evt, listeners[key][i]);
+						this.removeListener(evt, listeners[key][i].listener);
 					}
 				}
 			}
