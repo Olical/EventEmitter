@@ -20,8 +20,7 @@
 	// Shortcuts to improve speed and size
 
 	// Easy access to the prototype
-	var proto = EventEmitter.prototype,
-		nativeIndexOf = Array.prototype.indexOf ? true : false;
+	var proto = EventEmitter.prototype;
 
 	/**
 	 * Finds the index of the listener for the event in it's storage array.
@@ -31,12 +30,7 @@
 	 * @return {Number} Index of the specified listener, -1 if not found
 	 * @api private
 	 */
-	function indexOfListener(listener, listeners) {
-		// Return the index via the native method if possible
-		if (nativeIndexOf) {
-			return listeners.indexOf(listener);
-		}
-
+	var indexOfListener = Array.indexOf || function (listeners, listener) {
 		// There is no native method
 		// Use a manual loop to find the index
 		var i = listeners.length;
@@ -49,7 +43,7 @@
 
 		// Default to returning -1
 		return -1;
-	}
+	};
 
 	/**
 	 * Fetches the events object and creates one if required.
@@ -128,7 +122,7 @@
 
 		for (key in listeners) {
 			if (listeners.hasOwnProperty(key) &&
-				indexOfListener(listener, listeners[key]) === -1) {
+				indexOfListener(listeners[key], listener) === -1) {
 				listeners[key].push(listener);
 			}
 		}
@@ -183,7 +177,7 @@
 
 		for (key in listeners) {
 			if (listeners.hasOwnProperty(key)) {
-				index = indexOfListener(listener, listeners[key]);
+				index = indexOfListener(listeners[key], listener);
 
 				if (index !== -1) {
 					listeners[key].splice(index, 1);
