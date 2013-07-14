@@ -20,23 +20,17 @@
 	// Shortcuts to improve speed and size
 
 	// Easy access to the prototype
-	var proto = EventEmitter.prototype,
-		nativeIndexOf = Array.prototype.indexOf ? true : false;
+	var proto = EventEmitter.prototype;
 
 	/**
 	 * Finds the index of the listener for the event in it's storage array.
 	 *
-	 * @param {Function} listener Method to look for.
 	 * @param {Function[]} listeners Array of listeners to search through.
+	 * @param {Function} listener Method to look for.
 	 * @return {Number} Index of the specified listener, -1 if not found
 	 * @api private
 	 */
-	function indexOfListener(listener, listeners) {
-		// Return the index via the native method if possible
-		if (nativeIndexOf) {
-			return listeners.indexOf(listener);
-		}
-
+	var indexOfListener = Array.indexOf || function (listeners, listener) {
 		// There is no native method
 		// Use a manual loop to find the index
 		var i = listeners.length;
@@ -49,7 +43,7 @@
 
 		// Default to returning -1
 		return -1;
-	}
+	};
 
 	/**
 	 * Fetches the events object and creates one if required.
@@ -128,7 +122,7 @@
 
 		for (key in listeners) {
 			if (listeners.hasOwnProperty(key) &&
-				indexOfListener(listener, listeners[key]) === -1) {
+				indexOfListener(listeners[key], listener) === -1) {
 				listeners[key].push(listener);
 			}
 		}
@@ -160,8 +154,7 @@
 	 * @param {String[]} evts An array of event names to define.
 	 * @return {Object} Current instance of EventEmitter for chaining.
 	 */
-	proto.defineEvents = function (evts)
-	{
+	proto.defineEvents = function (evts) {
 		for (var i = 0; i < evts.length; i += 1) {
 			this.defineEvent(evts[i]);
 		}
@@ -183,7 +176,7 @@
 
 		for (key in listeners) {
 			if (listeners.hasOwnProperty(key)) {
-				index = indexOfListener(listener, listeners[key]);
+				index = indexOfListener(listeners[key], listener);
 
 				if (index !== -1) {
 					listeners[key].splice(index, 1);
@@ -375,7 +368,11 @@
 			return EventEmitter;
 		});
 	}
-	else {
-		exports.EventEmitter = EventEmitter;
+	else if (typeof module !== 'undefined' && module.exports){
+		// CommonJS module is defined
+		module.exports = EventEmitter;
 	}
-}(this));
+	else {
+		this.EventEmitter = EventEmitter;
+	}
+}.call(this));
