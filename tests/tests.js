@@ -114,6 +114,36 @@
 		});
 	});
 
+	suite('addOnceListener', function () {
+		var ee;
+		var counter;
+		var fn1 = function() { counter++; };
+
+		setup(function () {
+			ee = new EventEmitter();
+			counter = 0;
+		});
+
+		test('once listeners can be added', function () {
+			ee.addOnceListener('foo', fn1);
+			assert.deepEqual(ee.flattenListeners(ee.getListeners('foo')), [fn1]);
+		});
+
+		test('listeners are only executed once', function () {
+			ee.addOnceListener('foo', fn1);
+			ee.emitEvent('foo');
+			ee.emitEvent('foo');
+			ee.emitEvent('foo');
+			assert.strictEqual(counter, 1);
+		});
+
+		test('listeners can be removed', function () {
+			ee.addOnceListener('foo', fn1);
+			ee.removeListener('foo', fn1);
+			assert.deepEqual(ee.flattenListeners(ee.getListeners('foo')), []);
+		});
+	});
+
 	suite('removeListener', function() {
 		var ee,
 			fn1 = function(){},

@@ -129,12 +129,14 @@
 	 */
 	proto.addListener = function (evt, listener) {
 		var listeners = this.getListenersAsObject(evt);
+		var listenerIsWrapped = typeof listener === 'object';
 		var key;
 
 		for (key in listeners) {
 			if (listeners.hasOwnProperty(key) && indexOfListener(listener, listeners[key]) === -1) {
-				listeners[key].push({
-					listener: listener
+				listeners[key].push(listenerIsWrapped ? listener : {
+					listener: listener,
+					once: false
 				});
 			}
 		}
@@ -147,6 +149,26 @@
 	 * Alias of addListener
 	 */
 	proto.on = proto.addListener;
+
+	/**
+	 * Semi-alias of addListener. It will add a listener that will be
+	 * automatically removed after it's first execution.
+	 *
+	 * @param {String|RegExp} evt Name of the event to attach the listener to.
+	 * @param {Function} listener Method to be called when the event is emitted. If the function returns true then it will be removed after calling.
+	 * @return {Object} Current instance of EventEmitter for chaining.
+	 */
+	proto.addOnceListener = function (evt, listener) {
+		return this.addListener(evt, {
+			listener: listener,
+			once: true
+		});
+	};
+
+	/**
+	 * Alias of addOnceListener.
+	 */
+	proto.once = proto.addOnceListener;
 
 	/**
 	 * Defines an event name. This is required if you want to use a regex to add a listener to multiple events at once. If you don't do this then how do you expect it to know what event to add to? Should it just add to every possible match for a regex? No. That is scary and bad.
@@ -333,6 +355,7 @@
 	 */
 	proto.emitEvent = function (evt, args) {
 		var listeners = this.getListenersAsObject(evt);
+		var listener;
 		var i;
 		var key;
 		var response;
@@ -344,8 +367,9 @@
 				while (i--) {
 					// If the listener returns true then it shall be removed from the event
 					// The function is executed either with a basic call or an apply if there is an args array
-					response = listeners[key][i].listener.apply(this, args || []);
-					if (response === true) {
+					listener = listeners[key][i];
+					response = listener.listener.apply(this, args || []);
+					if (response === true || listener.once === true) {
 						this.removeListener(evt, listeners[key][i].listener);
 					}
 				}
