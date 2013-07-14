@@ -49,6 +49,32 @@
 		});
 	});
 
+	suite('flattenListeners', function () {
+		var ee,
+			fn1 = function(){},
+			fn2 = function(){},
+			fn3 = function(){};
+
+		setup(function () {
+			ee = new EventEmitter();
+		});
+
+		test('takes an array of objects and returns an array of functions', function () {
+			var input = [
+				{listener: fn1},
+				{listener: fn2},
+				{listener: fn3}
+			];
+			var output = ee.flattenListeners(input);
+			assert.deepEqual(output, [fn1, fn2, fn3]);
+		});
+
+		test('if given an empty array, an empty array is returned', function () {
+			var output = ee.flattenListeners([]);
+			assert.deepEqual(output, []);
+		});
+	});
+
 	suite('addListener', function() {
 		var ee,
 			fn1 = function(){},

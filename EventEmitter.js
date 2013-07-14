@@ -82,23 +82,22 @@
 		return response;
 	};
 
-	// /**
-	//  * Takes a list of listener objects and flattens it into a list of listener functions.
-	//  *
-	//  * @param {Object[]} listeners Raw listener objects.
-	//  * @return {Function[]} Just the listener functions.
-	//  * @api private
-	//  */
-	// proto._flattenListeners = function (listeners) {
-	// 	var flatListeners = [];
-	// 	var i;
+	/**
+	 * Takes a list of listener objects and flattens it into a list of listener functions.
+	 *
+	 * @param {Object[]} listeners Raw listener objects.
+	 * @return {Function[]} Just the listener functions.
+	 */
+	proto.flattenListeners = function (listeners) {
+		var flatListeners = [];
+		var i;
 
-	// 	for (i = 0; i < listeners.length; i += 1) {
-	// 		flatListeners.push(listeners[i].listener);
-	// 	}
+		for (i = 0; i < listeners.length; i += 1) {
+			flatListeners.push(listeners[i].listener);
+		}
 
-	// 	return flatListeners;
-	// };
+		return flatListeners;
+	};
 
 	/**
 	 * Fetches the requested listeners via getListeners but will always return the results inside an object. This is mainly for internal use but others may find it useful.
