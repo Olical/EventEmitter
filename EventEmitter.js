@@ -22,9 +22,6 @@
 	// Easy access to the prototype
 	var proto = EventEmitter.prototype;
 
-	// Cache the availablity of Array#indexOf.
-	var nativeIndexOf = Array.prototype.indexOf ? true : false;
-
 	/**
 	 * Finds the index of the listener for the event in it's storage array.
 	 *
@@ -34,22 +31,13 @@
 	 * @api private
 	 */
 	function indexOfListener(listener, listeners) {
-		// Return the index via the native method if possible
-		if (nativeIndexOf) {
-			return listeners.indexOf(listener);
-		}
-
-		// There is no native method
-		// Use a manual loop to find the index
 		var i = listeners.length;
 		while (i--) {
-			// If the listener matches, return it's index
 			if (listeners[i] === listener) {
 				return i;
 			}
 		}
 
-		// Default to returning -1
 		return -1;
 	}
 
