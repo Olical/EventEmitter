@@ -20,8 +20,10 @@
 	// Shortcuts to improve speed and size
 
 	// Easy access to the prototype
-	var proto = EventEmitter.prototype,
-		nativeIndexOf = Array.prototype.indexOf ? true : false;
+	var proto = EventEmitter.prototype;
+
+	// Cache the availablity of Array#indexOf.
+	var nativeIndexOf = Array.prototype.indexOf ? true : false;
 
 	/**
 	 * Finds the index of the listener for the event in it's storage array.
@@ -73,9 +75,9 @@
 	proto.getListeners = function (evt) {
 		// Create a shortcut to the storage object
 		// Initialise it if it does not exists yet
-		var events = this._getEvents(),
-			response,
-			key;
+		var events = this._getEvents();
+		var response;
+		var key;
 
 		// Return a concatenated array of all matching events if
 		// the selector is a regular expression.
@@ -101,8 +103,8 @@
 	 * @return {Object} All listener functions for an event in an object.
 	 */
 	proto.getListenersAsObject = function (evt) {
-		var listeners = this.getListeners(evt),
-			response;
+		var listeners = this.getListeners(evt);
+		var response;
 
 		if (listeners instanceof Array) {
 			response = {};
@@ -123,8 +125,8 @@
 	 * @return {Object} Current instance of EventEmitter for chaining.
 	 */
 	proto.addListener = function (evt, listener) {
-		var listeners = this.getListenersAsObject(evt),
-			key;
+		var listeners = this.getListenersAsObject(evt);
+		var key;
 
 		for (key in listeners) {
 			if (listeners.hasOwnProperty(key) &&
@@ -177,9 +179,9 @@
 	 * @return {Object} Current instance of EventEmitter for chaining.
 	 */
 	proto.removeListener = function (evt, listener) {
-		var listeners = this.getListenersAsObject(evt),
-			index,
-			key;
+		var listeners = this.getListenersAsObject(evt);
+		var index;
+		var key;
 
 		for (key in listeners) {
 			if (listeners.hasOwnProperty(key)) {
@@ -244,10 +246,10 @@
 	 */
 	proto.manipulateListeners = function (remove, evt, listeners) {
 		// Initialise any required variables
-		var i,
-			value,
-			single = remove ? this.removeListener : this.addListener,
-			multiple = remove ? this.removeListeners : this.addListeners;
+		var i;
+		var value;
+		var single = remove ? this.removeListener : this.addListener;
+		var multiple = remove ? this.removeListeners : this.addListeners;
 
 		// If evt is an object then pass each of it's properties to this method
 		if (typeof evt === 'object' && !(evt instanceof RegExp)) {
@@ -288,9 +290,9 @@
 	 * @return {Object} Current instance of EventEmitter for chaining.
 	 */
 	proto.removeEvent = function (evt) {
-		var type = typeof evt,
-			events = this._getEvents(),
-			key;
+		var type = typeof evt;
+		var events = this._getEvents();
+		var key;
 
 		// Remove different things depending on the state of evt
 		if (type === 'string') {
@@ -327,10 +329,10 @@
 	 * @return {Object} Current instance of EventEmitter for chaining.
 	 */
 	proto.emitEvent = function (evt, args) {
-		var listeners = this.getListenersAsObject(evt),
-			i,
-			key,
-			response;
+		var listeners = this.getListenersAsObject(evt);
+		var i;
+		var key;
+		var response;
 
 		for (key in listeners) {
 			if (listeners.hasOwnProperty(key)) {
