@@ -364,7 +364,7 @@
 					// The function is executed either with a basic call or an apply if there is an args array
 					listener = listeners[key][i];
 					response = listener.listener.apply(this, args || []);
-					if (response === true || listener.once === true) {
+					if (response === this._getOnceReturnValue() || listener.once === true) {
 						this.removeListener(evt, listeners[key][i].listener);
 					}
 				}
@@ -390,6 +390,36 @@
 	proto.emit = function emit(evt) {
 		var args = Array.prototype.slice.call(arguments, 1);
 		return this.emitEvent(evt, args);
+	};
+
+	/**
+	 * Sets the current value to check against when executing listeners. If a
+	 * listeners return value matches the one set here then it will be removed
+	 * after execution. This value defaults to true.
+	 *
+	 * @param {*} value The new value to check for when executing listeners.
+	 * @return {Object} Current instance of EventEmitter for chaining.
+	 */
+	proto.setOnceReturnValue = function setOnceReturnValue(value) {
+		this._onceReturnValue = value;
+		return this;
+	};
+
+	/**
+	 * Fetches the current value to check against when executing listeners. If
+	 * the listeners return value matches this one then it should be removed
+	 * automatically. It will return true by default.
+	 *
+	 * @return {*|Boolean} The current value to check for or the default, true.
+	 * @api private
+	 */
+	proto._getOnceReturnValue = function _getOnceReturnValue() {
+		if (this.hasOwnProperty('_onceReturnValue')) {
+			return this._onceReturnValue;
+		}
+		else {
+			return true;
+		}
 	};
 
 	// Expose the class either via AMD, CommonJS or the global object
