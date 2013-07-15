@@ -5,7 +5,7 @@
  * @preserve
  */
 
-(function (exports) {
+(function () {
 	// Place the script in strict mode
 	'use strict';
 
