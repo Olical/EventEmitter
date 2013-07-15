@@ -141,7 +141,6 @@
 			}
 		}
 
-		// Return the instance of EventEmitter to allow chaining
 		return this;
 	};
 
@@ -218,7 +217,6 @@
 			}
 		}
 
-		// Return the instance of EventEmitter to allow chaining
 		return this;
 	};
 
@@ -300,7 +298,6 @@
 			}
 		}
 
-		// Return the instance of EventEmitter to allow chaining
 		return this;
 	};
 
@@ -336,7 +333,6 @@
 			delete this._events;
 		}
 
-		// Return the instance of EventEmitter to allow chaining
 		return this;
 	};
 
@@ -375,7 +371,6 @@
 			}
 		}
 
-		// Return the instance of EventEmitter to allow chaining
 		return this;
 	};
 
