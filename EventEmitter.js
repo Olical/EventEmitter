@@ -42,16 +42,6 @@
 	}
 
 	/**
-	 * Fetches the events object and creates one if required.
-	 *
-	 * @return {Object} The events storage object.
-	 * @api private
-	 */
-	proto._getEvents = function _getEvents() {
-		return this._events || (this._events = {});
-	};
-
-	/**
 	 * Returns the listener array for the specified event.
 	 * Will initialise the event object and listener arrays if required.
 	 * Will return an object if you use a regex search. The object contains keys for each matched event. So /ba[rz]/ might return an object containing bar and baz. But only if you have either defined them with defineEvent or added some listeners to them.
@@ -420,6 +410,16 @@
 		else {
 			return true;
 		}
+	};
+
+	/**
+	 * Fetches the events object and creates one if required.
+	 *
+	 * @return {Object} The events storage object.
+	 * @api private
+	 */
+	proto._getEvents = function _getEvents() {
+		return this._events || (this._events = {});
 	};
 
 	// Expose the class either via AMD, CommonJS or the global object
