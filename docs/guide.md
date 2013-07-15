@@ -274,6 +274,10 @@ ee.emitEvent('addStuff', [10, 20]);
  * `off` - `removeListener`
  * `trigger` - `emitEvent`
 
+I've also added one since then.
+
+ * `once` - `addOnceListener`
+
 ### Using regular expressions
 
 You can pass a regular expression to pretty much every function in EventEmitter in place of an event name string. So if you have two events, say, bar and baz, you can manipulate both of them with `/ba[rz]/`.
