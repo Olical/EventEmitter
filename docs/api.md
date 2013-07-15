@@ -17,6 +17,13 @@ You may also be interested in [the guide](https://github.com/Wolfy87/EventEmitte
  * **param** (String | RegExp) _evt_ - Name of the event to return the listeners from.
  * **return** (Function[] | Object) - All listener functions for the event.
 
+## flattenListeners
+
+<p>Takes a list of listener objects and flattens it into a list of listener functions.</p>
+
+ * **param** (Object[]) _listeners_ - Raw listener objects.
+ * **return** (Function[]) - Just the listener functions.
+
 ## getListenersAsObject
 
 <p>Fetches the requested listeners via getListeners but will always return the results inside an object. This is mainly for internal use but others may find it useful.</p>
@@ -35,6 +42,19 @@ You may also be interested in [the guide](https://github.com/Wolfy87/EventEmitte
 ## on
 
 <p>Alias of addListener</p>
+
+
+## addOnceListener
+
+<p>Semi-alias of addListener. It will add a listener that will be<br />automatically removed after it's first execution.</p>
+
+ * **param** (String | RegExp) _evt_ - Name of the event to attach the listener to.
+ * **param** (Function) _listener_ - Method to be called when the event is emitted. If the function returns true then it will be removed after calling.
+ * **return** (Object) - Current instance of EventEmitter for chaining.
+
+## once
+
+<p>Alias of addOnceListener.</p>
 
 
 ## defineEvent
@@ -115,4 +135,11 @@ You may also be interested in [the guide](https://github.com/Wolfy87/EventEmitte
 
  * **param** (String | RegExp) _evt_ - Name of the event to emit and execute listeners for.
  * **param** (...*) _Optional_ - additional arguments to be passed to each listener.
+ * **return** (Object) - Current instance of EventEmitter for chaining.
+
+## setOnceReturnValue
+
+<p>Sets the current value to check against when executing listeners. If a<br />listeners return value matches the one set here then it will be removed<br />after execution. This value defaults to true.</p>
+
+ * **param** (*) _value_ - The new value to check for when executing listeners.
  * **return** (Object) - Current instance of EventEmitter for chaining.
