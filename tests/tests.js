@@ -50,10 +50,10 @@
 	});
 
 	suite('flattenListeners', function () {
-		var ee,
-			fn1 = function(){},
-			fn2 = function(){},
-			fn3 = function(){};
+		var ee;
+		var fn1 = function(){};
+		var fn2 = function(){};
+		var fn3 = function(){};
 
 		setup(function () {
 			ee = new EventEmitter();
@@ -76,9 +76,9 @@
 	});
 
 	suite('addListener', function() {
-		var ee,
-			fn1 = function(){},
-			fn2 = function(){};
+		var ee;
+		var fn1 = function(){};
+		var fn2 = function(){};
 
 		setup(function() {
 			ee = new EventEmitter();
@@ -145,13 +145,13 @@
 	});
 
 	suite('removeListener', function() {
-		var ee,
-			fn1 = function(){},
-			fn2 = function(){},
-			fn3 = function(){},
-			fn4 = function(){},
-			fn5 = function(){},
-			fnX = function(){};
+		var ee;
+		var fn1 = function(){};
+		var fn2 = function(){};
+		var fn3 = function(){};
+		var fn4 = function(){};
+		var fn5 = function(){};
+		var fnX = function(){};
 
 		setup(function() {
 			ee = new EventEmitter();
@@ -282,12 +282,12 @@
 	});
 
 	suite('removeEvent', function() {
-		var ee,
-			fn1 = function(){},
-			fn2 = function(){},
-			fn3 = function(){},
-			fn4 = function(){},
-			fn5 = function(){};
+		var ee;
+		var fn1 = function(){};
+		var fn2 = function(){};
+		var fn3 = function(){};
+		var fn4 = function(){};
+		var fn5 = function(){};
 
 		setup(function() {
 			ee = new EventEmitter();
@@ -396,8 +396,8 @@
 		});
 
 		test('executes multiple listeners after one has been removed', function() {
-			var count = 0,
-				toRemove = function() { count++; };
+			var count = 0;
+			var toRemove = function() { count++; };
 
 			ee.addListener('baz', function() { count++; });
 			ee.addListener('baz', function() { count++; });
@@ -450,12 +450,12 @@
 	});
 
 	suite('manipulateListeners', function() {
-		var ee,
-			fn1 = function(){},
-			fn2 = function(){},
-			fn3 = function(){},
-			fn4 = function(){},
-			fn5 = function(){};
+		var ee;
+		var fn1 = function(){};
+		var fn2 = function(){};
+		var fn3 = function(){};
+		var fn4 = function(){};
+		var fn5 = function(){};
 
 		setup(function() {
 			ee = new EventEmitter();
@@ -528,12 +528,12 @@
 	});
 
 	suite('addListeners', function() {
-		var ee,
-			fn1 = function(){},
-			fn2 = function(){},
-			fn3 = function(){},
-			fn4 = function(){},
-			fn5 = function(){};
+		var ee;
+		var fn1 = function(){};
+		var fn2 = function(){};
+		var fn3 = function(){};
+		var fn4 = function(){};
+		var fn5 = function(){};
 
 		setup(function() {
 			ee = new EventEmitter();
@@ -578,12 +578,12 @@
 	});
 
 	suite('removeListeners', function() {
-		var ee,
-			fn1 = function(){},
-			fn2 = function(){},
-			fn3 = function(){},
-			fn4 = function(){},
-			fn5 = function(){};
+		var ee;
+		var fn1 = function(){};
+		var fn2 = function(){};
+		var fn3 = function(){};
+		var fn4 = function(){};
+		var fn5 = function(){};
 
 		setup(function() {
 			ee = new EventEmitter();
