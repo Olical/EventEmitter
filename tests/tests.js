@@ -672,7 +672,7 @@
 			ee.emitEvent('baz');
 			ee.emitEvent('baz');
 
-			assert.strictEqual(count, 8);
+			assert.strictEqual(count, 10);
 		});
 
 		test('will not remove those that return a different string to the one that is set', function () {
@@ -689,7 +689,7 @@
 			ee.emitEvent('baz');
 			ee.emitEvent('baz');
 
-			assert.strictEqual(count, 10);
+			assert.strictEqual(count, 11);
 		});
 	});
 
