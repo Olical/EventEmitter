@@ -362,14 +362,13 @@
 		return this.emitEvent(evt, args);
 	};
 
-	// Expose the class either via AMD or the global object
+	// Expose the class either via AMD, CommonJS or the global object
 	if (typeof define === 'function' && define.amd) {
 		define(function () {
 			return EventEmitter;
 		});
 	}
 	else if (typeof module !== 'undefined' && module.exports){
-		// CommonJS module is defined
 		module.exports = EventEmitter;
 	}
 	else {
