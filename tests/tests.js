@@ -636,6 +636,63 @@
 		});
 	});
 
+	suite('setOnceReturnValuea', function() {
+		var ee;
+
+		setup(function () {
+			ee = new EventEmitter();
+		});
+
+		test('will remove if left as default and returning true', function () {
+			var count = 0;
+
+			ee.addListener('baz', function() { count++; });
+			ee.addListener('baz', function() { count++; return true; });
+			ee.addListener('baz', function() { count++; return false; });
+			ee.addListener('baz', function() { count++; return 1; });
+			ee.addListener('baz', function() { count++; return true; });
+
+			ee.emitEvent('baz');
+			ee.emitEvent('baz');
+
+			assert.strictEqual(count, 8);
+		});
+
+		test('will remove those that return a string when set to that string', function () {
+			var count = 0;
+
+			ee.setOnceReturnValue('only-once');
+			ee.addListener('baz', function() { count++; });
+			ee.addListener('baz', function() { count++; return true; });
+			ee.addListener('baz', function() { count++; return 'only-once'; });
+			ee.addListener('baz', function() { count++; return 1; });
+			ee.addListener('baz', function() { count++; return 'only-once'; });
+			ee.addListener('baz', function() { count++; return true; });
+
+			ee.emitEvent('baz');
+			ee.emitEvent('baz');
+
+			assert.strictEqual(count, 8);
+		});
+
+		test('will not remove those that return a different string to the one that is set', function () {
+			var count = 0;
+
+			ee.setOnceReturnValue('only-once');
+			ee.addListener('baz', function() { count++; });
+			ee.addListener('baz', function() { count++; return true; });
+			ee.addListener('baz', function() { count++; return 'not-only-once'; });
+			ee.addListener('baz', function() { count++; return 1; });
+			ee.addListener('baz', function() { count++; return 'only-once'; });
+			ee.addListener('baz', function() { count++; return true; });
+
+			ee.emitEvent('baz');
+			ee.emitEvent('baz');
+
+			assert.strictEqual(count, 10);
+		});
+	});
+
 	// Execute the tests.
 	mocha.run();
 }());
