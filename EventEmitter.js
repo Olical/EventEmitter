@@ -30,20 +30,16 @@
 	 * @return {Number} Index of the specified listener, -1 if not found
 	 * @api private
 	 */
-	var indexOfListener = Array.indexOf || function (listeners, listener) {
-		// There is no native method
-		// Use a manual loop to find the index
+	function indexOfListener(listeners, listener) {
 		var i = listeners.length;
 		while (i--) {
-			// If the listener matches, return it's index
-			if (listeners[i] === listener) {
+			if (listeners[i].listener === listener) {
 				return i;
 			}
 		}
 
-		// Default to returning -1
 		return -1;
-	};
+	}
 
 	/**
 	 * Fetches the events object and creates one if required.
@@ -65,8 +61,6 @@
 	 * @return {Function[]|Object} All listener functions for the event.
 	 */
 	proto.getListeners = function (evt) {
-		// Create a shortcut to the storage object
-		// Initialise it if it does not exists yet
 		var events = this._getEvents();
 		var response;
 		var key;
@@ -86,6 +80,23 @@
 		}
 
 		return response;
+	};
+
+	/**
+	 * Takes a list of listener objects and flattens it into a list of listener functions.
+	 *
+	 * @param {Object[]} listeners Raw listener objects.
+	 * @return {Function[]} Just the listener functions.
+	 */
+	proto.flattenListeners = function (listeners) {
+		var flatListeners = [];
+		var i;
+
+		for (i = 0; i < listeners.length; i += 1) {
+			flatListeners.push(listeners[i].listener);
+		}
+
+		return flatListeners;
 	};
 
 	/**
@@ -118,12 +129,15 @@
 	 */
 	proto.addListener = function (evt, listener) {
 		var listeners = this.getListenersAsObject(evt);
+		var listenerIsWrapped = typeof listener === 'object';
 		var key;
 
 		for (key in listeners) {
-			if (listeners.hasOwnProperty(key) &&
-				indexOfListener(listeners[key], listener) === -1) {
-				listeners[key].push(listener);
+			if (listeners.hasOwnProperty(key) && indexOfListener(listeners[key], listener) === -1) {
+				listeners[key].push(listenerIsWrapped ? listener : {
+					listener: listener,
+					once: false
+				});
 			}
 		}
 
@@ -135,6 +149,26 @@
 	 * Alias of addListener
 	 */
 	proto.on = proto.addListener;
+
+	/**
+	 * Semi-alias of addListener. It will add a listener that will be
+	 * automatically removed after it's first execution.
+	 *
+	 * @param {String|RegExp} evt Name of the event to attach the listener to.
+	 * @param {Function} listener Method to be called when the event is emitted. If the function returns true then it will be removed after calling.
+	 * @return {Object} Current instance of EventEmitter for chaining.
+	 */
+	proto.addOnceListener = function (evt, listener) {
+		return this.addListener(evt, {
+			listener: listener,
+			once: true
+		});
+	};
+
+	/**
+	 * Alias of addOnceListener.
+	 */
+	proto.once = proto.addOnceListener;
 
 	/**
 	 * Defines an event name. This is required if you want to use a regex to add a listener to multiple events at once. If you don't do this then how do you expect it to know what event to add to? Should it just add to every possible match for a regex? No. That is scary and bad.
@@ -236,7 +270,6 @@
 	 * @return {Object} Current instance of EventEmitter for chaining.
 	 */
 	proto.manipulateListeners = function (remove, evt, listeners) {
-		// Initialise any required variables
 		var i;
 		var value;
 		var single = remove ? this.removeListener : this.addListener;
@@ -321,6 +354,7 @@
 	 */
 	proto.emitEvent = function (evt, args) {
 		var listeners = this.getListenersAsObject(evt);
+		var listener;
 		var i;
 		var key;
 		var response;
@@ -332,9 +366,10 @@
 				while (i--) {
 					// If the listener returns true then it shall be removed from the event
 					// The function is executed either with a basic call or an apply if there is an args array
-					response = listeners[key][i].apply(this, args || []);
-					if (response === true) {
-						this.removeListener(evt, listeners[key][i]);
+					listener = listeners[key][i];
+					response = listener.listener.apply(this, args || []);
+					if (response === true || listener.once === true) {
+						this.removeListener(evt, listeners[key][i].listener);
 					}
 				}
 			}
