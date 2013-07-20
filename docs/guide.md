@@ -176,6 +176,34 @@ ee.addListeners('foo', [listener1, listener2]);
 ee.emitEvent('foo');
 ```
 
+If you do not want to, or can't for some reason, return true, you can set the return value using `setOnceReturnValue`.
+
+```javascript
+function listener() {
+	// Always remove after use
+	return 'REMOVE-ME';
+}
+
+ee.addListener('foo', listener);
+ee.setOnceReturnValue('REMOVE-ME');
+ee.emitEvent('foo');
+```
+
+Alternatively you can use the `addOnceListener` method, or it's alias, `once`.
+
+```javascript
+function listener() {
+	// Do stuff
+}
+
+ee.addOnceListener('foo', listener);
+ee.emitEvent('foo');
+// The listener will be removed now...
+ee.emitEvent('foo');
+
+// The listener will only be executed once.
+```
+
 You can also remove whole events and all of their attached listeners with the `removeEvent` method. If you pass an event name to the method then it will remove that event and it's listeners.
 
 ```javascript
@@ -245,6 +273,10 @@ ee.emitEvent('addStuff', [10, 20]);
  * `on` - `addListener`
  * `off` - `removeListener`
  * `trigger` - `emitEvent`
+
+I've also added one since then.
+
+ * `once` - `addOnceListener`
 
 ### Using regular expressions
 
