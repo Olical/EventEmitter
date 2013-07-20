@@ -355,7 +355,7 @@
 					listener = listeners[key][i];
 					response = listener.listener.apply(this, args || []);
 					if (response === this._getOnceReturnValue() || listener.once === true) {
-						this.removeListener(evt, listeners[key][i].listener);
+						this.removeListener(evt, listener.listener);
 					}
 				}
 			}
