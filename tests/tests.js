@@ -427,6 +427,30 @@
 			assert.strictEqual(count, 8);
 		});
 
+		test('can remove listeners that return true and also define another listener within them', function () {
+			var count = 0;
+
+			ee.addListener('baz', function() { count++; });
+
+			ee.addListener('baz', function() {
+				ee.addListener('baz', function() {
+					count++;
+				});
+
+				count++;
+				return true;
+			});
+
+			ee.addListener('baz', function() { count++; return false; });
+			ee.addListener('baz', function() { count++; return 1; });
+			ee.addListener('baz', function() { count++; return true; });
+
+			ee.emitEvent('baz');
+			ee.emitEvent('baz');
+
+			assert.strictEqual(count, 9);
+		});
+
 		test('executes all listeners that match a regular expression', function ()
 		{
 			var count = 0;
