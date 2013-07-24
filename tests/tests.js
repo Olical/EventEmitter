@@ -636,7 +636,7 @@
 		});
 	});
 
-	suite('setOnceReturnValuea', function() {
+	suite('setOnceReturnValue', function() {
 		var ee;
 
 		setup(function () {
