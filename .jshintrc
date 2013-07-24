@@ -1,6 +1,0 @@
-{
-	"globals": {
-		"define": true,
-		"jasmine": true
-	}
-}
