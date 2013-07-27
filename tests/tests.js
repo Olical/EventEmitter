@@ -1,7 +1,18 @@
-(function() {
+(function () {
+	/*global mocha,chai,EventEmitter*/
+	'use strict';
+
 	// Setup Mocha and Chai.
 	mocha.setup('tdd');
-	assert = chai.assert;
+	var assert = chai.assert;
+
+	function flattenCheck(check) {
+		var sorted = check.slice(0);
+		sorted.sort(function (a, b) {
+			return a < b ? -1 : 1;
+		});
+		return sorted.join();
+	}
 
 	// Configure the tests
 	suite('getListeners', function() {
@@ -35,11 +46,11 @@
 
 		test('allows you to fetch listeners by regex', function ()
 		{
-			var count = 0;
+			var check = [];
 
-			ee.addListener('foo', function() { count++; });
-			ee.addListener('bar', function() { count++; return 'bar'; });
-			ee.addListener('baz', function() { count++; return 'baz'; });
+			ee.addListener('foo', function() { check.push(1); });
+			ee.addListener('bar', function() { check.push(2); return 'bar'; });
+			ee.addListener('baz', function() { check.push(3); return 'baz'; });
 
 			var listeners = ee.getListeners(/ba[rz]/);
 
@@ -102,15 +113,14 @@
 
 		test('allows you to add listeners by regex', function ()
 		{
-			ee.removeEvent();
-			var count = 0;
+			var check = [];
 
 			ee.defineEvents(['bar', 'baz']);
-			ee.addListener('foo', function() { count++; });
-			ee.addListener(/ba[rz]/, function() { count++; });
+			ee.addListener('foo', function() { check.push(1); });
+			ee.addListener(/ba[rz]/, function() { check.push(2); });
 			ee.emitEvent(/ba[rz]/);
 
-			assert.strictEqual(count, 2);
+			assert.strictEqual(flattenCheck(check), '2,2');
 		});
 	});
 
@@ -323,12 +333,12 @@
 
 		test('removes listeners when passed a regex', function ()
 		{
-			var count = 0;
+			var check = [];
 			ee.removeEvent();
 
-			ee.addListener('foo', function() { count++; return 'foo'; });
-			ee.addListener('bar', function() { count++; return 'bar'; });
-			ee.addListener('baz', function() { count++; return 'baz'; });
+			ee.addListener('foo', function() { check.push(1); return 'foo'; });
+			ee.addListener('bar', function() { check.push(2); return 'bar'; });
+			ee.addListener('baz', function() { check.push(3); return 'baz'; });
 
 			ee.removeEvent(/ba[rz]/);
 			var listeners = ee.getListeners('foo');
@@ -382,61 +392,85 @@
 		});
 
 		test('executes multiple listeners', function() {
-			var count = 0;
+			var check = [];
 
-			ee.addListener('baz', function() { count++; });
-			ee.addListener('baz', function() { count++; });
-			ee.addListener('baz', function() { count++; });
-			ee.addListener('baz', function() { count++; });
-			ee.addListener('baz', function() { count++; });
+			ee.addListener('baz', function() { check.push(1); });
+			ee.addListener('baz', function() { check.push(2); });
+			ee.addListener('baz', function() { check.push(3); });
+			ee.addListener('baz', function() { check.push(4); });
+			ee.addListener('baz', function() { check.push(5); });
 
 			ee.emitEvent('baz');
 
-			assert.strictEqual(count, 5);
+			assert.strictEqual(flattenCheck(check), '1,2,3,4,5');
 		});
 
 		test('executes multiple listeners after one has been removed', function() {
-			var count = 0;
-			var toRemove = function() { count++; };
+			var check = [];
+			var toRemove = function() { check.push('R'); };
 
-			ee.addListener('baz', function() { count++; });
-			ee.addListener('baz', function() { count++; });
+			ee.addListener('baz', function() { check.push(1); });
+			ee.addListener('baz', function() { check.push(2); });
 			ee.addListener('baz', toRemove);
-			ee.addListener('baz', function() { count++; });
-			ee.addListener('baz', function() { count++; });
+			ee.addListener('baz', function() { check.push(3); });
+			ee.addListener('baz', function() { check.push(4); });
 
 			ee.removeListener('baz', toRemove);
 
 			ee.emitEvent('baz');
 
-			assert.strictEqual(count, 4);
+			assert.strictEqual(flattenCheck(check), '1,2,3,4');
 		});
 
 		test('executes multiple listeners and removes those that return true', function() {
-			var count = 0;
+			var check = [];
 
-			ee.addListener('baz', function() { count++; });
-			ee.addListener('baz', function() { count++; return true; });
-			ee.addListener('baz', function() { count++; return false; });
-			ee.addListener('baz', function() { count++; return 1; });
-			ee.addListener('baz', function() { count++; return true; });
+			ee.addListener('baz', function() { check.push(1); });
+			ee.addListener('baz', function() { check.push(2); return true; });
+			ee.addListener('baz', function() { check.push(3); return false; });
+			ee.addListener('baz', function() { check.push(4); return 1; });
+			ee.addListener('baz', function() { check.push(5); return true; });
 
 			ee.emitEvent('baz');
 			ee.emitEvent('baz');
 
-			assert.strictEqual(count, 8);
+			assert.strictEqual(flattenCheck(check), '1,1,2,3,3,4,4,5');
+		});
+
+		test('can remove listeners that return true and also define another listener within them', function () {
+			var check = [];
+
+			ee.addListener('baz', function() { check.push(1); });
+
+			ee.addListener('baz', function() {
+				ee.addListener('baz', function() {
+					check.push(2);
+				});
+
+				check.push(3);
+				return true;
+			});
+
+			ee.addListener('baz', function() { check.push(4); return false; });
+			ee.addListener('baz', function() { check.push(5); return 1; });
+			ee.addListener('baz', function() { check.push(6); return true; });
+
+			ee.emitEvent('baz');
+			ee.emitEvent('baz');
+
+			assert.strictEqual(flattenCheck(check), '1,1,2,3,4,4,5,5,6');
 		});
 
 		test('executes all listeners that match a regular expression', function ()
 		{
-			var count = 0;
+			var check = [];
 
-			ee.addListener('foo', function() { count++; });
-			ee.addListener('bar', function() { count++; });
-			ee.addListener('baz', function() { count++; });
+			ee.addListener('foo', function() { check.push(1); });
+			ee.addListener('bar', function() { check.push(2); });
+			ee.addListener('baz', function() { check.push(3); });
 
 			ee.emitEvent(/ba[rz]/);
-			assert.strictEqual(count, 2);
+			assert.strictEqual(flattenCheck(check), '2,3');
 		});
 
 		test('global object is defined', function()
@@ -507,23 +541,23 @@
 		});
 
 		test('does not execute listeners just after they are added in another listeners', function() {
-			var count = 0;
+			var check = [];
 
-			ee.addListener('baz', function() { count++; });
-			ee.addListener('baz', function() { count++; });
+			ee.addListener('baz', function() { check.push(1); });
+			ee.addListener('baz', function() { check.push(2); });
 			ee.addListener('baz', function() {
-				count++;
+				check.push(3);
 
 				ee.addListener('baz', function() {
-					count++;
+					check.push(4);
 				});
 			});
-			ee.addListener('baz', function() { count++; });
-			ee.addListener('baz', function() { count++; });
+			ee.addListener('baz', function() { check.push(5); });
+			ee.addListener('baz', function() { check.push(6); });
 
 			ee.emitEvent('baz');
 
-			assert.strictEqual(count, 5);
+			assert.strictEqual(flattenCheck(check), '1,2,3,5,6');
 		});
 	});
 
@@ -565,15 +599,14 @@
 
 		test('allows you to add listeners by regex', function ()
 		{
-			ee.removeEvent();
-			var count = 0;
+			var check = [];
 
 			ee.defineEvents(['bar', 'baz']);
-			ee.addListeners('foo', [function() { count++; }]);
-			ee.addListeners(/ba[rz]/, [function() { count++; }, function() { count++; }]);
+			ee.addListeners('foo', [function() { check.push(1); }]);
+			ee.addListeners(/ba[rz]/, [function() { check.push(2); }, function() { check.push(3); }]);
 			ee.emitEvent(/ba[rz]/);
 
-			assert.strictEqual(count, 4);
+			assert.strictEqual(flattenCheck(check), '2,2,3,3');
 		});
 	});
 
@@ -636,7 +669,7 @@
 		});
 	});
 
-	suite('setOnceReturnValuea', function() {
+	suite('setOnceReturnValue', function() {
 		var ee;
 
 		setup(function () {
@@ -644,55 +677,55 @@
 		});
 
 		test('will remove if left as default and returning true', function () {
-			var count = 0;
+			var check = [];
 
-			ee.addListener('baz', function() { count++; });
-			ee.addListener('baz', function() { count++; return true; });
-			ee.addListener('baz', function() { count++; return false; });
-			ee.addListener('baz', function() { count++; return 1; });
-			ee.addListener('baz', function() { count++; return true; });
+			ee.addListener('baz', function() { check.push(1); });
+			ee.addListener('baz', function() { check.push(2); return true; });
+			ee.addListener('baz', function() { check.push(3); return false; });
+			ee.addListener('baz', function() { check.push(4); return 1; });
+			ee.addListener('baz', function() { check.push(5); return true; });
 
 			ee.emitEvent('baz');
 			ee.emitEvent('baz');
 
-			assert.strictEqual(count, 8);
+			assert.strictEqual(flattenCheck(check), '1,1,2,3,3,4,4,5');
 		});
 
 		test('will remove those that return a string when set to that string', function () {
-			var count = 0;
+			var check = [];
 
 			ee.setOnceReturnValue('only-once');
-			ee.addListener('baz', function() { count++; });
-			ee.addListener('baz', function() { count++; return true; });
-			ee.addListener('baz', function() { count++; return 'only-once'; });
-			ee.addListener('baz', function() { count++; return 1; });
-			ee.addListener('baz', function() { count++; return 'only-once'; });
-			ee.addListener('baz', function() { count++; return true; });
+			ee.addListener('baz', function() { check.push(1); });
+			ee.addListener('baz', function() { check.push(2); return true; });
+			ee.addListener('baz', function() { check.push(3); return 'only-once'; });
+			ee.addListener('baz', function() { check.push(4); return 1; });
+			ee.addListener('baz', function() { check.push(5); return 'only-once'; });
+			ee.addListener('baz', function() { check.push(6); return true; });
 
 			ee.emitEvent('baz');
 			ee.emitEvent('baz');
 
-			assert.strictEqual(count, 10);
+			assert.strictEqual(flattenCheck(check), '1,1,2,2,3,4,4,5,6,6');
 		});
 
 		test('will not remove those that return a different string to the one that is set', function () {
-			var count = 0;
+			var check = [];
 
 			ee.setOnceReturnValue('only-once');
-			ee.addListener('baz', function() { count++; });
-			ee.addListener('baz', function() { count++; return true; });
-			ee.addListener('baz', function() { count++; return 'not-only-once'; });
-			ee.addListener('baz', function() { count++; return 1; });
-			ee.addListener('baz', function() { count++; return 'only-once'; });
-			ee.addListener('baz', function() { count++; return true; });
+			ee.addListener('baz', function() { check.push(1); });
+			ee.addListener('baz', function() { check.push(2); return true; });
+			ee.addListener('baz', function() { check.push(3); return 'not-only-once'; });
+			ee.addListener('baz', function() { check.push(4); return 1; });
+			ee.addListener('baz', function() { check.push(5); return 'only-once'; });
+			ee.addListener('baz', function() { check.push(6); return true; });
 
 			ee.emitEvent('baz');
 			ee.emitEvent('baz');
 
-			assert.strictEqual(count, 11);
+			assert.strictEqual(flattenCheck(check), '1,1,2,2,3,3,4,4,5,6,6');
 		});
 	});
 
 	// Execute the tests.
 	mocha.run();
-}());
+}.call(this));
