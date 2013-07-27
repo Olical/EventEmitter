@@ -1,4 +1,4 @@
-(function() {
+(function () {
 	/*global mocha,chai,EventEmitter*/
 	'use strict';
 
