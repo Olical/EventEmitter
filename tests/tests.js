@@ -1,7 +1,10 @@
 (function() {
+	/*global mocha,chai,EventEmitter*/
+	'use strict';
+
 	// Setup Mocha and Chai.
 	mocha.setup('tdd');
-	assert = chai.assert;
+	var assert = chai.assert;
 
 	// Configure the tests
 	suite('getListeners', function() {
