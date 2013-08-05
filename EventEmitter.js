@@ -46,6 +46,7 @@
 	 *
 	 * @param {String} name The name of the target method.
 	 * @return {Function} The aliased method
+	 * @api private
 	 */
 	function alias(name) {
 		return function() {
