@@ -49,7 +49,7 @@
 	 * @api private
 	 */
 	function alias(name) {
-		return function() {
+		return function aliasClosure() {
 			return this[name].apply(this, arguments);
 		};
 	}
