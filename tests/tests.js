@@ -726,13 +726,13 @@
 		});
 	});
 
-	suite('alias', function() {
-		test('that it works when overwriting target method', function() {
+	suite('alias', function () {
+		test('that it works when overwriting target method', function () {
 			var addListener = EventEmitter.prototype.addListener;
 			var res;
 			var rand = Math.random();
 
-			EventEmitter.prototype.addListener = function() {
+			EventEmitter.prototype.addListener = function () {
 				res = rand;
 			};
 
