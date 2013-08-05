@@ -42,6 +42,19 @@
 	}
 
 	/**
+	 * Alias a method while keeping the context correct, to allow for overwriting
+	 * of target method.
+	 *
+	 * @param  {String} name The name of the target method.
+	 * @return {Function}    The aliased method
+	 */
+	function alias(name) {
+		return function() {
+			return this[name].apply(this, arguments);
+		};
+	}
+
+	/**
 	 * Returns the listener array for the specified event.
 	 * Will initialise the event object and listener arrays if required.
 	 * Will return an object if you use a regex search. The object contains keys for each matched event. So /ba[rz]/ might return an object containing bar and baz. But only if you have either defined them with defineEvent or added some listeners to them.
@@ -137,7 +150,7 @@
 	/**
 	 * Alias of addListener
 	 */
-	proto.on = proto.addListener;
+	proto.on = alias('addListener');
 
 	/**
 	 * Semi-alias of addListener. It will add a listener that will be
@@ -157,7 +170,7 @@
 	/**
 	 * Alias of addOnceListener.
 	 */
-	proto.once = proto.addOnceListener;
+	proto.once = alias('addOnceListener');
 
 	/**
 	 * Defines an event name. This is required if you want to use a regex to add a listener to multiple events at once. If you don't do this then how do you expect it to know what event to add to? Should it just add to every possible match for a regex? No. That is scary and bad.
@@ -213,7 +226,7 @@
 	/**
 	 * Alias of removeListener
 	 */
-	proto.off = proto.removeListener;
+	proto.off = alias('removeListener');
 
 	/**
 	 * Adds listeners in bulk using the manipulateListeners method.
@@ -367,7 +380,7 @@
 	/**
 	 * Alias of emitEvent
 	 */
-	proto.trigger = proto.emitEvent;
+	proto.trigger = alias('emitEvent');
 
 	/**
 	 * Subtly different from emitEvent in that it will pass its arguments on to the listeners, as opposed to taking a single array of arguments to pass on.
