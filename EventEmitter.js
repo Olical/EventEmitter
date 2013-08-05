@@ -6,7 +6,6 @@
  */
 
 (function () {
-	// Place the script in strict mode
 	'use strict';
 
 	/**
@@ -441,7 +440,7 @@
 			return EventEmitter;
 		});
 	}
-	else if (typeof module !== 'undefined' && module.exports){
+	else if (typeof module === 'object' && module.exports){
 		module.exports = EventEmitter;
 	}
 	else {
