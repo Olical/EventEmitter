@@ -1,12 +1,11 @@
 /*!
- * EventEmitter v4.2.1 - git.io/ee
+ * EventEmitter v4.2.2 - git.io/ee
  * Oliver Caldwell
  * MIT license
  * @preserve
  */
 
 (function () {
-	// Place the script in strict mode
 	'use strict';
 
 	/**
@@ -42,14 +41,14 @@
 	}
 
 	/**
-	 * Alias a method while keeping the context correct, to allow for overwriting
-	 * of target method.
+	 * Alias a method while keeping the context correct, to allow for overwriting of target method.
 	 *
-	 * @param  {String} name The name of the target method.
-	 * @return {Function}    The aliased method
+	 * @param {String} name The name of the target method.
+	 * @return {Function} The aliased method
+	 * @api private
 	 */
 	function alias(name) {
-		return function() {
+		return function aliasClosure() {
 			return this[name].apply(this, arguments);
 		};
 	}
@@ -441,7 +440,7 @@
 			return EventEmitter;
 		});
 	}
-	else if (typeof module !== 'undefined' && module.exports){
+	else if (typeof module === 'object' && module.exports){
 		module.exports = EventEmitter;
 	}
 	else {
