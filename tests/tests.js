@@ -726,6 +726,25 @@
 		});
 	});
 
+	suite('alias', function() {
+		test('that it works when overwriting target method', function() {
+			var addListener = EventEmitter.prototype.addListener;
+			var res;
+			var rand = Math.random();
+
+			EventEmitter.prototype.addListener = function() {
+				res = rand;
+			};
+
+			var ee = new EventEmitter();
+			ee.on();
+
+			assert.strictEqual(res, rand);
+
+			EventEmitter.prototype.addListener = addListener;
+		});
+	});
+
 	// Execute the tests.
 	mocha.run();
 }.call(this));
