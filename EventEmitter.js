@@ -1,5 +1,5 @@
 /*!
- * EventEmitter v4.2.2 - git.io/ee
+ * EventEmitter v4.2.3 - git.io/ee
  * Oliver Caldwell
  * MIT license
  * @preserve
@@ -365,8 +365,14 @@
 					// If the listener returns true then it shall be removed from the event
 					// The function is executed either with a basic call or an apply if there is an args array
 					listener = listeners[key][i];
+
+					if (listener.once === true) {
+						this.removeListener(evt, listener.listener);
+					}
+
 					response = listener.listener.apply(this, args || []);
-					if (response === this._getOnceReturnValue() || listener.once === true) {
+
+					if (response === this._getOnceReturnValue()) {
 						this.removeListener(evt, listener.listener);
 					}
 				}

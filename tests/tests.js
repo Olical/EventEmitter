@@ -152,6 +152,15 @@
 			ee.removeListener('foo', fn1);
 			assert.deepEqual(ee.flattenListeners(ee.getListeners('foo')), []);
 		});
+
+		test('can not cause infinite recursion', function () {
+			ee.addOnceListener('foo', function() {
+				counter += 1;
+				this.emitEvent('foo');
+			});
+			ee.trigger('foo');
+			assert.strictEqual(counter, 1);
+		});
 	});
 
 	suite('removeListener', function() {
