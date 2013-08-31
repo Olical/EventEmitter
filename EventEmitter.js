@@ -393,6 +393,30 @@
 	proto.fire = alias('emitEvent');
 
 	/**
+	 * Alias of emitEventAsync
+	 */
+	proto.triggerAsync = alias('emitEventAsync');
+
+	/**
+	 * Alias of emitEventAsync
+	 */
+	proto.fireAsync = alias('emitEventAsync');
+
+
+	proto.emitEventAsync = function emitEventAsync(evt, args, callback) {
+		// listeners is an object, with events as keys and arrays
+		// of listeners as values
+
+		var that = this;
+		setTimeout(function fireSync() {
+			that.emitEvent(evt, args);
+			callback.call(that);
+		}, 0);
+
+		return this;
+	}
+
+	/**
 	 * Subtly different from emitEvent in that it will pass its arguments on to the listeners, as opposed to taking a single array of arguments to pass on.
 	 * As with emitEvent, you can pass a regex in place of the event name to emit to all events that match it.
 	 *
