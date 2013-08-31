@@ -388,6 +388,11 @@
 	proto.trigger = alias('emitEvent');
 
 	/**
+	 * Alias of emitEvent
+	 */
+	proto.fire = alias('emitEvent');
+
+	/**
 	 * Subtly different from emitEvent in that it will pass its arguments on to the listeners, as opposed to taking a single array of arguments to pass on.
 	 * As with emitEvent, you can pass a regex in place of the event name to emit to all events that match it.
 	 *
