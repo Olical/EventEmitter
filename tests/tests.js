@@ -754,6 +754,60 @@
 		});
 	});
 
+	suite('emitEventAsync', function () {
+		var ee;
+
+		setup(function () {
+			ee = new EventEmitter();
+		});
+
+		test('fires a single event asynchronously', function () {
+			var eventFired = false;
+			ee.addListener('asyncEvent', function () {
+				eventFired = true;
+			});
+
+			ee.emitEventAsync('asyncEvent', function () {
+				assert.ok(eventFired);
+			});
+
+			assert.notOk(eventFired);
+		});
+
+		test('fires regex-defined events asynchronously', function () {
+			var callbacksCalled = 0;
+			ee.defineEvents(['bar', 'baz']);
+			ee.addListener('bar', function () {
+				callbacksCalled += 1;
+			});
+			ee.addListener('baz', function () {
+				callbacksCalled += 1;
+			});
+
+			ee.emitEventAsync(/ba[rz]/, function () {
+				assert.strictEqual(callbacksCalled, 2);
+			});
+
+			assert.strictEqual(callbacksCalled, 0);
+		});
+
+		// it should still fire an event if I remove it **after** calling
+		// emitEventAsync(), even if the events still don't fire
+		test('doesn\'t mess up when removing events while firing asynchronously', function () {
+			var eventFired = false;
+			ee.addListener('asyncEvent', function () {
+				eventFired = true;
+			});
+
+			ee.emitEventAsync('asyncEvent', function () {
+				assert.ok(eventFired);
+			});
+
+			ee.removeListener('asyncEvent');
+			assert.notOk(eventFired);
+		});
+	});
+
 	// Execute the tests.
 	mocha.run();
 }.call(this));
