@@ -754,6 +754,95 @@
 		});
 	});
 
+	suite('emitEventAsync', function () {
+		var ee;
+
+		setup(function () {
+			ee = new EventEmitter();
+		});
+
+		test('fires a single event asynchronously', function () {
+			var eventFired = false;
+			ee.addListener('asyncEvent', function () {
+				eventFired = true;
+			});
+
+			ee.emitEventAsync('asyncEvent', function () {
+				assert.ok(eventFired);
+			});
+
+			assert.notOk(eventFired);
+		});
+
+		test('fires regex-defined events asynchronously', function () {
+			var callbacksCalled = 0;
+			ee.defineEvents(['bar', 'baz']);
+			ee.addListener('bar', function () {
+				callbacksCalled += 1;
+			});
+			ee.addListener('baz', function () {
+				callbacksCalled += 1;
+			});
+
+			ee.emitEventAsync(/ba[rz]/, function () {
+				assert.strictEqual(callbacksCalled, 2);
+			});
+
+			assert.strictEqual(callbacksCalled, 0);
+		});
+
+		// it should still fire an event if I remove it **after** calling
+		// emitEventAsync(), even if the events still don't fire
+		test('doesn\'t mess up when removing events while firing asynchronously', function () {
+			var eventFired = false;
+			ee.addListener('asyncEvent', function () {
+				eventFired = true;
+			});
+
+			ee.emitEventAsync('asyncEvent', function () {
+				assert.ok(eventFired);
+			});
+
+			ee.removeListener('asyncEvent');
+			assert.notOk(eventFired);
+		});
+
+		test('regularly calls the callback after events have been fired', function () {
+			var eventsFired = 0;
+
+			var sleep = function sleep(millis) {
+				var now = new Date();
+				while ((new Date()) - now <= millis);
+			}
+
+			ee.addListener('anEvent', function () {
+				sleep(500);
+				eventsFired += 1;
+			});
+			ee.addListener('anEvent', function () {
+				sleep(500);
+				eventsFired += 1;
+			});
+
+			ee.emitEventAsync('anEvent', function () {
+				assert.strictEqual(eventsFired, 2);
+			});
+		});
+
+		test('regularly calls listeners with arguments', function () {
+			var check = 0;
+			ee.addListener('argsEvent', function (a, b) {
+				check += a + b;
+			});
+
+			ee.emitEventAsync('argsEvent', [3, 7], function () {
+				assert.strictEqual(check, 10);
+			});
+
+			assert.strictEqual(check, 0);
+		});
+	});
+
 	// Execute the tests.
 	mocha.run();
 }.call(this));
