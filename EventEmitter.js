@@ -402,7 +402,17 @@
 	 */
 	proto.fireAsync = alias('emitEventAsync');
 
-
+	/**
+	 * Emits an event of your choice, executing its listeners asynchronously.
+	 * The set of listeners will be executed as an uninterruptible block, but instead
+	 * of executing it synchronously, in a blocking way, it will be placed on the
+	 * JavaScript event queue and executed as soon as possibile.
+	 *
+	 * @param {String|RegExp} evt Name of the event to emit and execute listeners for.
+	 * @param {Array} [args] Optional additional arguments to be passed to each listener.
+	 * @param {Function} callback Callback to be executed once all the listeners have been executed.
+	 * @return {Object} Current instance of EventEmitter for chaining.
+	 */
 	proto.emitEventAsync = function emitEventAsync(evt, args, callback) {
 		// listeners is an object, with events as keys and arrays
 		// of listeners as values
