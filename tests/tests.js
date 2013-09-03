@@ -806,6 +806,41 @@
 			ee.removeListener('asyncEvent');
 			assert.notOk(eventFired);
 		});
+
+		test('regularly calls the callback after events have been fired', function () {
+			var eventsFired = 0;
+
+			var sleep = function sleep(millis) {
+				var now = new Date();
+				while ((new Date()) - now <= millis);
+			}
+
+			ee.addListener('anEvent', function () {
+				sleep(500);
+				eventsFired += 1;
+			});
+			ee.addListener('anEvent', function () {
+				sleep(500);
+				eventsFired += 1;
+			});
+
+			ee.emitEventAsync('anEvent', function () {
+				assert.strictEqual(eventsFired, 2);
+			});
+		});
+
+		test('regularly calls listeners with arguments', function () {
+			var check = 0;
+			ee.addListener('argsEvent', function (a, b) {
+				check += a + b;
+			});
+
+			ee.emitEventAsync('argsEvent', [3, 7], function () {
+				assert.strictEqual(check, 10);
+			});
+
+			assert.strictEqual(check, 0);
+		});
 	});
 
 	// Execute the tests.

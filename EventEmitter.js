@@ -407,10 +407,17 @@
 		// listeners is an object, with events as keys and arrays
 		// of listeners as values
 
+		// args is skipped, it's the callback actually
+		if (typeof args === 'function' && !callback) {
+			callback = args;
+		}
+
 		var that = this;
 		setTimeout(function fireSync() {
 			that.emitEvent(evt, args);
-			callback.call(that);
+			if (callback) {
+				callback.call(that);
+			}
 		}, 0);
 
 		return this;
