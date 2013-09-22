@@ -355,6 +355,18 @@
 			assert.lengthOf(listeners, 1);
 			assert.strictEqual(listeners[0].listener(), 'foo');
 		});
+
+		test('can be used through the alias, removeAllListeners', function() {
+			ee.removeAllListeners('bar');
+			assert.deepEqual(ee.flattenListeners(ee.getListeners('foo')), [fn1, fn2]);
+			assert.deepEqual(ee.flattenListeners(ee.getListeners('bar')), []);
+			assert.deepEqual(ee.flattenListeners(ee.getListeners('baz')), [fn5]);
+
+			ee.removeAllListeners('baz');
+			assert.deepEqual(ee.flattenListeners(ee.getListeners('foo')), [fn1, fn2]);
+			assert.deepEqual(ee.flattenListeners(ee.getListeners('bar')), []);
+			assert.deepEqual(ee.flattenListeners(ee.getListeners('baz')), []);
+		});
 	});
 
 	suite('emitEvent', function() {

@@ -1,5 +1,5 @@
 /*!
- * EventEmitter v4.2.3 - git.io/ee
+ * EventEmitter v4.2.4 - git.io/ee
  * Oliver Caldwell
  * MIT license
  * @preserve
@@ -337,6 +337,13 @@
 
 		return this;
 	};
+
+	/**
+	 * Alias of removeEvent.
+	 *
+	 * Added to mirror the node API.
+	 */
+	proto.removeAllListeners = alias('removeEvent');
 
 	/**
 	 * Emits an event of your choice.
