@@ -116,6 +116,13 @@ You may also be interested in [the guide](https://github.com/Wolfy87/EventEmitte
  * **param** (String | RegExp) _[evt]_ - Optional name of the event to remove all listeners for. Will remove from every event if not passed.
  * **return** (Object) - Current instance of EventEmitter for chaining.
 
+## removeAllListeners
+
+<p>Alias of removeEvent.</p>
+
+<p>Added to mirror the node API.</p>
+
+
 ## emitEvent
 
 <p>Emits an event of your choice.<br />When emitted, every listener attached to that event will be executed.<br />If you pass the optional argument array then those arguments will be passed to every listener upon execution.<br />Because it uses <code>apply</code>, your array of arguments will be passed as if you wrote them out separately.<br />So they will not arrive within the array on the other side, they will be separate.<br />You can also pass a regular expression to emit to all events that match it.</p>
