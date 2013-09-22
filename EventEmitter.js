@@ -339,6 +339,13 @@
 	};
 
 	/**
+	 * Alias of removeEvent.
+	 *
+	 * Added to mirror the node API.
+	 */
+	proto.removeAllListeners = alias('removeEvent');
+
+	/**
 	 * Emits an event of your choice.
 	 * When emitted, every listener attached to that event will be executed.
 	 * If you pass the optional argument array then those arguments will be passed to every listener upon execution.
