@@ -363,6 +363,8 @@
 		var i;
 		var key;
 		var response;
+		var arglist = args || [];
+		var argslen = arglist.length;
 
 		for (key in listeners) {
 			if (listeners.hasOwnProperty(key)) {
@@ -377,7 +379,17 @@
 						this.removeListener(evt, listener.listener);
 					}
 
-					response = listener.listener.apply(this, args || []);
+					if (argslen === 0) {
+						response = listener.listener.call(this);
+					} else if (argslen === 1) {
+						response = listener.listener.call(this, arglist[0]);
+					} else if (argslen === 2) {
+						response = listener.listener.call(this, arglist[0], arglist[1]);
+					} else if (argslen === 3) {
+						response = listener.listener.call(this, arglist[0], arglist[1], arglist[2]);
+					} else {
+						response = listener.listener.apply(this, arglist);
+					}
 
 					if (response === this._getOnceReturnValue()) {
 						this.removeListener(evt, listener.listener);
@@ -403,7 +415,10 @@
 	 * @return {Object} Current instance of EventEmitter for chaining.
 	 */
 	proto.emit = function emit(evt) {
-		var args = Array.prototype.slice.call(arguments, 1);
+		var args = [];
+		for (var i = 1, len = arguments.length; i < len; ++i) {
+			args.push(arguments[i]);
+		}
 		return this.emitEvent(evt, args);
 	};
 
