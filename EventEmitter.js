@@ -21,11 +21,9 @@
 	// Easy access to the prototype
 	var proto = EventEmitter.prototype;
 
-	// Context this immediately-invoked function expression is called in, usually the `window` object.
-	var context = this;
+	var exports = this;
 
-	// Existing EventEmitter version for use with `noConflict`.
-	var _EventEmitter = context.EventEmitter;
+	var originalGlobalValue = exports.EventEmitter;
 
 	/**
 	 * Finds the index of the listener for the event in it's storage array.
@@ -456,10 +454,10 @@
 	/**
 	 * Reverts the global {@link EventEmitter} to its previous value and returns a reference to this version.
 	 *
-	 * @return {Object} Current instance of EventEmitter.
+	 * @return {EventEmitter} EventEmitter class.
 	 */
 	EventEmitter.noConflict = function noConflict() {
-		context.EventEmitter = _EventEmitter;
+		exports.EventEmitter = originalGlobalValue;
 
 		return EventEmitter;
 	};
