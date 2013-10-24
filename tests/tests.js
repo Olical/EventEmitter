@@ -766,6 +766,24 @@
 		});
 	});
 
+	suite('noConflict', function () {
+		var _EventEmitter = EventEmitter;
+
+		teardown(function () {
+			EventEmitter = _EventEmitter;
+		});
+
+		test('reverts the global `EventEmitter` to its previous value', function () {
+			EventEmitter.noConflict();
+
+			assert.isUndefined(EventEmitter);
+		});
+
+		test('returns `EventEmitter`', function () {
+			assert.strictEqual(EventEmitter.noConflict(), _EventEmitter);
+		});
+	});
+
 	// Execute the tests.
 	mocha.run();
 }.call(this));
