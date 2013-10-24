@@ -21,6 +21,12 @@
 	// Easy access to the prototype
 	var proto = EventEmitter.prototype;
 
+	// Context this immediately-invoked function expression is called in, usually the `window` object.
+	var context = this;
+
+	// Existing EventEmitter version for use with `noConflict`.
+	var _EventEmitter = context.EventEmitter;
+
 	/**
 	 * Finds the index of the listener for the event in it's storage array.
 	 *
@@ -445,6 +451,17 @@
 	 */
 	proto._getEvents = function _getEvents() {
 		return this._events || (this._events = {});
+	};
+
+	/**
+	 * Reverts the global {@link EventEmitter} to its previous value and returns a reference to this version.
+	 *
+	 * @return {Object} Current instance of EventEmitter.
+	 */
+	EventEmitter.noConflict = function noConflict() {
+		context.EventEmitter = _EventEmitter;
+
+		return EventEmitter;
 	};
 
 	// Expose the class either via AMD, CommonJS or the global object
