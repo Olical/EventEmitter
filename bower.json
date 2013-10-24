@@ -18,5 +18,12 @@
 	"keywords": [
 		"events",
 		"structure"
+	],
+	"ignore": [
+		"docs",
+		"tests",
+		"tools",
+		".gitignore",
+		"package.json"
 	]
 }
