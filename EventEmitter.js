@@ -21,6 +21,10 @@
 	// Easy access to the prototype
 	var proto = EventEmitter.prototype;
 
+	var exports = this;
+
+	var originalGlobalValue = exports.EventEmitter;
+
 	/**
 	 * Finds the index of the listener for the event in it's storage array.
 	 *
@@ -445,6 +449,17 @@
 	 */
 	proto._getEvents = function _getEvents() {
 		return this._events || (this._events = {});
+	};
+
+	/**
+	 * Reverts the global {@link EventEmitter} to its previous value and returns a reference to this version.
+	 *
+	 * @return {EventEmitter} EventEmitter class.
+	 */
+	EventEmitter.noConflict = function noConflict() {
+		exports.EventEmitter = originalGlobalValue;
+
+		return EventEmitter;
 	};
 
 	// Expose the class either via AMD, CommonJS or the global object
