@@ -58,6 +58,17 @@
 			assert.strictEqual(listeners.bar[0].listener(), 'bar');
 			assert.strictEqual(listeners.baz[0].listener(), 'baz');
 		});
+
+		test('does not return matched sub-strings', function () {
+			var check = function () {};
+
+			ee.addListener('foo', function () {});
+			ee.addListener('fooBar', check);
+
+			var listeners = ee.getListeners('fooBar');
+			assert.strictEqual(listeners.length, 1);
+			assert.strictEqual(listeners[0].listener, check);
+		});
 	});
 
 	suite('flattenListeners', function () {
@@ -763,6 +774,24 @@
 			assert.strictEqual(res, rand);
 
 			EventEmitter.prototype.addListener = addListener;
+		});
+	});
+
+	suite('noConflict', function () {
+		var _EventEmitter = EventEmitter;
+
+		teardown(function () {
+			EventEmitter = _EventEmitter;
+		});
+
+		test('reverts the global `EventEmitter` to its previous value', function () {
+			EventEmitter.noConflict();
+
+			assert.isUndefined(EventEmitter);
+		});
+
+		test('returns `EventEmitter`', function () {
+			assert.strictEqual(EventEmitter.noConflict(), _EventEmitter);
 		});
 	});
 

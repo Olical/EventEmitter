@@ -150,3 +150,9 @@ You may also be interested in [the guide](https://github.com/Wolfy87/EventEmitte
 
  * **param** (*) _value_ - The new value to check for when executing listeners.
  * **return** (Object) - Current instance of EventEmitter for chaining.
+
+## noConflict
+
+<p>Reverts the global {@link EventEmitter} to its previous value and returns a reference to this version.</p>
+
+ * **return** (Function) - Non conflicting EventEmitter class.
