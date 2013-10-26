@@ -58,6 +58,17 @@
 			assert.strictEqual(listeners.bar[0].listener(), 'bar');
 			assert.strictEqual(listeners.baz[0].listener(), 'baz');
 		});
+
+		test('does not return matched sub-strings', function () {
+			var check = function () {};
+
+			ee.addListener('foo', function () {});
+			ee.addListener('fooBar', check);
+
+			var listeners = ee.getListeners('fooBar');
+			assert.strictEqual(listeners.length, 1);
+			assert.strictEqual(listeners[0].listener, check);
+		});
 	});
 
 	suite('flattenListeners', function () {

@@ -1,5 +1,5 @@
 /*!
- * EventEmitter v4.2.4 - git.io/ee
+ * EventEmitter v4.2.5 - git.io/ee
  * Oliver Caldwell
  * MIT license
  * @preserve
