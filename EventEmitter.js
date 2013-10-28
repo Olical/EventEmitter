@@ -364,6 +364,11 @@
 		var key;
 		var response;
 
+		// Weak preventation against non-array args being passed.
+		if (typeof args !== 'object') {
+			args = [];
+		}
+
 		for (key in listeners) {
 			if (listeners.hasOwnProperty(key)) {
 				i = listeners[key].length;
