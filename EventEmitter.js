@@ -469,4 +469,4 @@
 	else {
 		this.EventEmitter = EventEmitter;
 	}
-}.call(this));
+}).call(this);
