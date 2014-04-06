@@ -58,12 +58,18 @@ require(['EventEmitter'], function(EventEmitter) {
 });
 ```
 
-### node.js
+### node.js or Browser via Browserify
 
-This is pretty simple, just require the file and load the `EventEmitter` attribute out of it.
+This is pretty simple, just install the file via npm (or bower):
+
+```bash
+npm install wolfy87-eventemitter --save
+```
+
+...and then require it (if you used bower you have to require the relative path to the bower component)
 
 ```javascript
-var EventEmitter = require('./assets/js/EventEmitter').EventEmitter;
+var EventEmitter = require('wolfy87-eventemitter');
 var ee = new EventEmitter();
 ```
 
