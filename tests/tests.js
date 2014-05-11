@@ -122,8 +122,7 @@
 			assert.deepEqual(ee.flattenListeners(ee.getListeners('bar')), [fn1, fn2]);
 		});
 
-		test('allows you to add listeners by regex', function ()
-		{
+		test('allows you to add listeners by regex', function () {
 			var check = [];
 
 			ee.defineEvents(['bar', 'baz']);
@@ -132,6 +131,21 @@
 			ee.emitEvent(/ba[rz]/);
 
 			assert.strictEqual(flattenCheck(check), '2,2');
+		});
+
+		test('prevents you from adding duplicate listeners', function () {
+			var count = 0;
+
+			function adder() {
+				count += 1;
+			}
+
+			ee.addListener('foo', adder);
+			ee.addListener('foo', adder);
+			ee.addListener('foo', adder);
+			ee.emitEvent('foo');
+
+			assert.strictEqual(count, 1);
 		});
 	});
 
