@@ -44,8 +44,7 @@
 			});
 		});
 
-		test('allows you to fetch listeners by regex', function ()
-		{
+		test('allows you to fetch listeners by regex', function () {
 			var check = [];
 
 			ee.addListener('foo', function() { check.push(1); });
@@ -122,8 +121,7 @@
 			assert.deepEqual(ee.flattenListeners(ee.getListeners('bar')), [fn1, fn2]);
 		});
 
-		test('allows you to add listeners by regex', function ()
-		{
+		test('allows you to add listeners by regex', function () {
 			var check = [];
 
 			ee.defineEvents(['bar', 'baz']);
@@ -132,6 +130,21 @@
 			ee.emitEvent(/ba[rz]/);
 
 			assert.strictEqual(flattenCheck(check), '2,2');
+		});
+
+		test('prevents you from adding duplicate listeners', function () {
+			var count = 0;
+
+			function adder() {
+				count += 1;
+			}
+
+			ee.addListener('foo', adder);
+			ee.addListener('foo', adder);
+			ee.addListener('foo', adder);
+			ee.emitEvent('foo');
+
+			assert.strictEqual(count, 1);
 		});
 	});
 
@@ -351,8 +364,7 @@
 			assert.deepEqual(ee.flattenListeners(ee.getListeners('baz')), []);
 		});
 
-		test('removes listeners when passed a regex', function ()
-		{
+		test('removes listeners when passed a regex', function () {
 			var check = [];
 			ee.removeEvent();
 
@@ -493,8 +505,7 @@
 			assert.strictEqual(flattenCheck(check), '1,1,2,3,4,4,5,5,6');
 		});
 
-		test('executes all listeners that match a regular expression', function ()
-		{
+		test('executes all listeners that match a regular expression', function () {
 			var check = [];
 
 			ee.addListener('foo', function() { check.push(1); });
@@ -505,8 +516,7 @@
 			assert.strictEqual(flattenCheck(check), '2,3');
 		});
 
-		test('global object is defined', function()
-		{
+		test('global object is defined', function() {
 			ee.addListener('foo', function() {
 				assert.equal(this, ee);
 			});
@@ -629,8 +639,7 @@
 			assert.deepEqual(ee.flattenListeners(ee.getListeners('bar')), [fn3, fn2, fn5]);
 		});
 
-		test('allows you to add listeners by regex', function ()
-		{
+		test('allows you to add listeners by regex', function () {
 			var check = [];
 
 			ee.defineEvents(['bar', 'baz']);
