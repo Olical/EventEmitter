@@ -467,6 +467,6 @@
 		module.exports = EventEmitter;
 	}
 	else {
-		this.EventEmitter = EventEmitter;
+		exports.EventEmitter = EventEmitter;
 	}
 }.call(this));
