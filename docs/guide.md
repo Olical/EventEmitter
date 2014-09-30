@@ -54,7 +54,7 @@ I love AMD, so I implemented it in EventEmitter. If the script is loaded into a 
 
 ```javascript
 require(['EventEmitter'], function(EventEmitter) {
-	var ee = new EventEmitter();
+    var ee = new EventEmitter();
 });
 ```
 
@@ -109,7 +109,7 @@ A listener is a function that is executed when an event is emitted. You can add 
 
 ```javascript
 function listener() {
-	console.log('The foo event has been emitted.');
+    console.log('The foo event has been emitted.');
 }
 
 ee.addListener('foo', listener);
@@ -119,11 +119,11 @@ You can also add in bulk using the `addListeners` method (notice the "s" on the 
 
 ```javascript
 function listener1() {
-	console.log('ONE');
+    console.log('ONE');
 }
 
 function listener2() {
-	console.log('TWO');
+    console.log('TWO');
 }
 
 ee.addListeners('foo', [listener1, listener2]);
@@ -133,20 +133,20 @@ The second way of calling addListeners involves passing an object of event names
 
 ```javascript
 function listener1() {
-	console.log('ONE');
+    console.log('ONE');
 }
 
 function listener2() {
-	console.log('TWO');
+    console.log('TWO');
 }
 
 function listener3() {
-	console.log('THREE');
+    console.log('THREE');
 }
 
 ee.addListeners({
-	foo: [listener1, listener2],
-	bar: listener3
+    foo: [listener1, listener2],
+    bar: listener3
 });
 ```
 
@@ -156,7 +156,7 @@ This works in the _exact_ same way as adding listeners. The only difference is t
 
 ```javascript
 function listener() {
-	console.log('The foo event has been emitted.');
+    console.log('The foo event has been emitted.');
 }
 
 ee.addListener('foo', listener);
@@ -167,15 +167,15 @@ If you want a listener to remove itself after it has been called or after a cond
 
 ```javascript
 function listener1() {
-	// If a condition is met then remove the listener
-	if(completed) {
-		return true;
-	}
+    // If a condition is met then remove the listener
+    if(completed) {
+        return true;
+    }
 }
 
 function listener2() {
-	// Always remove after use
-	return true;
+    // Always remove after use
+    return true;
 }
 
 ee.addListeners('foo', [listener1, listener2]);
@@ -186,8 +186,8 @@ If you do not want to, or can't for some reason, return true, you can set the re
 
 ```javascript
 function listener() {
-	// Always remove after use
-	return 'REMOVE-ME';
+    // Always remove after use
+    return 'REMOVE-ME';
 }
 
 ee.addListener('foo', listener);
@@ -199,7 +199,7 @@ Alternatively you can use the `addOnceListener` method, or it's alias, `once`.
 
 ```javascript
 function listener() {
-	// Do stuff
+    // Do stuff
 }
 
 ee.addOnceListener('foo', listener);
@@ -214,11 +214,11 @@ You can also remove whole events and all of their attached listeners with the `r
 
 ```javascript
 function listener1() {
-	console.log('ONE');
+    console.log('ONE');
 }
 
 function listener2() {
-	console.log('TWO');
+    console.log('TWO');
 }
 
 ee.addListeners('foo', [listener1, listener2]);
@@ -233,11 +233,11 @@ If you really need to then you can get an array of all listeners attached to an 
 
 ```javascript
 function listener1() {
-	console.log('ONE');
+    console.log('ONE');
 }
 
 function listener2() {
-	console.log('TWO');
+    console.log('TWO');
 }
 
 ee.addListeners('foo', [listener1, listener2]);
@@ -250,11 +250,11 @@ So once you have added your listeners and you are ready to start executing them,
 
 ```javascript
 function listener1() {
-	console.log('ONE');
+    console.log('ONE');
 }
 
 function listener2() {
-	console.log('TWO');
+    console.log('TWO');
 }
 
 ee.addListeners('foo', [listener1, listener2]);
@@ -265,7 +265,7 @@ For more control, you can pass an arguments array as the second argument. This a
 
 ```javascript
 function adder(a, b) {
-	console.log(a + b);
+    console.log(a + b);
 }
 
 ee.addListener('addStuff', adder);
@@ -295,7 +295,7 @@ By defined I mean, it has to have some other listener added to it, or you have t
 ```javascript
 ee.defineEvents(['bar', 'baz']);
 ee.addListener(/ba[rz]/, function () {
-	console.log('Now you are thinking with regular expressions.');
+    console.log('Now you are thinking with regular expressions.');
 });
 ee.emitEvent(/ba[rz]/);
 ```
