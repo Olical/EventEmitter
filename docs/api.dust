@@ -12,5 +12,5 @@ You may also be interested in [the guide](https://github.com/Wolfy87/EventEmitte
 {#tags}
 {~s}* **{type}**{?types} ({#types}{.}{@sep} | {/sep}{/types}){/types}{?name} _{name}_{/name}{?description} - {description}{/description}{~n}
 {/tags}
-{@sep}{~n}{/sep}
+{~n}
 {/.}
