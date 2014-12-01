@@ -1,11 +1,11 @@
 /*!
- * EventEmitter v4.2.9 - git.io/ee
+ * EventEmitter v4.2.10 - git.io/ee
  * Oliver Caldwell
  * MIT license
  * @preserve
  */
 
-(function () {
+;(function () {
     'use strict';
 
     /**
