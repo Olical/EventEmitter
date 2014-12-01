@@ -1,4 +1,4 @@
-# EventEmitter [![Gitter][gitter-img]][gitter]
+# EventEmitter [![Gitter](https://badges.gitter.im/Join Chat.svg)][gitter]
 
 ## Event based JavaScript for the browser
 
@@ -81,5 +81,4 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 [nathggns]: https://github.com/nathggns
 [http-server]: https://www.npmjs.org/package/http-server
 [node.js]: http://nodejs.org/
-[gitter-img]: https://badges.gitter.im/Join Chat.svg
 [gitter]: https://gitter.im/Wolfy87/EventEmitter?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
