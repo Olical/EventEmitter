@@ -5,7 +5,7 @@
  * @preserve
  */
 
-(function () {
+;(function () {
     'use strict';
 
     /**
