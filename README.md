@@ -28,7 +28,7 @@ If you wish to contribute to the project then please commit your changes into th
 
 ## Testing
 
-Tests are performed using [Mocha][] and [Chai][], just serve up the directory using your local HTTP server of choice ([http-server][] is probably a good choice) and open up `tests/index.html`.
+Tests are performed using [Mocha][] and [Chai][], just serve up the directory using your local HTTP server of choice ([http-server][] is probably a good choice) and open up `tests/index.html`. You can also use the server scripts in the `tools` directory.
 
 ## Building the documentation
 
