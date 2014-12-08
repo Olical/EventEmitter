@@ -5,5 +5,5 @@
     "version": "4.2.10",
     "scripts": ["EventEmitter.js"],
     "main": "EventEmitter.js",
-    "license": "MIT"
+    "license": "Unlicense"
 }

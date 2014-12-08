@@ -22,7 +22,7 @@
         "email": "olliec87@gmail.com",
         "url": "http://oli.me.uk/"
     },
-    "license": "MIT",
+    "license": "Unlicense",
     "readmeFilename": "README.md",
     "bugs": {
         "url": "https://github.com/Wolfy87/EventEmitter/issues"
