@@ -57,15 +57,15 @@ You can also get a copy of EventEmitter through the following package managers:
  * [Bower][] (eventEmitter)
  * [Component][] (Wolfy87/EventEmitter)
 
-## License (MIT)
+## Unlicense
 
-Copyright (c) 2011-2014 Oliver Caldwell
+This project used to be released under MIT, but I release everything under the [Unlicense][] now. Here's the gist of it but you can find the full thing in the `UNLICENSE` file.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+>This is free and unencumbered software released into the public domain.
+>
+>Anyone is free to copy, modify, publish, use, compile, sell, or distribute this software, either in source code form or as a compiled binary, for any purpose, commercial or non-commercial, and by any means.
 
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+I gave people the chance to object in issue #84, which also explains my reasoning.
 
 [guide]: https://github.com/Wolfy87/EventEmitter/blob/master/docs/guide.md
 [api]: https://github.com/Wolfy87/EventEmitter/blob/master/docs/api.md
@@ -82,3 +82,4 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 [http-server]: https://www.npmjs.org/package/http-server
 [node.js]: http://nodejs.org/
 [gitter]: https://gitter.im/Wolfy87/EventEmitter?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
+[unlicense]: http://unlicense.org/
