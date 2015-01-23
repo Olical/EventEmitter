@@ -86,7 +86,7 @@ If you do not want to use a huge framework like that then you might want to use 
 
 ```javascript
 function Player(){}
-Player.inherit(EventEmitter);
+heir.inherit(Player, EventEmitter);
 ```
 
 That's all there is to it.
