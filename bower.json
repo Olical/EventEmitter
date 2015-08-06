@@ -9,12 +9,7 @@
         "name": "Oliver Caldwell",
         "web": "http://oli.me.uk/"
     },
-    "licenses": [
-        {
-            "type": "Unlicense",
-            "url": "http://unlicense.org/"
-        }
-    ],
+    "license": "Unlicense",
     "keywords": [
         "events",
         "structure"
