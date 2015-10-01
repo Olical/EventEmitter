@@ -1,6 +1,6 @@
 {
     "name": "wolfy87-eventemitter",
-    "version": "4.2.11",
+    "version": "4.3.0",
     "description": "Event based JavaScript for the browser",
     "main": "EventEmitter.js",
     "directories": {
@@ -9,7 +9,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "git://github.com/Wolfy87/EventEmitter.git"
+        "url": "git://github.com/Olical/EventEmitter.git"
     },
     "keywords": [
         "eventemitter",
@@ -25,7 +25,7 @@
     "license": "Unlicense",
     "readmeFilename": "README.md",
     "bugs": {
-        "url": "https://github.com/Wolfy87/EventEmitter/issues"
+        "url": "https://github.com/Olical/EventEmitter/issues"
     },
     "devDependencies": {
         "uglify-js": "*",

@@ -1,8 +1,8 @@
 {
     "name": "eventEmitter",
-    "repo": "Wolfy87/EventEmitter",
+    "repo": "Olical/EventEmitter",
     "description": "Event based JavaScript for the browser.",
-    "version": "4.2.11",
+    "version": "4.3.0",
     "scripts": ["EventEmitter.js"],
     "main": "EventEmitter.js",
     "license": "Unlicense"
