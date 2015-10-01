@@ -44,10 +44,10 @@ You can clone the repository with your generic clone commands as a standalone re
 
 ```bash
 # Full repository
-git clone git://github.com/Wolfy87/EventEmitter.git
+git clone git://github.com/Olical/EventEmitter.git
 
 # Or submodule
-git submodule add git://github.com/Wolfy87/EventEmitter.git assets/js/EventEmitter
+git submodule add git://github.com/Olical/EventEmitter.git assets/js/EventEmitter
 ```
 
 ### Package managers
@@ -55,7 +55,7 @@ git submodule add git://github.com/Wolfy87/EventEmitter.git assets/js/EventEmitt
 You can also get a copy of EventEmitter through the following package managers:
  * [NPM][] (wolfy87-eventemitter)
  * [Bower][] (eventEmitter)
- * [Component][] (Wolfy87/EventEmitter)
+ * [Component][] (Olical/EventEmitter)
 
 ## Unlicense
 
@@ -68,7 +68,7 @@ This project used to be released under MIT, but I release everything under the [
 I gave people the chance to object in issue #84, which also explains my reasoning.
 
 [guide]: https://github.com/Wolfy87/EventEmitter/blob/master/docs/guide.md
-[api]: https://github.com/Wolfy87/EventEmitter/blob/master/docs/api.md
+[api]: https://github.com/Olical/EventEmitter/blob/master/docs/api.md
 [simple]: http://jsfiddle.net/Wolfy87/qXQu9/
 [regexp dom caster]: http://jsfiddle.net/Wolfy87/JqRvS/
 [npm]: https://npmjs.org/
@@ -76,10 +76,10 @@ I gave people the chance to object in issue #84, which also explains my reasonin
 [component]: http://github.com/component/component
 [mocha]: http://visionmedia.github.io/mocha/
 [chai]: http://chaijs.com/
-[issues]: https://github.com/Wolfy87/EventEmitter/issues
-[example]: https://github.com/Wolfy87/EventEmitter/pull/46
+[issues]: https://github.com/Olical/EventEmitter/issues
+[example]: https://github.com/Olical/EventEmitter/pull/46
 [nathggns]: https://github.com/nathggns
 [http-server]: https://www.npmjs.org/package/http-server
 [node.js]: http://nodejs.org/
-[gitter]: https://gitter.im/Wolfy87/EventEmitter?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
+[gitter]: https://gitter.im/Olical/EventEmitter?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
 [unlicense]: http://unlicense.org/

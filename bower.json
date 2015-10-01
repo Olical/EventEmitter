@@ -1,7 +1,7 @@
 {
     "name": "eventEmitter",
     "description": "Event based JavaScript for the browser",
-    "version": "4.2.11",
+    "version": "4.3.0",
     "main": [
         "./EventEmitter.js"
     ],
@@ -9,12 +9,7 @@
         "name": "Oliver Caldwell",
         "web": "http://oli.me.uk/"
     },
-    "licenses": [
-        {
-            "type": "Unlicense",
-            "url": "http://unlicense.org/"
-        }
-    ],
+    "license": "Unlicense",
     "keywords": [
         "events",
         "structure"

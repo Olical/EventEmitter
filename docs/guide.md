@@ -1,20 +1,20 @@
 # Guide
 
-This guide should get you going with EventEmitter. Once finished you may wish to learn more about the script and use methods that are not shown here. At that point you should either browse [the API documentation](https://github.com/Wolfy87/EventEmitter/blob/master/docs/api.md) or have a look around [the source](https://github.com/Wolfy87/EventEmitter/blob/master/EventEmitter.js).
+This guide should get you going with EventEmitter. Once finished you may wish to learn more about the script and use methods that are not shown here. At that point you should either browse [the API documentation](https://github.com/Olical/EventEmitter/blob/master/docs/api.md) or have a look around [the source](https://github.com/Olical/EventEmitter/blob/master/EventEmitter.js).
 
 ## Getting a copy of the script
 
 ### Cloning the full source as a submodule
 
 ```bash
-git submodule add git://github.com/Wolfy87/EventEmitter.git assets/js/EventEmitter
+git submodule add git://github.com/Olical/EventEmitter.git assets/js/EventEmitter
 ```
 
 This will copy the whole repository, including all documentation and build scripts. Obviously you must replace the destination directory with your desired location.
 
 ### Downloading a minified version
 
-You can get pre-built versions of EventEmitter from [the downloads page](https://github.com/Wolfy87/EventEmitter/downloads). I would recommend using the latest version. It's the latest for a reason.
+You can get pre-built versions of EventEmitter from [the downloads page](https://github.com/Olical/EventEmitter/downloads). I would recommend using the latest version. It's the latest for a reason.
 
 ### Installing the component with Bower
 
@@ -82,11 +82,11 @@ function Player(){}
 Player.prototype = Object.clone(EventEmitter.prototype);
 ```
 
-If you do not want to use a huge framework like that then you might want to use this script I wrote, [Heir](https://github.com/Wolfy87/Heir). It just makes prototypical inheritance nice and easy. So here is how you would inherit EventEmitter's methods with Heir.
+If you do not want to use a huge framework like that then you might want to use this script I wrote, [Heir](https://github.com/Olical/Heir). It just makes prototypical inheritance nice and easy. So here is how you would inherit EventEmitter's methods with Heir.
 
 ```javascript
 function Player(){}
-Player.inherit(EventEmitter);
+heir.inherit(Player, EventEmitter);
 ```
 
 That's all there is to it.
@@ -274,7 +274,7 @@ ee.emitEvent('addStuff', [10, 20]);
 
 ### Method aliases
 
-[Hebo](https://github.com/Hebo), from GitHub, [contributed three aliases](https://github.com/Wolfy87/EventEmitter/pull/35#issuecomment-9920932) to add, remove and emit. The aliases can be found in the [API documentation](https://github.com/Wolfy87/EventEmitter/blob/master/docs/api.md) but here is the mapping.
+[Hebo](https://github.com/Hebo), from GitHub, [contributed three aliases](https://github.com/Olical/EventEmitter/pull/35#issuecomment-9920932) to add, remove and emit. The aliases can be found in the [API documentation](https://github.com/Olical/EventEmitter/blob/master/docs/api.md) but here is the mapping.
 
  * `on` - `addListener`
  * `off` - `removeListener`
