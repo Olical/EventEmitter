@@ -466,6 +466,23 @@
             assert.strictEqual(flattenCheck(check), '1,2,3,4');
         });
 
+        test('can remove another listener from within a listener', function() {
+            var check = [];
+            var toRemove = function() { check.push('1'); };
+
+            ee.addListener('baz', toRemove);
+            ee.addListener('baz', function() {
+                check.push(2);
+                ee.removeListener('baz', toRemove);
+            });
+            ee.addListener('baz', function() { check.push(3); });
+
+            ee.emitEvent('baz');
+            ee.emitEvent('baz');
+
+            assert.strictEqual(flattenCheck(check), '1,2,2,3,3');
+        });
+
         test('executes multiple listeners and removes those that return true', function() {
             var check = [];
 
