@@ -1,10 +1,12 @@
-# EventEmitter [![Gitter](https://badges.gitter.im/Join Chat.svg)][gitter]
+# EventEmitter
+
+[![Gitter](https://badges.gitter.im/Join Chat.svg)][gitter]
 
 ## Event based JavaScript for the browser
 
 As the subtitle suggests, this script brings the power of events from platforms such as [node.js][] to your browser. Although it can be used on any other platform, I just built it with browsers in mind.
 
-This is actually the fourth full rewrite of EventEmitter, my aim is for it to be faster and lighter than ever before. It also has a remapped API which just makes a lot more sense. Because the methods now have more descriptive names it is friendlier to extension into other classes. You will be able to distinguish event method from your own methods.
+This is actually the fourth full rewrite of EventEmitter, my aim is for it to be faster and lighter than ever before. It also has a remapped API which just makes a lot more sense. Because the methods now have more descriptive names it is friendlier to extend EventEmitter into other classes. You will be able to distinguish event method from your own methods.
 
 I have been working on it for over ~~a year~~ ~~two~~ three years so far and in that time my skills in JavaScript have come a long way. This script is a culmination of my learnings which you can hopefully find very useful.
 
