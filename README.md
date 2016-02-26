@@ -69,10 +69,10 @@ This project used to be released under MIT, but I release everything under the [
 
 I gave people the chance to object in issue #84, which also explains my reasoning.
 
-[guide]: https://github.com/Wolfy87/EventEmitter/blob/master/docs/guide.md
+[guide]: https://github.com/Olical/EventEmitter/blob/master/docs/guide.md
 [api]: https://github.com/Olical/EventEmitter/blob/master/docs/api.md
-[simple]: http://jsfiddle.net/Wolfy87/qXQu9/
-[regexp dom caster]: http://jsfiddle.net/Wolfy87/JqRvS/
+[simple]: http://jsfiddle.net/Olical/qXQu9/
+[regexp dom caster]: http://jsfiddle.net/Olical/JqRvS/
 [npm]: https://npmjs.org/
 [bower]: http://bower.io/
 [component]: http://github.com/component/component
