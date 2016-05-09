@@ -368,9 +368,8 @@
         for (key in listenersMap) {
             if (listenersMap.hasOwnProperty(key)) {
                 listeners = listenersMap[key].slice(0);
-                i = listeners.length;
 
-                while (i--) {
+                for (i = 0; i < listeners.length; i++) {
                     // If the listener returns true then it shall be removed from the event
                     // The function is executed either with a basic call or an apply if there is an args array
                     listener = listeners[i];
