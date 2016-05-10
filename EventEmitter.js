@@ -1,5 +1,5 @@
 /*!
- * EventEmitter v4.2.11 - git.io/ee
+ * EventEmitter v5.0.0 - git.io/ee
  * Unlicense - http://unlicense.org/
  * Oliver Caldwell - http://oli.me.uk/
  * @preserve
