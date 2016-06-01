@@ -54,6 +54,17 @@
     }
 
     /**
+     * Check to see if an object is a function.
+     *
+     * @param {Object} the object to check.
+     * @return {Bool} Is a function or not
+     * @api private
+    */
+    function isFunction(x) {
+      return Object.prototype.toString.call(x) == '[object Function]';
+    }
+
+    /**
      * Returns the listener array for the specified event.
      * Will initialise the event object and listener arrays if required.
      * Will return an object if you use a regex search. The object contains keys for each matched event. So /ba[rz]/ might return an object containing bar and baz. But only if you have either defined them with defineEvent or added some listeners to them.
@@ -130,9 +141,16 @@
      * @return {Object} Current instance of EventEmitter for chaining.
      */
     proto.addListener = function addListener(evt, listener) {
+
+        if (listener === null) { return this; }
+
         var listeners = this.getListenersAsObject(evt);
         var listenerIsWrapped = typeof listener === 'object';
         var key;
+
+
+        if (!listenerIsWrapped && (!isFunction(listener))) { return this; }
+        else if (listenerIsWrapped && (!isFunction(listener.listener))) { return this; }
 
         for (key in listeners) {
             if (listeners.hasOwnProperty(key) && indexOfListener(listeners[key], listener) === -1) {

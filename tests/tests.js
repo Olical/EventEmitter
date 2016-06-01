@@ -146,6 +146,19 @@
 
             assert.strictEqual(count, 1);
         });
+
+        test('only allow function-like listeners', function() {
+            ee.addListener('undefined', undefined);
+            ee.emit('undefined');
+            ee.addListener('string', 'string');
+            ee.emit('string');
+            ee.addListener('number', 12);
+            ee.emit('number');
+            ee.addListener('null', null);
+            ee.emit('null');
+            ee.addListener('bool', true);
+            ee.emit('bool');
+        });
     });
 
     suite('addOnceListener', function () {
@@ -184,6 +197,19 @@
             });
             ee.trigger('foo');
             assert.strictEqual(counter, 1);
+        });
+
+        test('only allow function-like listeners', function() {
+            ee.addOnceListener('undefined', undefined);
+            ee.emit('undefined');
+            ee.addOnceListener('string', 'string');
+            ee.emit('string');
+            ee.addOnceListener('number', 12);
+            ee.emit('number');
+            ee.addOnceListener('null', null);
+            ee.emit('null');
+            ee.addOnceListener('bool', true);
+            ee.emit('bool');
         });
     });
 
