@@ -5,7 +5,7 @@
  * @preserve
  */
 
-;(function () {
+;(function (exports) {
     'use strict';
 
     /**
@@ -18,7 +18,7 @@
 
     // Shortcuts to improve speed and size
     var proto = EventEmitter.prototype;
-    var originalGlobalValue = this.EventEmitter;
+    var originalGlobalValue = exports.EventEmitter;
 
     /**
      * Finds the index of the listener for the event in its storage array.
@@ -453,7 +453,7 @@
      * @return {Function} Non conflicting EventEmitter class.
      */
     EventEmitter.noConflict = function noConflict() {
-        this.EventEmitter = originalGlobalValue;
+        exports.EventEmitter = originalGlobalValue;
         return EventEmitter;
     };
 
@@ -467,6 +467,6 @@
         module.exports = EventEmitter;
     }
     else {
-        this.EventEmitter = EventEmitter;
+        exports.EventEmitter = EventEmitter;
     }
-}.call(this || {}));
+}(this || {}));
