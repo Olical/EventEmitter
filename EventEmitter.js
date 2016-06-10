@@ -18,8 +18,7 @@
 
     // Shortcuts to improve speed and size
     var proto = EventEmitter.prototype;
-    var exports = this;
-    var originalGlobalValue = exports.EventEmitter;
+    var originalGlobalValue = this.EventEmitter;
 
     /**
      * Finds the index of the listener for the event in its storage array.
@@ -454,7 +453,7 @@
      * @return {Function} Non conflicting EventEmitter class.
      */
     EventEmitter.noConflict = function noConflict() {
-        exports.EventEmitter = originalGlobalValue;
+        this.EventEmitter = originalGlobalValue;
         return EventEmitter;
     };
 
@@ -468,6 +467,6 @@
         module.exports = EventEmitter;
     }
     else {
-        exports.EventEmitter = EventEmitter;
+        this.EventEmitter = EventEmitter;
     }
-}.call(this));
+}.call(this || {}));
