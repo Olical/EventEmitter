@@ -28,11 +28,11 @@
     "url": "https://github.com/Olical/EventEmitter/issues"
   },
   "devDependencies": {
-    "uglify-js": "*",
-    "mocha": "*",
-    "chai": "*",
-    "dox": "*",
-    "dustjs-linkedin": "*",
-    "dustjs-helpers": "*"
+    "chai": "^3.5.0",
+    "dox": "~0.5.0",
+    "dustjs-helpers": "~1.6.0",
+    "dustjs-linkedin": "~2.6.0",
+    "mocha": "^2.5.3",
+    "uglify-js": "^2.7.0"
   }
 }
