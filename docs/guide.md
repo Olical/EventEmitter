@@ -33,13 +33,13 @@ You can also register EventEmitter as a dependency of your own Bower components 
 This is so obvious it hurts. Just remember to set the right path to load from.
 
 ```html
-<script type='text/javascript' src='/assets/js/EventEmitter/EventEmitter.js'></script>
+<script src='/assets/js/EventEmitter/EventEmitter.js'></script>
 ```
 
 Or maybe you want to load a minified version you downloaded...
 
 ```html
-<script type='text/javascript' src='/assets/js/EventEmitter-VERSION.min.js'></script>
+<script src='/assets/js/EventEmitter-VERSION.min.js'></script>
 ```
 
 You can then access it in your code like so.
