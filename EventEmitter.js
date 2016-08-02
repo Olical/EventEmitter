@@ -163,6 +163,12 @@
      * Alias of addListener
      */
     proto.on = alias('addListener');
+    
+    /**
+     * Alias of addListener to support Observables api.
+     * @see http://reactivex.io/documentation/observable.html
+     */
+    proto.subscribe = alias('addListener');
 
     /**
      * Semi-alias of addListener. It will add a listener that will be
