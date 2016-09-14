@@ -6,7 +6,7 @@
 
 As the subtitle suggests, this script brings the power of events from platforms such as [node.js][] to your browser. Although it can be used on any other platform, I just built it with browsers in mind.
 
-This is actually the fourth full rewrite of EventEmitter, my aim is for it to be faster and lighter than ever before. It also has a remapped API which just makes a lot more sense. Because the methods now have more descriptive names it is friendlier to extend EventEmitter into other classes. You will be able to distinguish event method from your own methods.
+This is actually the fourth full rewrite of EventEmitter, my aim is for it to be faster and lighter than ever before. It also has a remapped API which just makes a lot more sense. Because the methods now have more descriptive names it is friendlier to extend EventEmitter into other classes. You will be able to distinguish event methods from your own methods.
 
 I have been working on it for over ~~a year~~ ~~two~~ three years so far and in that time my skills in JavaScript have come a long way. This script is a culmination of my learnings which you can hopefully find very useful.
 
@@ -69,10 +69,10 @@ This project used to be released under MIT, but I release everything under the [
 
 I gave people the chance to object in issue #84, which also explains my reasoning.
 
-[guide]: https://github.com/Wolfy87/EventEmitter/blob/master/docs/guide.md
+[guide]: https://github.com/Olical/EventEmitter/blob/master/docs/guide.md
 [api]: https://github.com/Olical/EventEmitter/blob/master/docs/api.md
-[simple]: http://jsfiddle.net/Wolfy87/qXQu9/
-[regexp dom caster]: http://jsfiddle.net/Wolfy87/JqRvS/
+[simple]: http://jsfiddle.net/Olical/qXQu9/
+[regexp dom caster]: http://jsfiddle.net/Olical/JqRvS/
 [npm]: https://npmjs.org/
 [bower]: http://bower.io/
 [component]: http://github.com/component/component

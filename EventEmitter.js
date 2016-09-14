@@ -1,11 +1,11 @@
 /*!
- * EventEmitter v4.2.11 - git.io/ee
+ * EventEmitter v5.1.0 - git.io/ee
  * Unlicense - http://unlicense.org/
  * Oliver Caldwell - http://oli.me.uk/
  * @preserve
  */
 
-;(function () {
+;(function (exports) {
     'use strict';
 
     /**
@@ -18,7 +18,6 @@
 
     // Shortcuts to improve speed and size
     var proto = EventEmitter.prototype;
-    var exports = this;
     var originalGlobalValue = exports.EventEmitter;
 
     /**
@@ -119,6 +118,16 @@
         return response || listeners;
     };
 
+    function isValidListener (listener) {
+        if (typeof listener === 'function' || listener instanceof RegExp) {
+            return true
+        } else if (listener && typeof listener === 'object') {
+            return isValidListener(listener.listener)
+        } else {
+            return false
+        }
+    }
+
     /**
      * Adds a listener function to the specified event.
      * The listener will not be added if it is a duplicate.
@@ -130,6 +139,10 @@
      * @return {Object} Current instance of EventEmitter for chaining.
      */
     proto.addListener = function addListener(evt, listener) {
+        if (!isValidListener(listener)) {
+            throw new TypeError('listener must be a function');
+        }
+
         var listeners = this.getListenersAsObject(evt);
         var listenerIsWrapped = typeof listener === 'object';
         var key;
@@ -164,12 +177,50 @@
             listener: listener,
             once: true
         });
+
     };
 
     /**
      * Alias of addOnceListener.
      */
     proto.once = alias('addOnceListener');
+
+    /**
+     * Register listener triggered on any event
+     *
+     * @param listener
+     * @returns {EventEmitter}
+     */
+    proto.onAny = function onAny(listener){
+        if (!isValidListener(listener)) {
+            throw new TypeError('listener must be a function');
+        }
+
+        if (!this._all) {
+            this._all = [];
+        }
+
+        this._all.push(listener);
+        return this;
+    };
+
+    /**
+     * Remove listener that are triggered for all events
+     *
+     * @param listener
+     * @returns {EventEmitter}
+     */
+    proto.offAny = function offAny(listener){
+        if (!isValidListener(listener)) {
+            throw new TypeError('listener must be a function');
+        }
+
+        if (this._all && this._all.length){
+            this._all.splice(this._all.indexOf(listener), 1);
+        }
+
+        return this;
+    };
 
     /**
      * Defines an event name. This is required if you want to use a regex to add a listener to multiple events at once. If you don't do this then how do you expect it to know what event to add to? Should it just add to every possible match for a regex? No. That is scary and bad.
@@ -229,7 +280,7 @@
 
     /**
      * Adds listeners in bulk using the manipulateListeners method.
-     * If you pass an object as the second argument you can add to multiple events at once. The object should contain key value pairs of events and listeners or listener arrays. You can also pass it an event name and an array of listeners to be added.
+     * If you pass an object as the first argument you can add to multiple events at once. The object should contain key value pairs of events and listeners or listener arrays. You can also pass it an event name and an array of listeners to be added.
      * You can also pass it a regular expression to add the array of listeners to all events that match it.
      * Yeah, this function does quite a bit. That's probably a bad thing.
      *
@@ -244,7 +295,7 @@
 
     /**
      * Removes listeners in bulk using the manipulateListeners method.
-     * If you pass an object as the second argument you can remove from multiple events at once. The object should contain key value pairs of events and listeners or listener arrays.
+     * If you pass an object as the first argument you can remove from multiple events at once. The object should contain key value pairs of events and listeners or listener arrays.
      * You can also pass it an event name and an array of listeners to be removed.
      * You can also pass it a regular expression to remove the listeners from all events that match it.
      *
@@ -308,6 +359,7 @@
      * If you do not specify an event then all listeners will be removed.
      * That means every event will be emptied.
      * You can also pass a regex to remove all events that match it.
+     * If you do not specify event, it will also remove all events added via onAny function
      *
      * @param {String|RegExp} [evt] Optional name of the event to remove all listeners for. Will remove from every event if not passed.
      * @return {Object} Current instance of EventEmitter for chaining.
@@ -333,6 +385,7 @@
         else {
             // Remove all listeners in all events
             delete this._events;
+            delete this._all;
         }
 
         return this;
@@ -365,12 +418,18 @@
         var key;
         var response;
 
+        // Emit to onAny listeners
+        if (this._all && this._all.length){
+            for (i = 0; i < this._all.length; i++){
+                this._all[i].apply(this, [evt, args || []]);
+            }
+        }
+
         for (key in listenersMap) {
             if (listenersMap.hasOwnProperty(key)) {
                 listeners = listenersMap[key].slice(0);
-                i = listeners.length;
 
-                while (i--) {
+                for (i = 0; i < listeners.length; i++) {
                     // If the listener returns true then it shall be removed from the event
                     // The function is executed either with a basic call or an apply if there is an args array
                     listener = listeners[i];
@@ -471,4 +530,4 @@
     else {
         exports.EventEmitter = EventEmitter;
     }
-}.call(this));
+}(this || {}));

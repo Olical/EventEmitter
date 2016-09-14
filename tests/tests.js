@@ -146,6 +146,12 @@
 
             assert.strictEqual(count, 1);
         });
+
+        test('it throws if you try to add a non-function/regex listener', function () {
+            assert.throws(ee.addListener.bind(ee, 'foo', null), /listener must be a function/)
+            assert.throws(ee.addListener.bind(ee, 'foo'), /listener must be a function/)
+            assert.throws(ee.addListener.bind(ee, 'foo', 'lol'), /listener must be a function/)
+        })
     });
 
     suite('addOnceListener', function () {
@@ -184,6 +190,87 @@
             });
             ee.trigger('foo');
             assert.strictEqual(counter, 1);
+        });
+    });
+
+    suite('onAny', function(){
+        var ee;
+
+        setup(function () {
+            ee = new EventEmitter();
+        });
+
+        test('onAny listener can be added', function(){
+            var fn1 = function(e, args){
+                console.log("event: ", e);
+            };
+
+            ee.onAny(fn1);
+
+            assert.deepEqual(ee._all, [fn1]);
+        });
+
+        test('All listeners are executed on any event', function(){
+            var counter = 0;
+            var fn1 = function(e, args){
+                counter++;
+                console.log("event: ", e);
+            };
+
+            var fn2 = function(e, args){
+                counter++;
+                console.log("arguments: ", args);
+            };
+
+            ee.onAny(fn1);
+            ee.onAny(fn2);
+
+            ee.emit("test1");
+            ee.emit("test2");
+
+            assert.strictEqual(counter, 4);
+        });
+
+        test('First argument of listener is event name', function(){
+            var event;
+
+            var fn1 = function(e, args){
+                event = e;
+            };
+
+            ee.onAny(fn1);
+
+            ee.emit("test");
+
+            assert.strictEqual(event, "test");
+        });
+
+        test('Second argument of listener are all arguments for that event', function(){
+            var eArgs;
+
+            var fn1 = function(e, args){
+                eArgs = args;
+            };
+
+            ee.onAny(fn1);
+
+            ee.emit("test", 1, 2, 3);
+
+            assert.deepEqual(eArgs, [1, 2, 3]);
+        });
+
+        test('onAny listener can be removed', function(){
+            var fn1 = function(e, args){
+                console.log("event: ", e);
+            };
+
+            ee.onAny(fn1);
+
+            assert.deepEqual(ee._all, [fn1]);
+
+            ee.offAny(fn1);
+
+            assert.deepEqual(ee._all, []);
         });
     });
 
@@ -340,9 +427,15 @@
             ee.addListener('bar', fn3);
             ee.addListener('bar', fn4);
             ee.addListener('baz', fn5);
+
+            ee.onAny(fn1);
+            ee.onAny(fn2);
+
             assert.deepEqual(ee.flattenListeners(ee.getListeners('foo')), [fn1, fn2]);
             assert.deepEqual(ee.flattenListeners(ee.getListeners('bar')), [fn3, fn4]);
             assert.deepEqual(ee.flattenListeners(ee.getListeners('baz')), [fn5]);
+
+            assert.deepEqual(ee._all, [fn1, fn2]);
         });
 
         test('removes all listeners for the specified event', function() {
@@ -362,6 +455,8 @@
             assert.deepEqual(ee.flattenListeners(ee.getListeners('foo')), []);
             assert.deepEqual(ee.flattenListeners(ee.getListeners('bar')), []);
             assert.deepEqual(ee.flattenListeners(ee.getListeners('baz')), []);
+
+            assert.strictEqual(ee._all, undefined);
         });
 
         test('removes listeners when passed a regex', function () {
@@ -539,6 +634,19 @@
             });
 
             ee.emitEvent('foo');
+        });
+
+        test('listeners are executed in the order they are added', function () {
+            var check = []
+
+            ee.addListener('foo', function () { check.push(1); })
+            ee.addListener('foo', function () { check.push(2); })
+            ee.addListener('foo', function () { check.push(3); })
+            ee.addListener('foo', function () { check.push(4); })
+            ee.addListener('foo', function () { check.push(5); })
+
+            ee.emitEvent('foo')
+            assert.deepEqual(check, [1, 2, 3, 4, 5])
         });
     });
 
