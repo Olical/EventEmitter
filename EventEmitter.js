@@ -177,12 +177,50 @@
             listener: listener,
             once: true
         });
+
     };
 
     /**
      * Alias of addOnceListener.
      */
     proto.once = alias('addOnceListener');
+
+    /**
+     * Register listener triggered on any event
+     *
+     * @param listener
+     * @returns {EventEmitter}
+     */
+    proto.onAny = function onAny(listener){
+        if (!isValidListener(listener)) {
+            throw new TypeError('listener must be a function');
+        }
+
+        if (!this._all) {
+            this._all = [];
+        }
+
+        this._all.push(listener);
+        return this;
+    };
+
+    /**
+     * Remove listener that are triggered for all events
+     *
+     * @param listener
+     * @returns {EventEmitter}
+     */
+    proto.offAny = function offAny(listener){
+        if (!isValidListener(listener)) {
+            throw new TypeError('listener must be a function');
+        }
+
+        if (this._all && this._all.length){
+            this._all.splice(this._all.indexOf(listener), 1);
+        }
+
+        return this;
+    };
 
     /**
      * Defines an event name. This is required if you want to use a regex to add a listener to multiple events at once. If you don't do this then how do you expect it to know what event to add to? Should it just add to every possible match for a regex? No. That is scary and bad.
@@ -321,6 +359,7 @@
      * If you do not specify an event then all listeners will be removed.
      * That means every event will be emptied.
      * You can also pass a regex to remove all events that match it.
+     * If you do not specify event, it will also remove all events added via onAny function
      *
      * @param {String|RegExp} [evt] Optional name of the event to remove all listeners for. Will remove from every event if not passed.
      * @return {Object} Current instance of EventEmitter for chaining.
@@ -346,6 +385,7 @@
         else {
             // Remove all listeners in all events
             delete this._events;
+            delete this._all;
         }
 
         return this;
@@ -377,6 +417,13 @@
         var i;
         var key;
         var response;
+
+        // Emit to onAny listeners
+        if (this._all && this._all.length){
+            for (i = 0; i < this._all.length; i++){
+                this._all[i].apply(this, [evt, args || []]);
+            }
+        }
 
         for (key in listenersMap) {
             if (listenersMap.hasOwnProperty(key)) {

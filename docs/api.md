@@ -57,6 +57,20 @@ You may also be interested in [the guide](https://github.com/Olical/EventEmitter
 <p>Alias of addOnceListener.</p>
 
 
+## onAny
+
+<p>Register listener triggered on any event</p>
+
+ * **param** (`listener`)
+ * **returns** (`EventEmitter`)
+
+## offAny
+
+<p>Remove listener that are triggered for all events</p>
+
+ * **param** (`listener`)
+ * **returns** (`EventEmitter`)
+
 ## defineEvent
 
 <p>Defines an event name. This is required if you want to use a regex to add a listener to multiple events at once. If you don&#39;t do this then how do you expect it to know what event to add to? Should it just add to every possible match for a regex? No. That is scary and bad.<br />You need to tell it what event names should be matched by a regex.</p>
@@ -111,7 +125,7 @@ You may also be interested in [the guide](https://github.com/Olical/EventEmitter
 
 ## removeEvent
 
-<p>Removes all listeners from a specified event.<br />If you do not specify an event then all listeners will be removed.<br />That means every event will be emptied.<br />You can also pass a regex to remove all events that match it.</p>
+<p>Removes all listeners from a specified event.<br />If you do not specify an event then all listeners will be removed.<br />That means every event will be emptied.<br />You can also pass a regex to remove all events that match it.<br />If you do not specify event, it will also remove all events added via onAny function</p>
 
  * **param** (`String` | `RegExp`) _[evt]_ - Optional name of the event to remove all listeners for. Will remove from every event if not passed.
  * **return** (`Object`) - Current instance of EventEmitter for chaining.
