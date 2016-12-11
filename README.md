@@ -76,7 +76,7 @@ I gave people the chance to object in issue #84, which also explains my reasonin
 [npm]: https://npmjs.org/
 [bower]: http://bower.io/
 [component]: http://github.com/component/component
-[mocha]: http://visionmedia.github.io/mocha/
+[mocha]: http://mochajs.org/
 [chai]: http://chaijs.com/
 [issues]: https://github.com/Olical/EventEmitter/issues
 [example]: https://github.com/Olical/EventEmitter/pull/46
