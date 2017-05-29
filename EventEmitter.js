@@ -90,14 +90,9 @@
      * @return {Function[]} Just the listener functions.
      */
     proto.flattenListeners = function flattenListeners(listeners) {
-        var flatListeners = [];
-        var i;
-
-        for (i = 0; i < listeners.length; i += 1) {
-            flatListeners.push(listeners[i].listener);
-        }
-
-        return flatListeners;
+        return listeners.map(function(l) {
+            return l.listener;
+        });
     };
 
     /**
