@@ -1,7 +1,5 @@
 # EventEmitter
 
-[![Gitter](https://badges.gitter.im/Join Chat.svg)][gitter]
-
 ## Event based JavaScript for the browser
 
 As the subtitle suggests, this script brings the power of events from platforms such as [node.js][] to your browser. Although it can be used on any other platform, I just built it with browsers in mind.
@@ -83,5 +81,4 @@ I gave people the chance to object in issue #84, which also explains my reasonin
 [nathggns]: https://github.com/nathggns
 [http-server]: https://www.npmjs.org/package/http-server
 [node.js]: http://nodejs.org/
-[gitter]: https://gitter.im/Olical/EventEmitter?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
 [unlicense]: http://unlicense.org/
