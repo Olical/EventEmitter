@@ -3,6 +3,7 @@
   "version": "5.1.0",
   "description": "Event based JavaScript for the browser",
   "main": "EventEmitter.js",
+  "types": "EventEmitter.d.ts",
   "directories": {
     "doc": "docs",
     "test": "tests"
