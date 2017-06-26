@@ -4,6 +4,7 @@
     "description": "Event based JavaScript for the browser.",
     "version": "5.2.0",
     "scripts": ["EventEmitter.js"],
+    "files": ["EventEmitter.d.ts"],
     "main": "EventEmitter.js",
     "license": "Unlicense"
 }
