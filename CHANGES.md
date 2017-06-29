@@ -1,5 +1,9 @@
 # EventEmitter changes
 
+# v5.2.1
+
+ * Merge [#132](https://github.com/Olical/EventEmitter/pull/132) - Fix TypeScript declarations.
+
 # v5.2.0
 
  * Merge [#130](https://github.com/Olical/EventEmitter/pull/130) - Add TypeScript declarations.
