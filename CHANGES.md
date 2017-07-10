@@ -1,5 +1,10 @@
 # EventEmitter changes
 
+# v5.2.2
+
+ * Merge [#134](https://github.com/Olical/EventEmitter/pull/134) - Make the event key type generic. Use any type you want as a key.
+ * Merge [#135](https://github.com/Olical/EventEmitter/pull/135) - Add missing argument types for the emit method.
+
 # v5.2.1
 
  * Merge [#132](https://github.com/Olical/EventEmitter/pull/132) - Fix TypeScript declarations.
