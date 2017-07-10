@@ -2,13 +2,13 @@ export = EventEmitter.EventEmitter;
 export as namespace EventEmitter;
 
 declare namespace EventEmitter {
-    type EventKey = string|RegExp;
+    type EventKey = string | RegExp;
 
     interface EventMap {
         [event: string]: EventKey;
     }
 
-    type Events = EventKey|EventMap;
+    type Events = EventKey | EventMap;
 
     interface Listener {
         listener: Function;
@@ -19,30 +19,30 @@ declare namespace EventEmitter {
         [event: string]: Listener[];
     }
 
-    type Listeners = Listener[]|ListenerMap;
+    type Listeners = Listener[] | ListenerMap;
 
-    export class EventEmitter {
+    export class EventEmitter<E = EventKey> {
         static noConflict(): typeof EventEmitter;
 
-        getListeners(event: EventKey): Listeners;
+        getListeners(event: E): Listeners;
         flattenListeners(listeners: Listener[]): void;
-        getListenersAsObject(event: EventKey): ListenerMap;
-        addListener(event: EventKey, listener: Listener|Function): this;
-        on(event: EventKey, listener: Listener|Function): this;
-        addOnceListener(event: EventKey, listener: Function): this;
-        once(event: EventKey, listener: Function): this;
-        defineEvent(event: EventKey): this;
-        defineEvents(events: EventKey[]): this;
-        removeListener(event: EventKey, listener: Function): this;
-        off(event: EventKey, listener: Function): this;
+        getListenersAsObject(event: E): ListenerMap;
+        addListener(event: E, listener: Listener | Function): this;
+        on(event: E, listener: Listener | Function): this;
+        addOnceListener(event: E, listener: Function): this;
+        once(event: E, listener: Function): this;
+        defineEvent(event: E): this;
+        defineEvents(events: E[]): this;
+        removeListener(event: E, listener: Function): this;
+        off(event: E, listener: Function): this;
         addListeners(event: Events, listeners: Function[]): this;
         removeListeners(event: Events, listeners: Function[]): this;
         manipulateListeners(remove: boolean, event: Events, listeners: Function[]): this;
-        removeEvent(event?: EventKey): this;
-        removeAllListeners(event?: EventKey): this;
-        emitEvent(event: EventKey, args?: any[]): this;
-        trigger(event: EventKey, args?: any[]): this;
-        emit(event: EventKey, ...args: any[]): this;
+        removeEvent(event?: E): this;
+        removeAllListeners(event?: E): this;
+        emitEvent(event: E, args?: any[]): this;
+        trigger(event: E, args?: any[]): this;
+        emit(event: E, ...args: any[]): this;
         setOnceReturnValue(value: any): this;
     }
 }
