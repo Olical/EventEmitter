@@ -42,7 +42,7 @@ declare namespace EventEmitter {
         removeAllListeners(event?: E): this;
         emitEvent(event: E, args?: any[]): this;
         trigger(event: E, args?: any[]): this;
-        emit(event: E, args: any[]): this;
+        emit(event: E, args: ...any[]): this;
         setOnceReturnValue(value: any): this;
     }
 }
