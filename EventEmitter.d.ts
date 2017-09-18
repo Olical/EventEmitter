@@ -1,48 +1,50 @@
-export = EventEmitter.EventEmitter;
 export as namespace EventEmitter;
 
-declare namespace EventEmitter {
-    type EventKey = string | RegExp;
+type ListenerFn = (...args: Array<any>) => void;
 
-    interface EventMap {
-        [event: string]: EventKey;
-    }
+/**
+ * Minimal `EventEmitter` interface that is molded against the Node.js
+ * `EventEmitter` interface.
+ */
+export class EventEmitter {
+  static prefixed: string | boolean;
 
-    type Events = EventKey | EventMap;
+  /**
+   * Return an array listing the events for which the emitter has registered
+   * listeners.
+   */
+  eventNames(): Array<string | symbol>;
 
-    interface Listener {
-        listener: Function;
-        once: boolean;
-    }
+  /**
+   * Return the listeners registered for a given event.
+   */
+  listeners(event: string | symbol, exists: boolean): Array<ListenerFn> | boolean;
+  listeners(event: string | symbol): Array<ListenerFn>;
 
-    interface ListenerMap {
-        [event: string]: Listener[];
-    }
+  /**
+   * Calls each of the listeners registered for a given event.
+   */
+  emit(event: string | symbol, ...args: Array<any>): boolean;
 
-    type Listeners = Listener[] | ListenerMap;
+  /**
+   * Add a listener for a given event.
+   */
+  on(event: string | symbol, fn: ListenerFn, context?: any): this;
+  addListener(event: string | symbol, fn: ListenerFn, context?: any): this;
 
-    export class EventEmitter<E = EventKey> {
-        static noConflict(): typeof EventEmitter;
+  /**
+   * Add a one-time listener for a given event.
+   */
+  once(event: string | symbol, fn: ListenerFn, context?: any): this;
 
-        getListeners(event: E): Listeners;
-        flattenListeners(listeners: Listener[]): void;
-        getListenersAsObject(event: E): ListenerMap;
-        addListener(event: E, listener: Listener | Function): this;
-        on(event: E, listener: Listener | Function): this;
-        addOnceListener(event: E, listener: Function): this;
-        once(event: E, listener: Function): this;
-        defineEvent(event: E): this;
-        defineEvents(events: E[]): this;
-        removeListener(event: E, listener: Function): this;
-        off(event: E, listener: Function): this;
-        addListeners(event: Events, listeners: Function[]): this;
-        removeListeners(event: Events, listeners: Function[]): this;
-        manipulateListeners(remove: boolean, event: Events, listeners: Function[]): this;
-        removeEvent(event?: E): this;
-        removeAllListeners(event?: E): this;
-        emitEvent(event: E, args?: any[]): this;
-        trigger(event: E, args?: any[]): this;
-        emit(event: E, ...args: any[]): this;
-        setOnceReturnValue(value: any): this;
-    }
+  /**
+   * Remove the listeners of a given event.
+   */
+  removeListener(event: string | symbol, fn?: ListenerFn, context?: any, once?: boolean): this;
+  off(event: string | symbol, fn?: ListenerFn, context?: any, once?: boolean): this;
+
+  /**
+   * Remove all listeners, or those of the specified event.
+   */
+  removeAllListeners(event?: string | symbol): this;
 }
