@@ -19,7 +19,7 @@ interface ListenerMap {
 
 type Listeners = Listener[] | ListenerMap;
 
-export class EventEmitter<E = EventKey> {
+export default class EventEmitter<E = EventKey> {
     static noConflict(): typeof EventEmitter;
 
     getListeners(event: E): Listeners;
