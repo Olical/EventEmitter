@@ -1,5 +1,9 @@
 # EventEmitter changes
 
+# v5.2.3
+
+ * Merge [#140](https://github.com/Olical/EventEmitter/pull/140) - Fix TypeScript declarations. Again.
+
 # v5.2.2
 
  * Merge [#134](https://github.com/Olical/EventEmitter/pull/134) - Make the event key type generic. Use any type you want as a key.
