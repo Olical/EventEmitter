@@ -1,5 +1,9 @@
 # EventEmitter changes
 
+# v5.2.4
+
+ * Copy in DefinitelyTyped TypeScript declarations. Hopefully this fixes them. Again.
+
 # v5.2.3
 
  * Merge [#140](https://github.com/Olical/EventEmitter/pull/140) - Fix TypeScript declarations. Again.
