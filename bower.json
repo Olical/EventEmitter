@@ -1,10 +1,8 @@
 {
     "name": "eventEmitter",
     "description": "Event based JavaScript for the browser",
-    "version": "4.3.0",
-    "main": [
-        "./EventEmitter.js"
-    ],
+    "version": "5.2.4",
+    "main": "EventEmitter.js",
     "author": {
         "name": "Oliver Caldwell",
         "web": "http://oli.me.uk/"

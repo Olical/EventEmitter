@@ -146,6 +146,12 @@
 
             assert.strictEqual(count, 1);
         });
+
+        test('it throws if you try to add a non-function/regex listener', function () {
+            assert.throws(ee.addListener.bind(ee, 'foo', null), /listener must be a function/)
+            assert.throws(ee.addListener.bind(ee, 'foo'), /listener must be a function/)
+            assert.throws(ee.addListener.bind(ee, 'foo', 'lol'), /listener must be a function/)
+        })
     });
 
     suite('addOnceListener', function () {
@@ -539,6 +545,19 @@
             });
 
             ee.emitEvent('foo');
+        });
+
+        test('listeners are executed in the order they are added', function () {
+            var check = []
+
+            ee.addListener('foo', function () { check.push(1); })
+            ee.addListener('foo', function () { check.push(2); })
+            ee.addListener('foo', function () { check.push(3); })
+            ee.addListener('foo', function () { check.push(4); })
+            ee.addListener('foo', function () { check.push(5); })
+
+            ee.emitEvent('foo')
+            assert.deepEqual(check, [1, 2, 3, 4, 5])
         });
     });
 
