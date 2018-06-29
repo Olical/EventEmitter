@@ -22,10 +22,6 @@ There are no hard dependencies. The only reason you will want to run `npm instal
  * [Simple][]
  * [RegExp DOM caster][]
 
-## Contributing (aim your pull request at the `develop` branch!)
-
-If you wish to contribute to the project then please commit your changes into the `develop` branch. All pull requests should contain a failing test which is then resolved by your additions. [A perfect example][example] was submitted by [nathggns][].
-
 ## Testing
 
 Tests are performed using [Mocha][] and [Chai][], just serve up the directory using your local HTTP server of choice ([http-server][] is probably a good choice) and open up `tests/index.html`. You can also use the server scripts in the `tools` directory.
