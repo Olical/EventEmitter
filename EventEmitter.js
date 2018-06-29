@@ -483,4 +483,4 @@
     else {
         exports.EventEmitter = EventEmitter;
     }
-}(this || {}));
+}( typeof window !== "undefined" ? window : this || {}));
