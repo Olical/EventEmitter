@@ -1,6 +1,6 @@
 {
   "name": "wolfy87-eventemitter",
-  "version": "5.2.4",
+  "version": "5.2.5",
   "description": "Event based JavaScript for the browser",
   "main": "EventEmitter.js",
   "types": "EventEmitter.d.ts",

@@ -1,5 +1,9 @@
 # EventEmitter changes
 
+# v5.2.5
+
+ * Merge [#144](https://github.com/Olical/EventEmitter/pull/144) - Fix `undefined` error in browser when compiled with Babel.
+
 # v5.2.4
 
  * Copy in DefinitelyTyped TypeScript declarations. Hopefully this fixes them. Again.
