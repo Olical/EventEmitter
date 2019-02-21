@@ -1,5 +1,9 @@
 # EventEmitter changes
 
+# v5.2.6
+
+ * Merge [#149](https://github.com/Olical/EventEmitter/pull/149) - Correct method signatures in TypeScript file.
+
 # v5.2.5
 
  * Merge [#144](https://github.com/Olical/EventEmitter/pull/144) - Fix `undefined` error in browser when compiled with Babel.
