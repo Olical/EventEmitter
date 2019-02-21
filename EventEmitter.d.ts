@@ -426,13 +426,25 @@ declare namespace Wolfy87EventEmitter {
          * If you pass the optional argument array then those arguments will be passed to every listener upon execution.
          * Because it uses `apply`, your array of arguments will be passed as if you wrote them out separately.
          * So they will not arrive within the array on the other side, they will be separate.
-         * You can also pass a regular expression to emit to all events that match it.
          *
          * @param {String|RegExp} event Name of the event to emit and execute listeners for.
          * @param {Array} [args] Optional array of arguments to be passed to each listener.
          * @return {EventEmitter} Current instance of EventEmitter for chaining.
          */
-        emitEvent(event: string, ...args: any[]): EventEmitter;
+        emitEvent(event: string, args: any[]): EventEmitter;
+
+        /**
+         * Emits to all events that match the regular expression passed
+         * When emitted, every listener attached to the event(s) will be executed.
+         * If you pass the optional argument array then those arguments will be passed to every listener upon execution.
+         * Because it uses `apply`, your array of arguments will be passed as if you wrote them out separately.
+         * So they will not arrive within the array on the other side, they will be separate.
+         *
+         * @param {String|RegExp} event Name of the event to emit and execute listeners for.
+         * @param {Array} [args] Optional array of arguments to be passed to each listener.
+         * @return {EventEmitter} Current instance of EventEmitter for chaining.
+         */
+        emitEvent(event: RegExp, args: any[]): EventEmitter;
 
         /**
          * Emits an event of your choice.
@@ -440,41 +452,25 @@ declare namespace Wolfy87EventEmitter {
          * If you pass the optional argument array then those arguments will be passed to every listener upon execution.
          * Because it uses `apply`, your array of arguments will be passed as if you wrote them out separately.
          * So they will not arrive within the array on the other side, they will be separate.
-         * You can also pass a regular expression to emit to all events that match it.
          *
          * @param {String|RegExp} event Name of the event to emit and execute listeners for.
          * @param {Array} [args] Optional array of arguments to be passed to each listener.
          * @return {EventEmitter} Current instance of EventEmitter for chaining.
          */
-        emitEvent(event: RegExp, ...args: any[]): EventEmitter;
+        trigger(event: string, args: any[]): EventEmitter;
 
         /**
-         * Emits an event of your choice.
-         * When emitted, every listener attached to that event will be executed.
+         * Emits to all events that match the regular expression passed
+         * When emitted, every listener attached to the event(s) will be executed.
          * If you pass the optional argument array then those arguments will be passed to every listener upon execution.
          * Because it uses `apply`, your array of arguments will be passed as if you wrote them out separately.
          * So they will not arrive within the array on the other side, they will be separate.
-         * You can also pass a regular expression to emit to all events that match it.
          *
          * @param {String|RegExp} event Name of the event to emit and execute listeners for.
          * @param {Array} [args] Optional array of arguments to be passed to each listener.
          * @return {EventEmitter} Current instance of EventEmitter for chaining.
          */
-        trigger(event: string, ...args: any[]): EventEmitter;
-
-        /**
-         * Emits an event of your choice.
-         * When emitted, every listener attached to that event will be executed.
-         * If you pass the optional argument array then those arguments will be passed to every listener upon execution.
-         * Because it uses `apply`, your array of arguments will be passed as if you wrote them out separately.
-         * So they will not arrive within the array on the other side, they will be separate.
-         * You can also pass a regular expression to emit to all events that match it.
-         *
-         * @param {String|RegExp} event Name of the event to emit and execute listeners for.
-         * @param {Array} [args] Optional array of arguments to be passed to each listener.
-         * @return {EventEmitter} Current instance of EventEmitter for chaining.
-         */
-        trigger(event: RegExp, ...args: any[]): EventEmitter;
+        trigger(event: RegExp, args: any[]): EventEmitter;
 
         /**
          * Subtly different from emitEvent in that it will pass its arguments on to the listeners,
