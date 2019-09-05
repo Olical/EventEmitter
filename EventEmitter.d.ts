@@ -444,7 +444,7 @@ declare namespace Wolfy87EventEmitter {
          * @param {Array} [args] Optional array of arguments to be passed to each listener.
          * @return {EventEmitter} Current instance of EventEmitter for chaining.
          */
-        emitEvent(event: RegExp, args: any[]): EventEmitter;
+        emitEvent(event: RegExp, args: any[] = []): EventEmitter;
 
         /**
          * Emits an event of your choice.
