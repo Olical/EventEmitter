@@ -1,5 +1,9 @@
 # EventEmitter changes
 
+# v5.2.7
+
+ * Merge [#152](https://github.com/Olical/EventEmitter/pull/152) - Add a default param value to emitEvent TypeScript signature..
+
 # v5.2.6
 
  * Merge [#149](https://github.com/Olical/EventEmitter/pull/149) - Correct method signatures in TypeScript file.
