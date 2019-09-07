@@ -1,8 +1,12 @@
 # EventEmitter changes
 
+# v5.2.8
+
+ * Merge [#153](https://github.com/Olical/EventEmitter/pull/153) - Undo previous change, it broke TypeScript.
+
 # v5.2.7
 
- * Merge [#152](https://github.com/Olical/EventEmitter/pull/152) - Add a default param value to emitEvent TypeScript signature..
+ * Merge [#152](https://github.com/Olical/EventEmitter/pull/152) - Add a default param value to emitEvent TypeScript signature.
 
 # v5.2.6
 
