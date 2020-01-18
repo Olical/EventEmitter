@@ -1,5 +1,9 @@
 # EventEmitter changes
 
+# v5.2.9
+
+ * Merge [#154](https://github.com/Olical/EventEmitter/pull/154) - Fix type definition of emitEvent method.
+
 # v5.2.8
 
  * Merge [#153](https://github.com/Olical/EventEmitter/pull/153) - Undo previous change, it broke TypeScript.

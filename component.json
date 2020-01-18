@@ -2,7 +2,7 @@
     "name": "eventEmitter",
     "repo": "Olical/EventEmitter",
     "description": "Event based JavaScript for the browser.",
-    "version": "5.2.8",
+    "version": "5.2.9",
     "scripts": ["EventEmitter.js"],
     "files": ["EventEmitter.d.ts"],
     "main": "EventEmitter.js",
